@@ -1,458 +1,1674 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Добавить задачу</title>
-  <style>
-    :root {
-      --light-bg: #d7dce3;
-      --dark-bg: #1a2f40;
-      --accent: #dc143c;
-      --text-dark: #1a2f40;
-      --text-light: #ffffff;
-      --input-padding: 14px;
-      --border-radius: 8px;
-    }
-    * { 
-      box-sizing: border-box; 
-      margin: 0; 
-      padding: 0; 
-      -webkit-tap-highlight-color: transparent;
-    }
-    html, body {
-      height: 100%;
-      overflow: hidden;
-    }
-    body {
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      background-color: var(--light-bg);
-      color: var(--text-dark);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 10px;
-      min-height: 100vh;
-      height: 100vh;
-    }
-    .container {
-      background-color: var(--text-light);
-      border-radius: var(--border-radius);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      width: 100%;
-      max-width: 400px;
-      padding: 15px;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      max-height: 96vh;
-    }
-    header {
-      background-color: var(--dark-bg);
-      padding: 12px;
-      border-radius: var(--border-radius);
-      text-align: center;
-      margin: 0 0 15px 0;
-      flex-shrink: 0;
-    }
-    header h1 {
-      font-size: 1.3rem;
-      color: var(--text-light);
-      font-weight: 600;
-    }
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      flex: 1;
-      overflow: hidden;
-    }
-    .form-content {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      flex: 1;
-      overflow: hidden;
-      justify-content: space-between;
-    }
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      flex-shrink: 0;
-    }
-    label {
-      font-weight: 500;
-      font-size: 0.9rem;
-      color: #444;
-    }
-    input[type="text"],
-    input[type="date"],
-    input[type="number"],
-    input[type="file"] {
-      width: 100%;
-      padding: var(--input-padding);
-      border: 2px solid #ccc;
-      border-radius: var(--border-radius);
-      font-size: 1rem;
-      outline: none;
-      transition: border-color 0.2s;
-      min-height: 44px;
-    }
-    input:focus {
-      border-color: var(--accent);
-    }
-    input[type="file"] {
-      padding: 10px;
-      background-color: #f8f9fa;
-    }
-    input[type="file"]::file-selector-button {
-      padding: 8px 12px;
-      background-color: var(--dark-bg);
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-    button {
-      padding: 14px;
-      background-color: var(--accent);
-      color: var(--text-light);
-      border: none;
-      border-radius: var(--border-radius);
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.2s;
-      min-height: 50px;
-      flex-shrink: 0;
-      margin-top: auto;
-    }
-    button:hover, button:active {
-      background-color: #b0102f;
-    }
-    button:disabled {
-      background-color: #cccccc;
-      cursor: not-allowed;
-    }
-    
-    /* Стили для индикатора загрузки */
-    .loader {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-    
-    .spinner {
-      width: 40px;
-      height: 40px;
-      border: 4px solid rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      border-top: 4px solid var(--accent);
-      animation: spin 1s linear infinite;
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
-    .loader-text {
-      color: white;
-      margin-top: 12px;
-      font-size: 1rem;
-      text-align: center;
-    }
-    
-    .loader-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-    /* Медиа-запросы для адаптивности */
-    @media (max-width: 480px) {
-      body {
-        padding: 8px;
-      }
-      
-      .container {
-        padding: 12px;
-        max-height: 98vh;
-      }
-      
-      header {
-        padding: 10px;
-        margin-bottom: 12px;
-      }
-      
-      header h1 {
-        font-size: 1.2rem;
-      }
-      
-      input[type="text"],
-      input[type="date"],
-      input[type="number"],
-      input[type="file"] {
-        padding: 12px;
-        font-size: 16px;
-      }
-      
-      button {
-        padding: 12px;
-        font-size: 1rem;
-      }
-      
-      .spinner {
-        width: 35px;
-        height: 35px;
-        border-width: 3px;
-      }
-      
-      .loader-text {
-        font-size: 0.9rem;
-      }
-    }
-
-    /* Для очень маленьких экранов */
-    @media (max-width: 350px) and (max-height: 650px) {
-      header h1 {
-        font-size: 1.1rem;
-      }
-      
-      input[type="text"],
-      input[type="date"],
-      input[type="number"],
-      input[type="file"] {
-        padding: 10px;
-        min-height: 40px;
-      }
-      
-      button {
-        padding: 10px;
-        font-size: 0.95rem;
-        min-height: 45px;
-      }
-      
-      .form-group {
-        gap: 4px;
-      }
-      
-      label {
-        font-size: 0.85rem;
-      }
-    }
-
-    /* Для landscape ориентации */
-    @media (max-height: 500px) and (orientation: landscape) {
-      body {
-        align-items: flex-start;
-        padding-top: 5px;
-        padding-bottom: 5px;
-      }
-      
-      .container {
-        max-height: 98vh;
-        overflow-y: auto;
-      }
-      
-      header {
-        padding: 8px;
-      }
-      
-      header h1 {
-        font-size: 1.1rem;
-      }
-    }
-
-    /* Для очень высоких экранов */
-    @media (min-height: 800px) {
-      .container {
-        max-height: 90vh;
-      }
-      
-      form {
-        gap: 16px;
-      }
-      
-      .form-group {
-        gap: 8px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <header>
-      <h1>ДОБАВИТЬ ЗАДАЧУ</h1>
-    </header>
-    <form id="form">
-      <div class="form-content">
-        <div class="form-group">
-          <label for="taskName">Название задачи</label>
-          <input type="text" id="taskName" placeholder="Введите название задачи" required>
-        </div>
-
-        <div class="form-group">
-          <label for="lastDate">Последняя дата выполнения</label>
-          <input type="date" id="lastDate" required>
-        </div>
-
-<div class="form-group">
-  <label for="periodicity">Периодичность (дней)</label>
-  <input type="number" id="periodicity" min="1" required>
-</div>
-
-
-        <div class="form-group">
-          <label for="photo">Фотография (необязательно)</label>
-          <input type="file" id="photo" accept="image/*">
-        </div>
-
-        <button type="submit" id="submit-btn">Добавить задачу</button>
-      </div>
-    </form>
-  </div>
-  
-  <!-- Индикатор загрузки -->
-  <div class="loader" id="loader">
-    <div class="loader-content">
-      <div class="spinner"></div>
-      <div class="loader-text">Добавление задачи...</div>
-    </div>
-  </div>
-
-  <script>
-    // ЗАМЕНИТЕ НА ВАШ URL Google Apps Script!
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx2W8nBS0vxamGcOD8JpLxMfoN5Y_0-VkD0fULvTt0yZPKOsFiwkXdaVrdTPmRshZ6auA/exec';
-    
-    // Элементы DOM
-    const form = document.getElementById('form');
-    const submitBtn = document.getElementById('submit-btn');
-    const loader = document.getElementById('loader');
-    
-    // Функция для проверки, помещается ли форма на экране
-    function checkFormFitsScreen() {
-      const formHeight = document.querySelector('.container').offsetHeight;
-      const windowHeight = window.innerHeight;
-      
-      if (formHeight > windowHeight) {
-        // Если форма не помещается, немного уменьшаем отступы
-        document.querySelector('.container').style.padding = '10px';
-        document.querySelector('header').style.padding = '8px';
-        document.querySelector('header').style.marginBottom = '8px';
-        document.querySelectorAll('input').forEach(input => {
-          input.style.padding = '10px';
-          input.style.minHeight = '40px';
-        });
-        document.querySelector('button').style.padding = '10px';
-        document.querySelector('button').style.minHeight = '45px';
-      }
-    }
-    
-    form.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      
-      const taskName = document.getElementById('taskName').value.trim();
-      const lastDate = document.getElementById('lastDate').value;
-      const periodicity = document.getElementById('periodicity').value;
-      const fileInput = document.getElementById('photo');
-      
-      if (!taskName || !lastDate || !periodicity) {
-        alert('Заполните все обязательные поля.');
-        return;
-      }
-      
-      // Блокируем кнопку и показываем индикатор загрузки
-      submitBtn.disabled = true;
-      loader.style.display = 'flex';
-      
-      try {
-        // Преобразуем дату в формат DD.MM.YYYY
-        const dateParts = lastDate.split('-');
-        const formattedDate = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`;
-        
-        // Подготавливаем данные для отправки
-        const formData = {
-          taskName: taskName,
-          lastDate: formattedDate,
-          periodicity: periodicity
-        };
-        
-        // Если есть фото, добавляем его данные
-        if (fileInput.files.length > 0) {
-          const file = fileInput.files[0];
-          const base64Data = await readFileAsBase64(file);
-          formData.base64 = base64Data;
-          formData.mimeType = file.type;
-          formData.fileName = file.name;
+        :root {
+            --light-bg: #fefefe;
+            --dark-bg: #1a1a1a;
+            --accent: #dc143c;
+            --text-dark: #1a1a1a;
+            --text-light: #ffffff;
+            --text-gray: #FFF;
+            --text-light-gray: #999999;
+            --border-radius: 8px;
+            --input-padding: 12px;
+            --surface: #ffffff;
+            --elevation-1: 0 1px 2px rgba(0,0,0,0.05);
+            --elevation-2: 0 2px 8px rgba(0,0,0,0.08);
         }
         
-        // Отправка с mode: 'no-cors' и параметром nocache
-        const response = await fetch(SCRIPT_URL + '?nocache=' + Date.now(), {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData)
-        });
-        
-        // При mode: 'no-cors' мы не можем прочитать ответ, но запрос отправлен
-        console.log('Запрос отправлен (no-cors mode)');
-        
-        // Показываем успешное сообщение (мы не можем проверить ответ при no-cors)
-        alert('✅ Задача успешно добавлена!');
-        document.getElementById('form').reset();
-        // Устанавливаем сегодняшнюю дату снова и периодичность по умолчанию
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('lastDate').value = today;
-        document.getElementById('periodicity').value = '7';
-        
-      } catch (error) {
-        console.error('Ошибка:', error);
-        alert('❌ Произошла ошибка при добавлении задачи.');
-      } finally {
-        // Скрываем индикатор загрузки
-        loader.style.display = 'none';
-        submitBtn.disabled = false;
-      }
-    });
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-    // Функция для чтения файла как base64
-    function readFileAsBase64(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = function(evt) {
-          resolve(evt.target.result);
-        };
-        reader.onerror = function() {
-          reject(new Error('Ошибка при чтении файла'));
-        };
-        reader.readAsDataURL(file);
-      });
-    }
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            background-color: #f4f6f9;
+            width: 100%;
+            position: fixed;
+        }
 
-    // Улучшение UX: фокус на первом поле при загрузке
-    window.addEventListener('DOMContentLoaded', () => {
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById('lastDate').value = today;
-      document.getElementById('taskName').focus();
-      // Проверяем, помещается ли форма на экране
-      setTimeout(checkFormFitsScreen, 100);
-    });
+        body {
+            color: #1a2f40;
+            padding: 0;
+            line-height: 1.5;
+            min-height: 100vh;
+            height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            font-weight: 700;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
+        }
+
+        /* ПОЛНОЭКРАННАЯ ЗАГРУЗКА */
+        .fullscreen-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            gap: 20px;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+        }
+
+        .fullscreen-loading .chaotic-orbit {
+            --uib-size: 40px;
+            --uib-speed: 1.5s;
+            --uib-color: #dc143c;
+        }
+
+        .fullscreen-loading .loading-text {
+            font-size: 16px;
+            color: #1a2f40;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0;
+            background-color: var(--surface);
+            border-radius: 0;
+            box-shadow: none;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            border: none;
+            min-height: -webkit-fill-available;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
+        }
+
+        .header-section {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+            padding-left: max(16px, env(safe-area-inset-left));
+            padding-right: max(16px, env(safe-area-inset-right));
+            padding-top: max(0px, env(safe-area-inset-top));
+        }
+
+        .tabs {
+            display: flex;
+            background-color: var(--surface);
+            padding: 16px 0;
+            gap: 8px;
+            flex-shrink: 0;
+            border-bottom: 1px solid #f0f0f0;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            width: 100%;
+            margin-top: env(safe-area-inset-top);
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
+        }
+
+        .tab-btn {
+            background: var(--surface);
+            border: 1px solid #e5e5e5;
+            color: var(--text-dark);
+            padding: 14px 12px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 0;
+            text-align: center;
+            border-radius: 6px;
+            font-weight: 700;
+            position: relative;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tab-btn:hover {
+            background-color: #fafafa;
+            border-color: #d0d0d0;
+            color: var(--text-dark);
+        }
+
+        .tab-btn.active {
+            background-color: var(--accent);
+            color: var(--text-light);
+            border-color: var(--accent);
+        }
+
+        .add-task-btn {
+            background-color: #1a2f40;
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            border-radius: 6px;
+            font-weight: 700;
+            margin: 8px 0 16px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .add-task-btn:hover {
+            background-color: #0d1f2d;
+            transform: translateY(-1px);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 16px;
+            flex: 1;
+            overflow-y: auto;
+            flex-direction: column;
+        }
+
+        .tab-content.active {
+            display: flex;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .task-card {
+            background: white;
+            margin: 0;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            user-select: none;
+            width: 100%;
+            min-height: 280px;
+        }
+
+        .task-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        }
+
+        .task-card.selected {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15), 0 0 0 2px #dc143c;
+        }
+
+        .task-header {
+            padding: 16px 16px 12px;
+            border-bottom: 2px solid #dc143c;
+            margin-bottom: 0;
+        }
+
+        .task-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #000000;
+            line-height: 1.4;
+            text-align: center;
+        }
+
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            padding: 0;
+        }
+
+        .content-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+            border-bottom: 1px solid #e0e0e0;
+            min-height: 48px;
+            height: 48px;
+        }
+
+        .content-row:last-child {
+            border-bottom: none;
+        }
+
+        .row-label {
+            font-size: 14px;
+            color: #000000;
+            font-weight: 700;
+            flex-shrink: 0;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .row-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: #000000;
+            text-align: right;
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            height: 100%;
+            line-height: 1;
+        }
+
+        .executor-select {
+            background: white;
+            border: 2px solid #1a2f40;
+            border-radius: 4px;
+            padding: 8px 10px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #1a2f40;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.3s ease;
+            width: auto;
+            max-width: 160px;
+            min-width: 140px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+        }
+
+        .executor-select:focus {
+            outline: none;
+            border-color: #dc143c;
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            border-top: 1px solid #e0e0e0;
+            margin-top: auto;
+        }
+
+        .schema-button {
+            background-color: #1a2f40;
+            color: white;
+            padding: 8px 12px;
+            font-weight: 700;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
+            white-space: nowrap;
+            height: 36px;
+        }
+
+        .schema-button:hover {
+            background-color: #0d1f2d;
+            transform: translateY(-1px);
+        }
+
+        .submit-btn {
+            background-color: #dc143c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            user-select: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-weight: 700;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            white-space: nowrap;
+            height: 36px;
+        }
+
+        .submit-btn:hover {
+            background-color: #a90e2e;
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .submitted-text {
+            color: #000;
+            font-weight: 700;
+            padding: 8px 12px;
+            border: 1px solid #FFFFFF;
+            border-radius: 4px;
+            font-size: 13px;
+            text-align: center;
+            background: #FFFFFF;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            height: 36px;
+            gap: 6px;
+        }
+
+        .catalog-buttons-container {
+            display: flex;
+            align-items: center;
+            padding: 0;
+            border-top: 1px solid #e0e0e0;
+            margin-top: auto;
+            position: relative;
+            min-height: 60px;
+        }
+
+        .catalog-button-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            position: relative;
+            padding: 10px 0;
+        }
+
+        /* Убрали вертикальные линии */
+        .catalog-button-wrapper::before,
+        .catalog-button-wrapper::after {
+            display: none;
+        }
+
+        .open-button {
+            background-color: #1a2f40;
+            color: white;
+            padding: 10px 24px;
+            font-weight: 700;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            text-align: center;
+            white-space: nowrap;
+            height: 40px;
+            min-width: 140px;
+            width: auto;
+            flex: 0 0 auto;
+        }
+
+        .open-button:hover {
+            background-color: #0d1f2d;
+            transform: translateY(-1px);
+        }
+
+        .no-open {
+            color: #999;
+            font-style: italic;
+            padding: 10px 24px;
+            border: 1px dashed #ddd;
+            border-radius: 4px;
+            font-size: 11px;
+            text-align: center;
+            background: #f8f9fa;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            height: 40px;
+            min-width: 140px;
+            width: auto;
+            flex: 0 0 auto;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: 11px;
+            min-width: 30px;
+            background: transparent;
+            border: 1px solid;
+            line-height: 1;
+        }
+
+        .status-badge.warning { 
+            border-color: #8e6a1e; 
+            color: #8e6a1e; 
+        }
+        .status-badge.success { 
+            border-color: #2d5a2d; 
+            color: #2d5a2d; 
+        }
+        .status-badge.danger { 
+            border-color: #7a2a2a; 
+            color: #7a2a2a; 
+        }
+
+        /* АНИМАЦИЯ ЗАГРУЗКИ */
+        .chaotic-orbit {
+            --uib-size: 25px;
+            --uib-speed: 1.5s;
+            --uib-color: #1a2f40;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: var(--uib-size);
+            width: var(--uib-size);
+            animation: rotate936 calc(var(--uib-speed) * 1.667) infinite linear;
+        }
+
+        .chaotic-orbit::before,
+        .chaotic-orbit::after {
+            content: '';
+            position: absolute;
+            height: 60%;
+            width: 60%;
+            border-radius: 50%;
+            background-color: var(--uib-color);
+            will-change: transform;
+            flex-shrink: 0;
+        }
+
+        .chaotic-orbit::before {
+            animation: orbit var(--uib-speed) linear infinite;
+        }
+
+        .chaotic-orbit::after {
+            animation: orbit var(--uib-speed) linear calc(var(--uib-speed) / -2) infinite;
+        }
+
+        @keyframes rotate936 {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes orbit {
+            0% {
+                transform: translate(calc(var(--uib-size) * 0.5)) scale(0.73684);
+                opacity: 0.65;
+            }
+
+            5% {
+                transform: translate(calc(var(--uib-size) * 0.4)) scale(0.684208);
+                opacity: 0.58;
+            }
+
+            10% {
+                transform: translate(calc(var(--uib-size) * 0.3)) scale(0.631576);
+                opacity: 0.51;
+            }
+
+            15% {
+                transform: translate(calc(var(--uib-size) * 0.2)) scale(0.578944);
+                opacity: 0.44;
+            }
+
+            20% {
+                transform: translate(calc(var(--uib-size) * 0.1)) scale(0.526312);
+                opacity: 0.37;
+            }
+
+            25% {
+                transform: translate(0%) scale(0.47368);
+                opacity: 0.3;
+            }
+
+            30% {
+                transform: translate(calc(var(--uib-size) * -0.1)) scale(0.526312);
+                opacity: 0.37;
+            }
+
+            35% {
+                transform: translate(calc(var(--uib-size) * -0.2)) scale(0.578944);
+                opacity: 0.44;
+            }
+
+            40% {
+                transform: translate(calc(var(--uib-size) * -0.3)) scale(0.631576);
+                opacity: 0.51;
+            }
+
+            45% {
+                transform: translate(calc(var(--uib-size) * -0.4)) scale(0.684208);
+                opacity: 0.58;
+            }
+
+            50% {
+                transform: translate(calc(var(--uib-size) * -0.5)) scale(0.73684);
+                opacity: 0.65;
+            }
+
+            55% {
+                transform: translate(calc(var(--uib-size) * -0.4)) scale(0.789472);
+                opacity: 0.72;
+            }
+
+            60% {
+                transform: translate(calc(var(--uib-size) * -0.3)) scale(0.842104);
+                opacity: 0.79;
+            }
+
+            65% {
+                transform: translate(calc(var(--uib-size) * -0.2)) scale(0.894736);
+                opacity: 0.86;
+            }
+
+            70% {
+                transform: translate(calc(var(--uib-size) * -0.1)) scale(0.947368);
+                opacity: 0.93;
+            }
+
+            75% {
+                transform: translate(0%) scale(1);
+                opacity: 1;
+            }
+
+            80% {
+                transform: translate(calc(var(--uib-size) * 0.1)) scale(0.947368);
+                opacity: 0.93;
+            }
+
+            85% {
+                transform: translate(calc(var(--uib-size) * 0.2)) scale(0.894736);
+                opacity: 0.86;
+            }
+
+            90% {
+                transform: translate(calc(var(--uib-size) * 0.3)) scale(0.842104);
+                opacity: 0.79;
+            }
+
+            95% {
+                transform: translate(calc(var(--uib-size) * 0.4)) scale(0.789472);
+                opacity: 0.72;
+            }
+
+            100% {
+                transform: translate(calc(var(--uib-size) * 0.5)) scale(0.73684);
+                opacity: 0.65;
+            }
+        }
+
+        /* СТИЛИ ЗАГРУЗКИ В КАРТОЧКАХ */
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            gap: 16px;
+        }
+
+        .loading-text {
+            font-size: 14px;
+            color: #666;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .error {
+            text-align: center;
+            padding: 20px;
+            color: #7a2a2a;
+            background: rgba(122,42,42,0.05);
+            border-radius: var(--border-radius);
+            margin: 10px 0;
+            border: 1px solid rgba(122,42,42,0.2);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 16px;
+            border-radius: 6px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.4s ease;
+            background-color: var(--text-dark);
+            font-size: 13px;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background-color: #2d5a2d;
+        }
+
+        .notification.error {
+            background-color: #7a2a2a;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            margin-bottom: 80px;
+            padding: 20px 10px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+
+        .page-btn {
+            background: white;
+            border: 1px solid #e5e5e5;
+            color: #1a2f40;
+            padding: 8px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            font-weight: 600;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            background-color: #f5f5f5;
+            border-color: #d0d0d0;
+        }
+
+        .page-btn.active {
+            background-color: #dc143c;
+            color: white;
+            border-color: #dc143c;
+        }
+
+        .page-btn:disabled {
+            background-color: #f0f0f0;
+            color: #999;
+            cursor: not-allowed;
+            border-color: #e5e5e5;
+        }
+
+        .page-info {
+            font-size: 14px;
+            color: #666;
+            font-weight: 600;
+            margin: 0 10px;
+        }
+
+        /* АДАПТИВНОСТЬ */
+        @media (min-width: 1200px) {
+            .cards-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .header-section {
+                padding: 0;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 1199px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .header-section {
+                padding: 0 16px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .container {
+                height: 100vh;
+            }
+            
+            .header-section {
+                padding-left: max(12px, env(safe-area-inset-left));
+                padding-right: max(12px, env(safe-area-inset-right));
+                padding-top: max(0px, env(safe-area-inset-top));
+            }
+            
+            .tabs {
+                padding: 12px 0;
+                gap: 6px;
+                margin-top: env(safe-area-inset-top);
+            }
+            
+            .tab-btn {
+                padding: 12px 8px;
+                font-size: 14px;
+                min-width: calc(50% - 10px);
+                flex: 1 1 calc(50% - 10px);
+            }
+            
+            .add-task-btn {
+                margin: 6px 0 12px;
+                padding: 12px 8px;
+                font-size: 14px;
+            }
+            
+            .tab-content {
+                padding: 12px;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .task-card {
+                min-height: auto;
+            }
+            
+            .content-row {
+                padding: 0 12px;
+                min-height: 44px;
+                height: 44px;
+            }
+            
+            .row-label {
+                font-size: 13px;
+                padding-right: 8px;
+                flex-shrink: 0;
+                min-width: 80px;
+            }
+            
+            .row-value {
+                font-size: 13px;
+                justify-content: flex-end;
+                flex: 1;
+                min-width: 0;
+            }
+            
+            .buttons-container {
+                padding: 10px 12px;
+            }
+            
+            .catalog-buttons-container {
+                min-height: 56px;
+            }
+            
+            .open-button,
+            .no-open {
+                height: 36px;
+                min-width: 120px;
+                padding: 8px 20px;
+                font-size: 12px;
+            }
+            
+            .executor-select {
+                max-width: 140px;
+                min-width: 120px;
+                font-size: 12px;
+                padding: 7px 8px;
+                height: 34px;
+            }
+            
+            .schema-button,
+            .submit-btn,
+            .submitted-text {
+                height: 34px;
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+            
+            .chaotic-orbit {
+                --uib-size: 22px;
+            }
+            
+            .loading-text {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-section {
+                padding-left: max(10px, env(safe-area-inset-left));
+                padding-right: max(10px, env(safe-area-inset-right));
+            }
+            
+            .tabs {
+                padding: 10px 0;
+                gap: 4px;
+            }
+            
+            .tab-btn {
+                padding: 10px 6px;
+                font-size: 13px;
+                min-width: calc(50% - 6px);
+                flex: 1 1 calc(50% - 6px);
+            }
+            
+            .add-task-btn {
+                margin: 4px 0 10px;
+                padding: 10px 6px;
+                font-size: 13px;
+            }
+            
+            .tab-content {
+                padding: 10px;
+            }
+            
+            .task-card {
+                padding: 0;
+            }
+            
+            .content-row {
+                padding: 0 10px;
+                min-height: 42px;
+                height: 42px;
+            }
+            
+            .task-title {
+                font-size: 15px;
+            }
+            
+            .row-label, .row-value {
+                font-size: 12px;
+            }
+            
+            .catalog-buttons-container {
+                min-height: 52px;
+            }
+            
+            .open-button,
+            .no-open {
+                height: 34px;
+                min-width: 110px;
+                padding: 7px 18px;
+                font-size: 11px;
+            }
+            
+            .executor-select {
+                max-width: 120px;
+                min-width: 100px;
+                font-size: 11px;
+                padding: 6px 7px;
+                height: 32px;
+            }
+            
+            .row-label {
+                font-size: 12px;
+                min-width: 70px;
+            }
+            
+            .schema-button,
+            .submit-btn,
+            .submitted-text,
+            .no-open {
+                height: 32px;
+                font-size: 11px;
+                padding: 5px 8px;
+            }
+            
+            .chaotic-orbit {
+                --uib-size: 20px;
+            }
+            
+            .loading-text {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .tabs {
+                flex-direction: column;
+                gap: 6px;
+            }
+            
+            .tab-btn {
+                flex: 1 1 auto;
+                min-height: 44px;
+                min-width: 100%;
+                margin: 0;
+            }
+            
+            .header-section {
+                padding-left: max(8px, env(safe-area-inset-left));
+                padding-right: max(8px, env(safe-area-inset-right));
+            }
+            
+            .executor-select {
+                max-width: 110px;
+                min-width: 90px;
+                font-size: 10px;
+                padding: 5px 6px;
+                height: 30px;
+            }
+            
+            .row-label {
+                font-size: 11px;
+                min-width: 65px;
+            }
+            
+            .content-row {
+                min-height: 40px;
+                height: 40px;
+            }
+            
+            .catalog-buttons-container {
+                min-height: 48px;
+            }
+            
+            .open-button,
+            .no-open {
+                height: 32px;
+                min-width: 100px;
+                padding: 6px 16px;
+                font-size: 10px;
+            }
+            
+            .schema-button,
+            .submit-btn,
+            .submitted-text,
+            .no-open {
+                height: 30px;
+                font-size: 10px;
+                padding: 4px 6px;
+            }
+            
+            .chaotic-orbit {
+                --uib-size: 18px;
+            }
+            
+            .loading-text {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ПОЛНОЭКРАННАЯ ЗАГРУЗКА -->
+    <div class="fullscreen-loading" id="fullscreen-loading">
+        <div class="chaotic-orbit"></div>
+        <div class="loading-text">Загрузка приложения...</div>
+    </div>
     
-    // Также проверяем при изменении размера окна
-    window.addEventListener('resize', checkFormFitsScreen);
-  </script>
+    <div class="notification" id="notification"></div>
+    
+    <div class="container" id="main-container" style="display: none;">
+        <div class="header-section">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="tab1">
+                    <i class="fas fa-tasks"></i>РЕЕСТР ЗАДАЧ
+                </button>
+                <button class="tab-btn" data-tab="tab2">
+                    <i class="fas fa-book"></i>КАТАЛОГ ЗАДАЧ
+                </button>
+            </div>
+            
+            <button class="add-task-btn" onclick="window.open('https://smart-bowling.github.io/add_engineer/', '_blank')">
+                <i class="fas fa-plus-circle"></i>ДОБАВИТЬ ЗАДАЧУ
+            </button>
+        </div>
+        
+        <div class="tab-content active" id="tab1">
+            <div class="cards-grid" id="journal-cards">
+                <div class="task-card">
+                    <div class="loading-container">
+                        <div class="chaotic-orbit"></div>
+                        <div class="loading-text">Загрузка данных...</div>
+                    </div>
+                </div>
+            </div>
+            <div class="pagination" id="journal-pagination" style="display: none;">
+                <button class="page-btn prev-btn" onclick="changePage('journal', -1)">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="page-info">
+                    Страница <span id="journal-current-page">1</span> из <span id="journal-total-pages">1</span>
+                </div>
+                <button class="page-btn next-btn" onclick="changePage('journal', 1)">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="tab2">
+            <div class="cards-grid" id="tasks-cards">
+                <div class="task-card">
+                    <div class="loading-container">
+                        <div class="chaotic-orbit"></div>
+                        <div class="loading-text">Загрузка данных...</div>
+                    </div>
+                </div>
+            </div>
+            <div class="pagination" id="tasks-pagination" style="display: none;">
+                <button class="page-btn prev-btn" onclick="changePage('tasks', -1)">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="page-info">
+                    Страница <span id="tasks-current-page">1</span> из <span id="tasks-total-pages">1</span>
+                </div>
+                <button class="page-btn next-btn" onclick="changePage('tasks', 1)">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbx5-tGhnLwWavAOApJdGfV51jr1JVii4YvOexG-ACx3cmOMK0qiu46mwWi1bNCnRuEe/exec';
+        const CARDS_PER_PAGE = 6;
+
+        let isInitialLoad = true;
+        let tasksData = null;
+        let journalData = null;
+        
+        let currentJournalPage = 1;
+        let currentTasksPage = 1;
+        let totalJournalPages = 1;
+        let totalTasksPages = 1;
+
+        // Функция для показа полноэкранной загрузки
+        function showFullscreenLoading(message = 'Загрузка...') {
+            const loading = document.getElementById('fullscreen-loading');
+            const mainContainer = document.getElementById('main-container');
+            const loadingText = loading.querySelector('.loading-text');
+            
+            loadingText.textContent = message;
+            loading.style.display = 'flex';
+            mainContainer.style.display = 'none';
+        }
+
+        // Функция для скрытия полноэкранной загрузки
+        function hideFullscreenLoading() {
+            const loading = document.getElementById('fullscreen-loading');
+            const mainContainer = document.getElementById('main-container');
+            
+            loading.style.display = 'none';
+            mainContainer.style.display = 'flex';
+        }
+
+        // Функция для показа загрузки при операциях
+        function showOperationLoading(message) {
+            showFullscreenLoading(message);
+        }
+
+        function convertGoogleDriveLink(driveLink) {
+            if (!driveLink) return null;
+            
+            if (driveLink.includes('drive.google.com/file/d/')) {
+                const match = driveLink.match(/\/d\/([^\/]+)/);
+                if (match && match[1]) {
+                    return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+                }
+            }
+            
+            if (driveLink.includes('uc?export=view')) {
+                return driveLink;
+            }
+            
+            return null;
+        }
+
+        function openDriveLink(driveLink) {
+            if (!driveLink) return;
+            
+            const viewLink = convertGoogleDriveLink(driveLink);
+            if (viewLink) {
+                window.open(viewLink, '_blank');
+            } else {
+                window.open(driveLink, '_blank');
+            }
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+        
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        async function makeRequest(url, options = {}) {
+            try {
+                if (!options.method || options.method === 'GET') {
+                    const separator = url.includes('?') ? '&' : '?';
+                    url = `${url}${separator}_=${Date.now()}`;
+                }
+                
+                const response = await fetch(url, options);
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Ошибка запроса:', error);
+                throw error;
+            }
+        }
+
+        function updatePagination(type, currentPage, totalPages) {
+            const pagination = document.getElementById(`${type}-pagination`);
+            const currentPageSpan = document.getElementById(`${type}-current-page`);
+            const totalPagesSpan = document.getElementById(`${type}-total-pages`);
+            const prevBtn = pagination.querySelector('.prev-btn');
+            const nextBtn = pagination.querySelector('.next-btn');
+            
+            currentPageSpan.textContent = currentPage;
+            totalPagesSpan.textContent = totalPages;
+            
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages;
+            
+            pagination.style.display = totalPages > 1 ? 'flex' : 'none';
+        }
+
+        function changePage(type, direction) {
+            if (type === 'journal') {
+                const newPage = currentJournalPage + direction;
+                if (newPage >= 1 && newPage <= totalJournalPages) {
+                    currentJournalPage = newPage;
+                    renderJournalCards(journalData);
+                    updatePagination('journal', currentJournalPage, totalJournalPages);
+                }
+            } else if (type === 'tasks') {
+                const newPage = currentTasksPage + direction;
+                if (newPage >= 1 && newPage <= totalTasksPages) {
+                    currentTasksPage = newPage;
+                    renderTasksCards(tasksData);
+                    updatePagination('tasks', currentTasksPage, totalTasksPages);
+                }
+            }
+        }
+
+        function getCurrentPageData(data, currentPage) {
+            const startIndex = (currentPage - 1) * CARDS_PER_PAGE;
+            const endIndex = startIndex + CARDS_PER_PAGE;
+            return data.slice(startIndex, endIndex);
+        }
+
+        async function loadTasks() {
+            try {
+                if (tasksData && !isInitialLoad) {
+                    renderTasksCards(tasksData);
+                    return;
+                }
+                
+                const tasksCards = document.getElementById('tasks-cards');
+                tasksCards.innerHTML = `
+                    <div class="task-card">
+                        <div class="loading-container">
+                            <div class="chaotic-orbit"></div>
+                            <div class="loading-text">Загрузка данных...</div>
+                        </div>
+                    </div>
+                `;
+                
+                const tasks = await makeRequest(`${BACKEND_URL}?action=getTasks`);
+                tasksData = tasks;
+                renderTasksCards(tasks);
+                
+            } catch (error) {
+                console.error('Ошибка загрузки задач:', error);
+                const tasksCards = document.getElementById('tasks-cards');
+                tasksCards.innerHTML = `
+                    <div class="task-card error">
+                        Ошибка загрузки: ${error.message}
+                    </div>
+                `;
+                showNotification('Ошибка загрузки задач', 'error');
+            }
+        }
+
+        async function loadJournal() {
+            try {
+                if (journalData && !isInitialLoad) {
+                    renderJournalCards(journalData);
+                    return;
+                }
+                
+                const journalCards = document.getElementById('journal-cards');
+                journalCards.innerHTML = `
+                    <div class="task-card">
+                        <div class="loading-container">
+                            <div class="chaotic-orbit"></div>
+                            <div class="loading-text">Загрузка данных...</div>
+                        </div>
+                    </div>
+                `;
+                
+                const journal = await makeRequest(`${BACKEND_URL}?action=getJournal`);
+                journalData = journal;
+                renderJournalCards(journal);
+                
+            } catch (error) {
+                console.error('Ошибка загрузки журнала:', error);
+                const journalCards = document.getElementById('journal-cards');
+                journalCards.innerHTML = `
+                    <div class="task-card error">
+                        Ошибка загрузки: ${error.message}
+                    </div>
+                `;
+                showNotification('Ошибка загрузки журнала', 'error');
+            }
+        }
+
+        async function completeTask(taskId, executor, rowIndex) {
+            showOperationLoading('Сохранение данных...');
+            
+            try {
+                const updateUrl = `${BACKEND_URL}?action=updateCell&sheetName=B&column=E&row=${rowIndex}&value=${encodeURIComponent(executor)}`;
+                const result = await makeRequest(updateUrl);
+                
+                if (result.success) {
+                    const immediateUpdateResult = await makeRequest(`${BACKEND_URL}?action=updateFromRowNumber&rowNumber=${rowIndex}`);
+                    
+                    if (immediateUpdateResult === 'SUCCESS') {
+                        showNotification('Задача выполнена! Данные обновлены мгновенно.', 'success');
+                        
+                        const card = document.querySelector(`[data-task-id="${taskId}"]`);
+                        if (card) {
+                            const submitBtn = card.querySelector('.submit-btn');
+                            if (submitBtn) {
+                                const submittedText = document.createElement('div');
+                                submittedText.className = 'submitted-text';
+                                submittedText.innerHTML = '<i class="fas fa-check-circle"></i>ОТПРАВЛЕНО';
+                                submitBtn.parentNode.replaceChild(submittedText, submitBtn);
+                            }
+                            
+                            const select = card.querySelector('.executor-select');
+                            if (select) {
+                                const executorName = document.createElement('span');
+                                executorName.className = 'row-value';
+                                executorName.textContent = executor;
+                                select.parentNode.replaceChild(executorName, select);
+                            }
+                        }
+                        
+                        journalData = null;
+                        tasksData = null;
+                        
+                        setTimeout(() => {
+                            loadJournal();
+                            loadTasks();
+                            hideFullscreenLoading();
+                        }, 1000);
+                    } else {
+                        showNotification('Задача выполнена, но обновление даты займет до 1 минуты', 'warning');
+                        setTimeout(() => {
+                            loadJournal();
+                            loadTasks();
+                            hideFullscreenLoading();
+                        }, 1000);
+                    }
+                } else {
+                    hideFullscreenLoading();
+                    showNotification('Ошибка: ' + result.error, 'error');
+                }
+            } catch (error) {
+                console.error('Ошибка выполнения задачи:', error);
+                hideFullscreenLoading();
+                showNotification('Ошибка выполнения задачи: ' + error.message, 'error');
+            }
+        }
+
+        function renderTasksCards(tasks) {
+            const tasksCards = document.getElementById('tasks-cards');
+            
+            if (!tasks || tasks.length === 0) {
+                tasksCards.innerHTML = `
+                    <div class="task-card">
+                        <div class="loading-container">
+                            <div class="chaotic-orbit"></div>
+                            <div class="loading-text">Нет задач</div>
+                        </div>
+                    </div>
+                `;
+                updatePagination('tasks', 1, 1);
+                return;
+            }
+            
+            totalTasksPages = Math.ceil(tasks.length / CARDS_PER_PAGE);
+            if (currentTasksPage > totalTasksPages) {
+                currentTasksPage = 1;
+            }
+            
+            const currentTasks = getCurrentPageData(tasks, currentTasksPage);
+            
+            tasksCards.innerHTML = currentTasks.map(task => {
+                let statusClass = 'success';
+                if (task.daysLeft <= 0) {
+                    statusClass = 'danger';
+                } else if (task.daysLeft <= 2) {
+                    statusClass = 'warning';
+                }
+                
+                const hasLink = task.driveLink && task.driveLink.trim() !== '';
+                
+                return `
+                    <div class="task-card catalog-task">
+                        <div class="task-header">
+                            <div class="task-title">${task.task}</div>
+                        </div>
+                        
+                        <div class="card-content">
+                            <div class="content-row">
+                                <span class="row-label">Последнее выполнение:</span>
+                                <span class="row-value">${task.lastDate || '-'}</span>
+                            </div>
+                            <div class="content-row">
+                                <span class="row-label">Прошло дней:</span>
+                                <span class="row-value">${task.daysPassed}</span>
+                            </div>
+                            <div class="content-row">
+                                <span class="row-label">Интервал:</span>
+                                <span class="row-value">${task.frequency} дн.</span>
+                            </div>
+                            <div class="content-row">
+                                <span class="row-label">Остаток дней:</span>
+                                <span class="row-value">
+                                    <span class="status-badge ${statusClass}">${task.daysLeft}</span>
+                                </span>
+                            </div>
+                            <div class="content-row">
+                                <span class="row-label">Следующее выполнение:</span>
+                                <span class="row-value">${task.nextDate || '-'}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="catalog-buttons-container">
+                            <div class="catalog-button-wrapper">
+                                ${hasLink 
+                                    ? `<a href="#" onclick="openDriveLink('${task.driveLink}')" class="open-button">
+                                        <i class="fas fa-file-alt"></i>ОТКРЫТЬ
+                                      </a>`
+                                    : '<div class="no-open">Недоступно</div>'
+                                }
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            updatePagination('tasks', currentTasksPage, totalTasksPages);
+        }
+
+        function renderJournalCards(journal) {
+            const journalCards = document.getElementById('journal-cards');
+            
+            if (!journal || journal.length === 0) {
+                journalCards.innerHTML = `
+                    <div class="task-card">
+                        <div class="loading-container">
+                            <div class="chaotic-orbit"></div>
+                            <div class="loading-text">Нет данных</div>
+                        </div>
+                    </div>
+                `;
+                updatePagination('journal', 1, 1);
+                return;
+            }
+            
+            totalJournalPages = Math.ceil(journal.length / CARDS_PER_PAGE);
+            if (currentJournalPage > totalJournalPages) {
+                currentJournalPage = 1;
+            }
+            
+            const currentJournal = getCurrentPageData(journal, currentJournalPage);
+            
+            let html = '';
+            
+            currentJournal.forEach((task, index) => {
+                const rowIndex = task.rowIndex || (index + 2);
+                const hasLink = task.driveLink && task.driveLink.trim() !== '';
+                const taskId = task.id || task.driveLink || '';
+                
+                if (!task.isCompleted) {
+                    html += `
+                        <div class="task-card pending" data-task-id="${taskId}" data-row-index="${rowIndex}">
+                            <div class="task-header">
+                                <div class="task-title">${task.task}</div>
+                            </div>
+                            
+                            <div class="card-content">
+                                <div class="content-row">
+                                    <span class="row-label">Дата появления:</span>
+                                    <span class="row-value">${task.createdDate}</span>
+                                </div>
+                                <div class="content-row">
+                                    <span class="row-label">Дата выполнения:</span>
+                                    <span class="row-value">${task.completedDate || '-'}</span>
+                                </div>
+                                <div class="content-row">
+                                    <span class="row-label">Выполнил:</span>
+                                    <span class="row-value">
+                                        <select class="executor-select" id="executor-${taskId}">
+                                            <option value="" selected disabled></option>
+                                            <option value="Вадим">Вадим</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="buttons-container">
+                                ${hasLink 
+                                    ? `<a href="#" onclick="openDriveLink('${task.driveLink}')" class="schema-button">
+                                        <i class="fas fa-file-alt"></i>ОТКРЫТЬ
+                                      </a>`
+                                    : '<div class="no-open">Недоступно</div>'
+                                }
+                                <button class="submit-btn" onclick="submitTask('${taskId}', ${rowIndex})" disabled>
+                                    <i class="fas fa-paper-plane"></i>ОТПРАВИТЬ
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    html += `
+                        <div class="task-card completed">
+                            <div class="task-header">
+                                <div class="task-title">${task.task}</div>
+                            </div>
+                            
+                            <div class="card-content">
+                                <div class="content-row">
+                                    <span class="row-label">Дата появления:</span>
+                                    <span class="row-value">${task.createdDate}</span>
+                                </div>
+                                <div class="content-row">
+                                    <span class="row-label">Дата выполнения:</span>
+                                    <span class="row-value">${task.completedDate}</span>
+                                </div>
+                                <div class="content-row">
+                                    <span class="row-label">Выполнил:</span>
+                                    <span class="row-value">${task.executor}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="buttons-container">
+                                ${hasLink 
+                                    ? `<a href="#" onclick="openDriveLink('${task.driveLink}')" class="schema-button">
+                                        <i class="fas fa-file-alt"></i>ОТКРЫТЬ
+                                      </a>`
+                                    : '<div class="no-open">Недоступно</div>'
+                                }
+                                <div class="submitted-text">
+                                    <i class="fas fa-check-circle"></i>ОТПРАВЛЕНО
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+            
+            journalCards.innerHTML = html;
+            
+            document.querySelectorAll('.executor-select').forEach(select => {
+                select.addEventListener('change', function() {
+                    const card = this.closest('.task-card');
+                    const submitBtn = card.querySelector('.submit-btn');
+                    submitBtn.disabled = !this.value;
+                    event.stopPropagation();
+                });
+                
+                select.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                });
+            });
+            
+            updatePagination('journal', currentJournalPage, totalJournalPages);
+        }
+
+        function submitTask(taskId, rowIndex) {
+            const card = document.querySelector(`[data-task-id="${taskId}"]`);
+            const select = card.querySelector('.executor-select');
+            const submitBtn = card.querySelector('.submit-btn');
+            
+            if (!select.value) {
+                showNotification('Выберите исполнителя перед отправкой', 'error');
+                return;
+            }
+            
+            completeTask(taskId, select.value, rowIndex);
+            event.stopPropagation();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Показываем полноэкранную загрузку при старте
+            showFullscreenLoading('Загрузка приложения...');
+            
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            // Загружаем данные и скрываем загрузку когда все готово
+            Promise.all([
+                loadJournal(),
+                loadTasks()
+            ]).then(() => {
+                setTimeout(() => {
+                    hideFullscreenLoading();
+                }, 500);
+            }).catch(error => {
+                console.error('Ошибка загрузки:', error);
+                hideFullscreenLoading();
+            });
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    button.classList.add('active');
+                    
+                    const tabId = button.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                    
+                    if (tabId === 'tab2') {
+                        currentTasksPage = 1;
+                        loadTasks();
+                    } else if (tabId === 'tab1') {
+                        currentJournalPage = 1;
+                        loadJournal();
+                    }
+                });
+            });
+
+            setInterval(() => {
+                const activeTab = document.querySelector('.tab-content.active');
+                if (activeTab.id === 'tab2') {
+                    loadTasks();
+                } else if (activeTab.id === 'tab1') {
+                    loadJournal();
+                }
+            }, 30000);
+
+            setTimeout(() => {
+                isInitialLoad = false;
+            }, 1000);
+
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.task-card')) {
+                    const card = e.target.closest('.task-card');
+                    
+                    if (e.target.tagName === 'BUTTON' || 
+                        e.target.tagName === 'SELECT' || 
+                        e.target.tagName === 'OPTION' ||
+                        e.target.tagName === 'A' ||
+                        e.target.tagName === 'I') {
+                        return;
+                    }
+                    
+                    document.querySelectorAll('.task-card').forEach(c => {
+                        c.classList.remove('selected');
+                    });
+                    
+                    card.classList.add('selected');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
