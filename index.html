@@ -53,18 +53,124 @@
             padding-right: env(safe-area-inset-right);
         }
 
-        /* ЗАГОЛОВОК ДНЕПРО */
-        .header-title {
-            background: #ffffff;
-            color: #000;
+        /* НОВАЯ ШАПКА ИЗ ВТОРОГО КОДА */
+        header {
+            background-color: #1f2937;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            user-select: none;
+            z-index: 1000;
+            padding-top: max(10px, env(safe-area-inset-top));
+            padding-left: max(20px, env(safe-area-inset-left));
+            padding-right: max(20px, env(safe-area-inset-right));
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 0;
+            transform: translateY(4px);
+        }
+
+        .site-name {
+            flex: 1;
             text-align: center;
-            padding: 10px 16px;
-            font-size: 18px;
-            font-weight: 700;
-            width: 100%;
-            border-bottom: 2px solid #f0f0f0;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .site-name-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #1f2937;
+            border: 1px solid #444;
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 1001;
+            min-width: 150px;
+            margin-top: 25px;
+            width: 90%;
+        }
+
+        .site-name-dropdown a {
+            padding: 10px 15px;
+            text-decoration: none;
+            color: white;
+            transition: background 0.3s;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            justify-content: center;
+        }
+
+        .site-name-dropdown a:hover {
+            background-color: #374151;
+        }
+
+        .menu-button {
+            width: 30px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 20px;
+        }
+
+        .menu-button div {
+            height: 4px;
+            background-color: white;
+            border-radius: 2px;
+        }
+
+        .dropdown {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 70px;
+            right: 15px;
+            background-color: #1f2937;
+            border: 1px solid #444;
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 9999;
+            min-width: 150px;
+        }
+
+        .dropdown a {
+            padding: 10px 15px;
+            text-decoration: none;
+            color: white;
+            transition: background 0.3s;
+            user-select: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown a:hover {
+            background-color: #374151;
+        }
+
+        .icon-space {
+            margin-right: 6px;
+            width: 20px;
+            text-align: center;
+            font-size: 16px;
         }
 
         /* ПОЛНОЭКРАННАЯ ЗАГРУЗКА */
@@ -124,7 +230,7 @@
             padding: 0 16px;
             padding-left: max(16px, env(safe-area-inset-left));
             padding-right: max(16px, env(safe-area-inset-right));
-            padding-top: max(0px, env(safe-area-inset-top));
+            padding-top: max(60px, env(safe-area-inset-top));
         }
 
         .tabs {
@@ -137,7 +243,7 @@
             justify-content: space-between;
             flex-wrap: wrap;
             width: 100%;
-            margin-top: env(safe-area-inset-top);
+            margin-top: 0;
             padding-left: env(safe-area-inset-left);
             padding-right: env(safe-area-inset-right);
         }
@@ -438,7 +544,6 @@
             padding: 10px 0;
         }
 
-        /* Убрали вертикальные линии */
         .catalog-button-wrapper::before,
         .catalog-button-wrapper::after {
             display: none;
@@ -779,7 +884,78 @@
             margin: 0 10px;
         }
 
-        /* АДАПТИВНОСТЬ */
+        /* АДАПТИВНОСТЬ ДЛЯ НОВОЙ ШАПКИ */
+        @media (max-width: 767px) {
+            header {
+                padding: 8px 15px;
+                padding-top: max(8px, env(safe-area-inset-top));
+                padding-left: max(15px, env(safe-area-inset-left));
+                padding-right: max(15px, env(safe-area-inset-right));
+            }
+            
+            .logo img {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .site-name {
+                font-size: 18px;
+            }
+            
+            .header-section {
+                padding-top: max(55px, env(safe-area-inset-top));
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 6px 12px;
+                padding-top: max(6px, env(safe-area-inset-top));
+                padding-left: max(12px, env(safe-area-inset-left));
+                padding-right: max(12px, env(safe-area-inset-right));
+            }
+            
+            .logo img {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .site-name {
+                font-size: 16px;
+            }
+            
+            .header-section {
+                padding-top: max(50px, env(safe-area-inset-top));
+            }
+            
+            .menu-button {
+                width: 25px;
+                height: 18px;
+            }
+            
+            .menu-button div {
+                height: 3px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            header {
+                padding: 5px 10px;
+                padding-top: max(5px, env(safe-area-inset-top));
+                padding-left: max(10px, env(safe-area-inset-left));
+                padding-right: max(10px, env(safe-area-inset-right));
+            }
+            
+            .site-name {
+                font-size: 15px;
+            }
+            
+            .header-section {
+                padding-top: max(48px, env(safe-area-inset-top));
+            }
+        }
+
+        /* ОСТАЛЬНАЯ АДАПТИВНОСТЬ */
         @media (min-width: 1200px) {
             .cards-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -808,13 +984,13 @@
             .header-section {
                 padding-left: max(12px, env(safe-area-inset-left));
                 padding-right: max(12px, env(safe-area-inset-right));
-                padding-top: max(0px, env(safe-area-inset-top));
+                padding-top: max(55px, env(safe-area-inset-top));
             }
             
             .tabs {
                 padding: 12px 0;
                 gap: 6px;
-                margin-top: env(safe-area-inset-top);
+                margin-top: 0;
             }
             
             .tab-btn {
@@ -908,6 +1084,7 @@
             .header-section {
                 padding-left: max(10px, env(safe-area-inset-left));
                 padding-right: max(10px, env(safe-area-inset-right));
+                padding-top: max(50px, env(safe-area-inset-top));
             }
             
             .tabs {
@@ -1009,6 +1186,7 @@
             .header-section {
                 padding-left: max(8px, env(safe-area-inset-left));
                 padding-right: max(8px, env(safe-area-inset-right));
+                padding-top: max(48px, env(safe-area-inset-top));
             }
             
             .executor-select {
@@ -1069,10 +1247,31 @@
     
     <div class="notification" id="notification"></div>
     
+    <!-- НОВАЯ ШАПКА -->
+    <header>
+        <div class="logo"><img src="https://i.postimg.cc/wjGzSY92/1.png" alt="Logo"></div>
+        <div class="site-name" onclick="toggleSiteNameDropdown()">
+            BLOCKBUSTER
+            <div class="site-name-dropdown" id="siteNameDropdown">
+                <a href="https://smart-bowling.github.io/SMB-SKYMALL/" class="dropdown-button">
+                    <span>SKYMALL</span>
+                </a>
+            </div>
+        </div>
+        <div class="menu-button" onclick="toggleDropdown()">
+            <div></div><div></div><div></div>
+        </div>
+        <div class="dropdown" id="dropdownMenu">
+            <a href="https://smart-bowling.github.io/PARTS-BB/">
+                <span class="icon-space"><i class="fas fa-cube"></i></span>ДЕТАЛИ
+            </a>
+            <a href="https://smart-bowling.github.io/PS-STOP-BB/">
+                <span class="icon-space"><i class="fas fa-exclamation-triangle"></i></span>STOP LANE
+            </a>
+        </div>
+    </header>
+    
     <div class="container" id="main-container" style="display: none;">
-        <!-- ЗАГОЛОВОК ДНЕПРО -->
-        <div class="header-title">SMART MAINTENANCE BOWLING SULTAN</div>
-        
         <div class="header-section">
             <div class="tabs">
                 <button class="tab-btn active" data-tab="tab1">
@@ -1134,7 +1333,32 @@
     </div>
 
     <script>
-        // ... (остальной JavaScript код остается без изменений)
+        // ФУНКЦИИ ДЛЯ РАБОТЫ ШАПКИ
+        function toggleSiteNameDropdown() {
+            const dropdown = document.getElementById("siteNameDropdown");
+            dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+            
+            const menu = document.getElementById("dropdownMenu");
+            if (menu.style.display === "flex") {
+                menu.style.display = "none";
+            }
+            
+            event.stopPropagation();
+        }
+
+        function toggleDropdown() {
+            const menu = document.getElementById("dropdownMenu");
+            menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+            
+            const dropdown = document.getElementById("siteNameDropdown");
+            if (dropdown.style.display === "block") {
+                dropdown.style.display = "none";
+            }
+            
+            event.stopPropagation();
+        }
+
+        // ОСНОВНОЙ КОД ПРИЛОЖЕНИЯ
         const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbyBiibLN40TjLDo1pz69ogyUgERUBhuCcmmkXDCgvS3fUGbt6ifyt_Lh9f3gg8yXZOA/exec';
         const CARDS_PER_PAGE = 6;
 
@@ -1615,6 +1839,20 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
+            // ОБРАБОТЧИКИ ДЛЯ ЗАКРЫТИЯ МЕНЮ ПРИ КЛИКЕ ВНЕ
+            document.addEventListener('click', function(e) {
+                const siteNameDropdown = document.getElementById('siteNameDropdown');
+                const dropdownMenu = document.getElementById('dropdownMenu');
+                
+                if (!e.target.closest('.site-name') && siteNameDropdown.style.display === 'block') {
+                    siteNameDropdown.style.display = 'none';
+                }
+                
+                if (!e.target.closest('.menu-button') && dropdownMenu.style.display === 'flex') {
+                    dropdownMenu.style.display = 'none';
+                }
+            });
+            
             // Показываем полноэкранную загрузку при старте
             showFullscreenLoading('Загрузка приложения...');
             
