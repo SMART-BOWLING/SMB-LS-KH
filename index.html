@@ -174,18 +174,37 @@
             font-size: 16px;
         }
 
-        /* АНИМАЦИЯ ПАДАЮЩИХ ИНСТРУМЕНТОВ */
-        .tools-animation {
+        /* НОВАЯ ПОЛНОЭКРАННАЯ ЗАГРУЗКА С АНИМАЦИЕЙ ПАДАЮЩИХ ИНСТРУМЕНТОВ */
+        .fullscreen-loading {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            z-index: 0;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            gap: 20px;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
             overflow: hidden;
         }
 
+        .fullscreen-loading .loading-text {
+            font-size: 16px;
+            color: #1a2f40;
+            font-weight: 600;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px 20px;
+            border-radius: 8px;
+        }
+
+        /* Стили для анимации падающих инструментов */
         .tool {
             position: absolute;
             top: -100px;
@@ -211,36 +230,6 @@
             100% { margin-left: 0; }
         }
 
-        /* ПОЛНОЭКРАННАЯ ЗАГРУЗКА */
-        .fullscreen-loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            gap: 20px;
-            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-        }
-
-        .fullscreen-loading .chaotic-orbit {
-            --uib-size: 40px;
-            --uib-speed: 1.5s;
-            --uib-color: #dc143c;
-        }
-
-        .fullscreen-loading .loading-text {
-            font-size: 16px;
-            color: #1a2f40;
-            font-weight: 600;
-            text-align: center;
-        }
-
         .container {
             max-width: 100%;
             margin: 0;
@@ -257,8 +246,6 @@
             padding-bottom: env(safe-area-inset-bottom);
             padding-left: env(safe-area-inset-left);
             padding-right: env(safe-area-inset-right);
-            position: relative;
-            z-index: 1;
         }
 
         .header-section {
@@ -353,8 +340,6 @@
             flex: 1;
             overflow-y: auto;
             flex-direction: column;
-            position: relative;
-            z-index: 2;
         }
 
         .tab-content.active {
@@ -670,157 +655,6 @@
         .status-badge.danger { 
             border-color: #7a2a2a; 
             color: #7a2a2a; 
-        }
-
-        /* АНИМАЦИЯ ЗАГРУЗКИ */
-        .chaotic-orbit {
-            --uib-size: 25px;
-            --uib-speed: 1.5s;
-            --uib-color: #1a2f40;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: var(--uib-size);
-            width: var(--uib-size);
-            animation: rotate936 calc(var(--uib-speed) * 1.667) infinite linear;
-        }
-
-        .chaotic-orbit::before,
-        .chaotic-orbit::after {
-            content: '';
-            position: absolute;
-            height: 60%;
-            width: 60%;
-            border-radius: 50%;
-            background-color: var(--uib-color);
-            will-change: transform;
-            flex-shrink: 0;
-        }
-
-        .chaotic-orbit::before {
-            animation: orbit var(--uib-speed) linear infinite;
-        }
-
-        .chaotic-orbit::after {
-            animation: orbit var(--uib-speed) linear calc(var(--uib-speed) / -2) infinite;
-        }
-
-        @keyframes rotate936 {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes orbit {
-            0% {
-                transform: translate(calc(var(--uib-size) * 0.5)) scale(0.73684);
-                opacity: 0.65;
-            }
-
-            5% {
-                transform: translate(calc(var(--uib-size) * 0.4)) scale(0.684208);
-                opacity: 0.58;
-            }
-
-            10% {
-                transform: translate(calc(var(--uib-size) * 0.3)) scale(0.631576);
-                opacity: 0.51;
-            }
-
-            15% {
-                transform: translate(calc(var(--uib-size) * 0.2)) scale(0.578944);
-                opacity: 0.44;
-            }
-
-            20% {
-                transform: translate(calc(var(--uib-size) * 0.1)) scale(0.526312);
-                opacity: 0.37;
-            }
-
-            25% {
-                transform: translate(0%) scale(0.47368);
-                opacity: 0.3;
-            }
-
-            30% {
-                transform: translate(calc(var(--uib-size) * -0.1)) scale(0.526312);
-                opacity: 0.37;
-            }
-
-            35% {
-                transform: translate(calc(var(--uib-size) * -0.2)) scale(0.578944);
-                opacity: 0.44;
-            }
-
-            40% {
-                transform: translate(calc(var(--uib-size) * -0.3)) scale(0.631576);
-                opacity: 0.51;
-            }
-
-            45% {
-                transform: translate(calc(var(--uib-size) * -0.4)) scale(0.684208);
-                opacity: 0.58;
-            }
-
-            50% {
-                transform: translate(calc(var(--uib-size) * -0.5)) scale(0.73684);
-                opacity: 0.65;
-            }
-
-            55% {
-                transform: translate(calc(var(--uib-size) * -0.4)) scale(0.789472);
-                opacity: 0.72;
-            }
-
-            60% {
-                transform: translate(calc(var(--uib-size) * -0.3)) scale(0.842104);
-                opacity: 0.79;
-            }
-
-            65% {
-                transform: translate(calc(var(--uib-size) * -0.2)) scale(0.894736);
-                opacity: 0.86;
-            }
-
-            70% {
-                transform: translate(calc(var(--uib-size) * -0.1)) scale(0.947368);
-                opacity: 0.93;
-            }
-
-            75% {
-                transform: translate(0%) scale(1);
-                opacity: 1;
-            }
-
-            80% {
-                transform: translate(calc(var(--uib-size) * 0.1)) scale(0.947368);
-                opacity: 0.93;
-            }
-
-            85% {
-                transform: translate(calc(var(--uib-size) * 0.2)) scale(0.894736);
-                opacity: 0.86;
-            }
-
-            90% {
-                transform: translate(calc(var(--uib-size) * 0.3)) scale(0.842104);
-                opacity: 0.79;
-            }
-
-            95% {
-                transform: translate(calc(var(--uib-size) * 0.4)) scale(0.789472);
-                opacity: 0.72;
-            }
-
-            100% {
-                transform: translate(calc(var(--uib-size) * 0.5)) scale(0.73684);
-                opacity: 0.65;
-            }
         }
 
         /* СТИЛИ ЗАГРУЗКИ В КАРТОЧКАХ */
@@ -1210,10 +1044,6 @@
                 min-width: 80px;
             }
             
-            .chaotic-orbit {
-                --uib-size: 22px;
-            }
-            
             .loading-text {
                 font-size: 13px;
             }
@@ -1330,10 +1160,6 @@
                 min-height: 54px; /* Увеличено */
             }
             
-            .chaotic-orbit {
-                --uib-size: 18px;
-            }
-            
             .loading-text {
                 font-size: 11px;
             }
@@ -1345,12 +1171,9 @@
     </style>
 </head>
 <body>
-    <!-- АНИМАЦИЯ ПАДАЮЩИХ ИНСТРУМЕНТОВ -->
-    <div class="tools-animation" id="tools-animation"></div>
-    
-    <!-- ПОЛНОЭКРАННАЯ ЗАГРУЗКА -->
+    <!-- ПОЛНОЭКРАННАЯ ЗАГРУЗКА С АНИМАЦИЕЙ ПАДАЮЩИХ ИНСТРУМЕНТОВ -->
     <div class="fullscreen-loading" id="fullscreen-loading">
-        <div class="chaotic-orbit"></div>
+        <!-- Анимация падающих инструментов будет создана через JavaScript -->
         <div class="loading-text">Загрузка приложения...</div>
     </div>
     
@@ -1400,7 +1223,6 @@
             <div class="cards-grid" id="journal-cards">
                 <div class="task-card">
                     <div class="loading-container">
-                        <div class="chaotic-orbit"></div>
                         <div class="loading-text">Загрузка данных...</div>
                     </div>
                 </div>
@@ -1422,7 +1244,6 @@
             <div class="cards-grid" id="tasks-cards">
                 <div class="task-card">
                     <div class="loading-container">
-                        <div class="chaotic-orbit"></div>
                         <div class="loading-text">Загрузка данных...</div>
                     </div>
                 </div>
@@ -1442,8 +1263,7 @@
     </div>
 
     <script>
-        // КОД АНИМАЦИИ ПАДАЮЩИХ ИНСТРУМЕНТОВ
-        const toolsAnimation = document.getElementById("tools-animation");
+        // КОД ДЛЯ АНИМАЦИИ ПАДАЮЩИХ ИНСТРУМЕНТОВ
         const icons = ['🔧', '🧽'];
         const minDistance = 80;
         const active = [];
@@ -1453,6 +1273,9 @@
         }
 
         function spawnTool() {
+            const loadingContainer = document.getElementById('fullscreen-loading');
+            if (!loadingContainer) return;
+
             let x, attempts = 0;
 
             do {
@@ -1472,19 +1295,39 @@
             el.style.fontSize = size + 'px';
             el.style.animationDuration = `${duration}s, ${2 + Math.random() * 2}s`;
 
-            toolsAnimation.appendChild(el);
+            loadingContainer.appendChild(el);
 
             const item = { el, x };
             active.push(item);
 
             setTimeout(() => {
-                el.remove();
-                active.splice(active.indexOf(item), 1);
+                if (el.parentNode) {
+                    el.remove();
+                    const index = active.indexOf(item);
+                    if (index > -1) {
+                        active.splice(index, 1);
+                    }
+                }
             }, duration * 1000);
         }
 
-        // Запускаем анимацию инструментов
-        setInterval(spawnTool, 140);
+        function startFallingToolsAnimation() {
+            // Очищаем старые инструменты
+            document.querySelectorAll('.tool').forEach(tool => tool.remove());
+            active.length = 0;
+            
+            // Запускаем интервал для создания новых инструментов
+            return setInterval(spawnTool, 140);
+        }
+
+        function stopFallingToolsAnimation(intervalId) {
+            if (intervalId) {
+                clearInterval(intervalId);
+            }
+            // Очищаем все инструменты
+            document.querySelectorAll('.tool').forEach(tool => tool.remove());
+            active.length = 0;
+        }
 
         // ФУНКЦИИ ДЛЯ РАБОТЫ ШАПКИ
         function toggleSiteNameDropdown() {
@@ -1523,6 +1366,8 @@
         let currentTasksPage = 1;
         let totalJournalPages = 1;
         let totalTasksPages = 1;
+        
+        let fallingToolsInterval = null;
 
         // Функция для показа полноэкранной загрузки
         function showFullscreenLoading(message = 'Загрузка...') {
@@ -1533,6 +1378,12 @@
             loadingText.textContent = message;
             loading.style.display = 'flex';
             mainContainer.style.display = 'none';
+            
+            // Запускаем анимацию падающих инструментов
+            if (fallingToolsInterval) {
+                stopFallingToolsAnimation(fallingToolsInterval);
+            }
+            fallingToolsInterval = startFallingToolsAnimation();
         }
 
         // Функция для скрытия полноэкранной загрузки
@@ -1542,6 +1393,12 @@
             
             loading.style.display = 'none';
             mainContainer.style.display = 'flex';
+            
+            // Останавливаем анимацию падающих инструментов
+            if (fallingToolsInterval) {
+                stopFallingToolsAnimation(fallingToolsInterval);
+                fallingToolsInterval = null;
+            }
         }
 
         // Функция для показа загрузки при операциях
@@ -1656,7 +1513,6 @@
                 tasksCards.innerHTML = `
                     <div class="task-card">
                         <div class="loading-container">
-                            <div class="chaotic-orbit"></div>
                             <div class="loading-text">Загрузка данных...</div>
                         </div>
                     </div>
@@ -1689,7 +1545,6 @@
                 journalCards.innerHTML = `
                     <div class="task-card">
                         <div class="loading-container">
-                            <div class="chaotic-orbit"></div>
                             <div class="loading-text">Загрузка данных...</div>
                         </div>
                     </div>
@@ -1779,7 +1634,6 @@
                 tasksCards.innerHTML = `
                     <div class="task-card">
                         <div class="loading-container">
-                            <div class="chaotic-orbit"></div>
                             <div class="loading-text">Нет задач</div>
                         </div>
                     </div>
@@ -1860,7 +1714,6 @@
                 journalCards.innerHTML = `
                     <div class="task-card">
                         <div class="loading-container">
-                            <div class="chaotic-orbit"></div>
                             <div class="loading-text">Нет данных</div>
                         </div>
                     </div>
