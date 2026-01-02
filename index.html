@@ -369,7 +369,8 @@
             font-weight: 700;
             color: #000000;
             line-height: 1.4;
-            text-align: center;
+            text-align: left; /* ИЗМЕНЕНИЕ: выравнивание по левому краю */
+            padding: 0 5px; /* Добавлено небольшое внутреннее отступление */
         }
 
         .card-content {
@@ -945,6 +946,10 @@
                 padding: 9px 8px; /* Увеличено */
                 font-size: 12px;
             }
+            
+            .task-title {
+                text-align: left; /* ИЗМЕНЕНИЕ: для мобильных тоже по левому краю */
+            }
         }
 
         @media (max-width: 480px) {
@@ -1004,6 +1009,10 @@
                 width: 28px; /* Увеличено */
                 height: 20px; /* Увеличено */
             }
+            
+            .task-title {
+                text-align: left; /* ИЗМЕНЕНИЕ: для мобильных тоже по левому краю */
+            }
         }
 
         @media (max-width: 360px) {
@@ -1052,6 +1061,10 @@
                 height: 34px; /* Увеличено с 30px */
                 padding: 7px 6px; /* Увеличено */
                 font-size: 10px;
+            }
+            
+            .task-title {
+                text-align: left; /* ИЗМЕНЕНИЕ: для мобильных тоже по левому краю */
             }
         }
 
@@ -1163,6 +1176,10 @@
             .loading-text {
                 font-size: 13px;
             }
+            
+            .task-title {
+                text-align: left; /* ИЗМЕНЕНИЕ: для мобильных тоже по левому краю */
+            }
         }
 
         @media (max-width: 480px) {
@@ -1206,6 +1223,7 @@
             
             .task-title {
                 font-size: 15px;
+                text-align: left; /* ИЗМЕНЕНИЕ: для мобильных тоже по левому краю */
             }
             
             .row-label, .row-value {
@@ -1277,6 +1295,10 @@
             
             .loading-text {
                 font-size: 11px;
+            }
+            
+            .task-title {
+                text-align: left; /* ИЗМЕНЕНИЕ: для мобильных тоже по левому краю */
             }
         }
     </style>
@@ -1586,8 +1608,10 @@
                 `;
                 
                 const journal = await makeRequest(`${BACKEND_URL}?action=getJournal`);
-                journalData = journal;
-                renderJournalCards(journal);
+                
+                // ИЗМЕНЕНИЕ: сортируем журнал в обратном порядке, чтобы новые задачи были вверху
+                journalData = journal.reverse();
+                renderJournalCards(journalData);
                 
             } catch (error) {
                 console.error('Ошибка загрузки журнала:', error);
