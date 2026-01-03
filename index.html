@@ -53,13 +53,14 @@
             padding-right: env(safe-area-inset-right);
         }
 
+        /* НОВАЯ ШАПКА ИЗ ВТОРОГО КОДА */
         header {
             background-color: #1f2937;
             color: white;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 14px 20px;
+            padding: 14px 20px; /* Увеличено с 10px */
             position: fixed;
             top: 0;
             left: 0;
@@ -67,15 +68,15 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             user-select: none;
             z-index: 1000;
-            padding-top: max(14px, env(safe-area-inset-top));
+            padding-top: max(14px, env(safe-area-inset-top)); /* Увеличено с 10px */
             padding-left: max(20px, env(safe-area-inset-left));
             padding-right: max(20px, env(safe-area-inset-right));
-            min-height: 65px;
+            min-height: 65px; /* Добавлена минимальная высота */
         }
 
         .logo img {
-            width: 42px;
-            height: 42px;
+            width: 42px; /* Увеличено с 40px */
+            height: 42px; /* Увеличено с 40px */
             object-fit: cover;
             border-radius: 0;
             transform: translateY(4px);
@@ -84,7 +85,7 @@
         .site-name {
             flex: 1;
             text-align: center;
-            font-size: 21px;
+            font-size: 21px; /* Увеличено с 20px */
             font-weight: bold;
             color: white;
             cursor: pointer;
@@ -124,12 +125,12 @@
         }
 
         .menu-button {
-            width: 32px;
+            width: 32px; /* Увеличено с 30px */
             cursor: pointer;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 22px;
+            height: 22px; /* Увеличено с 20px */
         }
 
         .menu-button div {
@@ -173,25 +174,27 @@
             font-size: 16px;
         }
 
-        /* АНИМАЦИЯ ЗАГРУЗКИ КАК В ПРИМЕРЕ */
+        /* НОВАЯ АНИМАЦИЯ ЗАГРУЗКИ ИЗ ПРЕДОСТАВЛЕННОГО КОДА */
         .loader-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(255, 255, 255, 0.85);
+            background-color: white;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 9999;
+            gap: 20px;
         }
 
         .loader {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #dc143c;
+            width: 25px;
+            height: 25px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #dc143c;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -199,6 +202,13 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 16px;
+            color: #1a2f40;
+            font-weight: 600;
+            text-align: center;
         }
 
         .container {
@@ -228,7 +238,7 @@
             padding: 0 16px;
             padding-left: max(16px, env(safe-area-inset-left));
             padding-right: max(16px, env(safe-area-inset-right));
-            padding-top: max(70px, env(safe-area-inset-top));
+            padding-top: 80px; /* УВЕЛИЧЕНО: было 70px, теперь 80px чтобы кнопки были под шапкой */
         }
 
         .tabs {
@@ -247,6 +257,7 @@
         }
 
         .tab-btn {
+      
             background: var(--surface);
             border: 1px solid #e5e5e5;
             color: var(--text-dark);
@@ -263,10 +274,6 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
         }
 
         .tab-btn:hover {
@@ -294,10 +301,6 @@
             font-weight: 700;
             margin: 8px 0 16px;
             width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
         }
 
         .add-task-btn:hover {
@@ -366,8 +369,8 @@
             font-weight: 700;
             color: #000000;
             line-height: 1.4;
-            text-align: left;
-            padding: 0 5px;
+            text-align: left; /* ИЗМЕНЕНИЕ: выравнивание по левому краю */
+            padding: 0 5px; /* Добавлено небольшое внутреннее отступление */
         }
 
         .card-content {
@@ -419,7 +422,7 @@
             background: white;
             border: 2px solid #1a2f40;
             border-radius: 4px;
-            padding: 10px 10px;
+            padding: 10px 10px; /* Увеличено с 8px 10px */
             font-size: 13px;
             font-weight: 700;
             color: #1a2f40;
@@ -429,7 +432,7 @@
             width: auto;
             max-width: 160px;
             min-width: 140px;
-            height: 42px;
+            height: 42px; /* Увеличено с 36px */
             display: flex;
             align-items: center;
         }
@@ -444,16 +447,16 @@
             justify-content: space-between;
             align-items: center;
             gap: 10px;
-            padding: 16px 16px;
+            padding: 16px 16px; /* Увеличено с 12px 16px */
             border-top: 1px solid #e0e0e0;
             margin-top: auto;
-            min-height: 74px;
+            min-height: 74px; /* Добавлено */
         }
 
         .schema-button {
             background-color: #1a2f40;
             color: white;
-            padding: 11px 14px;
+            padding: 11px 14px; /* Увеличено с 8px 12px */
             font-weight: 700;
             border: none;
             border-radius: 4px;
@@ -468,8 +471,8 @@
             flex: 1;
             text-align: center;
             white-space: nowrap;
-            height: 42px;
-            min-height: 42px;
+            height: 42px; /* Увеличено с 36px */
+            min-height: 42px; /* Добавлено */
         }
 
         .schema-button:hover {
@@ -484,7 +487,7 @@
             cursor: pointer;
             user-select: none;
             border-radius: 4px;
-            padding: 11px 14px;
+            padding: 11px 14px; /* Увеличено с 8px 12px */
             font-weight: 700;
             font-size: 13px;
             transition: all 0.3s ease;
@@ -494,8 +497,8 @@
             justify-content: center;
             gap: 6px;
             white-space: nowrap;
-            height: 42px;
-            min-height: 42px;
+            height: 42px; /* Увеличено с 36px */
+            min-height: 42px; /* Добавлено */
         }
 
         .submit-btn:hover {
@@ -512,7 +515,7 @@
         .submitted-text {
             color: #000;
             font-weight: 700;
-            padding: 11px 14px;
+            padding: 11px 14px; /* Увеличено с 8px 12px */
             border: 1px solid #FFFFFF;
             border-radius: 4px;
             font-size: 13px;
@@ -523,8 +526,8 @@
             align-items: center;
             justify-content: center;
             white-space: nowrap;
-            height: 42px;
-            min-height: 42px;
+            height: 42px; /* Увеличено с 36px */
+            min-height: 42px; /* Добавлено */
             gap: 6px;
         }
 
@@ -535,7 +538,7 @@
             border-top: 1px solid #e0e0e0;
             margin-top: auto;
             position: relative;
-            min-height: 66px;
+            min-height: 66px; /* Увеличено с 60px */
         }
 
         .catalog-button-wrapper {
@@ -555,7 +558,7 @@
         .open-button {
             background-color: #1a2f40;
             color: white;
-            padding: 13px 24px;
+            padding: 13px 24px; /* Увеличено с 10px 24px */
             font-weight: 700;
             border: none;
             border-radius: 4px;
@@ -569,8 +572,8 @@
             transition: all 0.3s ease;
             text-align: center;
             white-space: nowrap;
-            height: 46px;
-            min-height: 46px;
+            height: 46px; /* Увеличено с 40px */
+            min-height: 46px; /* Добавлено */
             min-width: 140px;
             width: auto;
             flex: 0 0 auto;
@@ -584,7 +587,7 @@
         .no-open {
             color: #999;
             font-style: italic;
-            padding: 13px 24px;
+            padding: 13px 24px; /* Увеличено тоже */
             border: 1px dashed #ddd;
             border-radius: 4px;
             font-size: 11px;
@@ -594,8 +597,8 @@
             align-items: center;
             justify-content: center;
             white-space: nowrap;
-            height: 46px;
-            min-height: 46px;
+            height: 46px; /* Увеличено тоже */
+            min-height: 46px; /* Добавлено */
             min-width: 140px;
             width: auto;
             flex: 0 0 auto;
@@ -628,6 +631,7 @@
             color: #7a2a2a; 
         }
 
+        /* СТИЛИ ЗАГРУЗКИ В КАРТОЧКАХ */
         .loading-container {
             display: flex;
             flex-direction: column;
@@ -637,7 +641,7 @@
             gap: 16px;
         }
 
-        .loading-text {
+        .loading-card-text {
             font-size: 14px;
             color: #666;
             font-weight: 600;
@@ -737,180 +741,183 @@
             margin: 0 10px;
         }
 
+        /* АДАПТИВНОСТЬ ДЛЯ НОВОЙ ШАПКИ */
         @media (max-width: 767px) {
             header {
-                padding: 12px 15px;
+                padding: 12px 15px; /* Увеличено с 8px */
                 padding-top: max(12px, env(safe-area-inset-top));
                 padding-left: max(15px, env(safe-area-inset-left));
                 padding-right: max(15px, env(safe-area-inset-right));
             }
             
             .logo img {
-                width: 38px;
-                height: 38px;
+                width: 38px; /* Увеличено */
+                height: 38px; /* Увеличено */
             }
             
             .site-name {
-                font-size: 19px;
+                font-size: 19px; /* Увеличено */
             }
             
             .header-section {
-                padding-top: max(65px, env(safe-area-inset-top));
+                padding-top: 75px; /* УВЕЛИЧЕНО для мобильных */
             }
             
+            /* Увеличим кнопки для мобильных */
             .schema-button,
             .submit-btn,
             .submitted-text {
-                height: 38px;
+                height: 38px; /* Увеличено с 34px */
                 min-height: 38px;
-                padding: 9px 12px;
+                padding: 9px 12px; /* Увеличено */
                 font-size: 12px;
             }
             
             .open-button,
             .no-open {
-                height: 42px;
+                height: 42px; /* Увеличено с 36px */
                 min-height: 42px;
-                padding: 11px 20px;
+                padding: 11px 20px; /* Увеличено */
                 font-size: 12px;
             }
             
             .buttons-container {
-                padding: 14px 12px;
+                padding: 14px 12px; /* Увеличено */
                 min-height: 68px;
             }
             
             .catalog-buttons-container {
-                min-height: 62px;
+                min-height: 62px; /* Увеличено с 56px */
             }
             
             .executor-select {
-                height: 38px;
-                padding: 9px 8px;
+                height: 38px; /* Увеличено с 34px */
+                padding: 9px 8px; /* Увеличено */
                 font-size: 12px;
             }
             
             .task-title {
-                text-align: left;
+                text-align: left; /* ИЗМЕНЕНИЕ: для мобильных тоже по левому краю */
             }
         }
 
         @media (max-width: 480px) {
             header {
-                padding: 10px 12px;
+                padding: 10px 12px; /* Увеличено */
                 padding-top: max(10px, env(safe-area-inset-top));
                 padding-left: max(12px, env(safe-area-inset-left));
                 padding-right: max(12px, env(safe-area-inset-right));
             }
             
             .logo img {
-                width: 36px;
-                height: 36px;
+                width: 36px; /* Увеличено */
+                height: 36px; /* Увеличено */
             }
             
             .site-name {
-                font-size: 17px;
+                font-size: 17px; /* Увеличено */
             }
             
             .header-section {
-                padding-top: max(60px, env(safe-area-inset-top));
+                padding-top: 70px; /* УВЕЛИЧЕНО для мобильных */
             }
             
             .schema-button,
             .submit-btn,
             .submitted-text {
-                height: 36px;
+                height: 36px; /* Увеличено с 32px */
                 min-height: 36px;
-                padding: 8px 10px;
+                padding: 8px 10px; /* Увеличено */
                 font-size: 11px;
             }
             
             .open-button,
             .no-open {
-                height: 40px;
+                height: 40px; /* Увеличено с 34px */
                 min-height: 40px;
-                padding: 10px 18px;
+                padding: 10px 18px; /* Увеличено */
                 font-size: 11px;
             }
             
             .buttons-container {
-                padding: 12px 12px;
+                padding: 12px 12px; /* Увеличено */
                 min-height: 64px;
             }
             
             .catalog-buttons-container {
-                min-height: 58px;
+                min-height: 58px; /* Увеличено с 52px */
             }
             
             .executor-select {
-                height: 36px;
-                padding: 8px 7px;
+                height: 36px; /* Увеличено с 32px */
+                padding: 8px 7px; /* Увеличено */
                 font-size: 11px;
             }
             
             .menu-button {
-                width: 28px;
-                height: 20px;
+                width: 28px; /* Увеличено */
+                height: 20px; /* Увеличено */
             }
             
             .task-title {
-                text-align: left;
+                text-align: left; /* ИЗМЕНЕНИЕ: для мобильных тоже по левому краю */
             }
         }
 
         @media (max-width: 360px) {
             header {
-                padding: 9px 10px;
+                padding: 9px 10px; /* Увеличено */
                 padding-top: max(9px, env(safe-area-inset-top));
                 padding-left: max(10px, env(safe-area-inset-left));
                 padding-right: max(10px, env(safe-area-inset-right));
             }
             
             .site-name {
-                font-size: 16px;
+                font-size: 16px; /* Увеличено */
             }
             
             .header-section {
-                padding-top: max(58px, env(safe-area-inset-top));
+                padding-top: 68px; /* УВЕЛИЧЕНО для мобильных */
             }
             
             .schema-button,
             .submit-btn,
             .submitted-text {
-                height: 34px;
+                height: 34px; /* Увеличено с 30px */
                 min-height: 34px;
-                padding: 7px 8px;
+                padding: 7px 8px; /* Увеличено */
                 font-size: 10px;
             }
             
             .open-button,
             .no-open {
-                height: 38px;
+                height: 38px; /* Увеличено с 32px */
                 min-height: 38px;
-                padding: 9px 16px;
+                padding: 9px 16px; /* Увеличено */
                 font-size: 10px;
             }
             
             .buttons-container {
-                padding: 10px 8px;
+                padding: 10px 8px; /* Увеличено */
                 min-height: 60px;
             }
             
             .catalog-buttons-container {
-                min-height: 54px;
+                min-height: 54px; /* Увеличено с 48px */
             }
             
             .executor-select {
-                height: 34px;
-                padding: 7px 6px;
+                height: 34px; /* Увеличено с 30px */
+                padding: 7px 6px; /* Увеличено */
                 font-size: 10px;
             }
             
             .task-title {
-                text-align: left;
+                text-align: left; /* ИЗМЕНЕНИЕ: для мобильных тоже по левому краю */
             }
         }
 
+        /* ОСТАЛЬНАЯ АДАПТИВНОСТЬ */
         @media (min-width: 1200px) {
             .cards-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -918,6 +925,7 @@
             
             .header-section {
                 padding: 0;
+                padding-top: 80px; /* УВЕЛИЧЕНО */
             }
         }
 
@@ -928,6 +936,7 @@
             
             .header-section {
                 padding: 0 16px;
+                padding-top: 80px; /* УВЕЛИЧЕНО */
             }
         }
 
@@ -939,7 +948,7 @@
             .header-section {
                 padding-left: max(12px, env(safe-area-inset-left));
                 padding-right: max(12px, env(safe-area-inset-right));
-                padding-top: max(65px, env(safe-area-inset-top));
+                padding-top: 75px; /* УВЕЛИЧЕНО для мобильных */
             }
             
             .tabs {
@@ -995,15 +1004,15 @@
             }
             
             .catalog-buttons-container {
-                min-height: 62px;
+                min-height: 62px; /* Увеличено */
             }
             
             .executor-select {
                 max-width: 140px;
                 min-width: 120px;
                 font-size: 12px;
-                padding: 9px 8px;
-                height: 38px;
+                padding: 9px 8px; /* Увеличено */
+                height: 38px; /* Увеличено */
             }
             
             .row-label {
@@ -1011,12 +1020,18 @@
                 min-width: 80px;
             }
             
-            .loading-text {
+            .loader {
+                width: 22px;
+                height: 22px;
+                border-width: 2.5px;
+            }
+            
+            .loading-card-text {
                 font-size: 13px;
             }
             
             .task-title {
-                text-align: left;
+                text-align: left; /* ИЗМЕНЕНИЕ: для мобильных тоже по левому краю */
             }
         }
 
@@ -1024,7 +1039,7 @@
             .header-section {
                 padding-left: max(10px, env(safe-area-inset-left));
                 padding-right: max(10px, env(safe-area-inset-right));
-                padding-top: max(60px, env(safe-area-inset-top));
+                padding-top: 70px; /* УВЕЛИЧЕНО для мобильных */
             }
             
             .tabs {
@@ -1061,7 +1076,7 @@
             
             .task-title {
                 font-size: 15px;
-                text-align: left;
+                text-align: left; /* ИЗМЕНЕНИЕ: для мобильных тоже по левому краю */
             }
             
             .row-label, .row-value {
@@ -1069,20 +1084,26 @@
             }
             
             .catalog-buttons-container {
-                min-height: 58px;
+                min-height: 58px; /* Увеличено */
             }
             
             .executor-select {
                 max-width: 120px;
                 min-width: 100px;
                 font-size: 11px;
-                padding: 8px 7px;
-                height: 36px;
+                padding: 8px 7px; /* Увеличено */
+                height: 36px; /* Увеличено */
             }
             
             .row-label {
                 font-size: 12px;
                 min-width: 70px;
+            }
+            
+            .loader {
+                width: 20px;
+                height: 20px;
+                border-width: 2px;
             }
         }
 
@@ -1102,15 +1123,15 @@
             .header-section {
                 padding-left: max(8px, env(safe-area-inset-left));
                 padding-right: max(8px, env(safe-area-inset-right));
-                padding-top: max(58px, env(safe-area-inset-top));
+                padding-top: 68px; /* УВЕЛИЧЕНО для мобильных */
             }
             
             .executor-select {
                 max-width: 110px;
                 min-width: 90px;
                 font-size: 10px;
-                padding: 7px 6px;
-                height: 34px;
+                padding: 7px 6px; /* Увеличено */
+                height: 34px; /* Увеличено */
             }
             
             .row-label {
@@ -1124,27 +1145,35 @@
             }
             
             .catalog-buttons-container {
-                min-height: 54px;
+                min-height: 54px; /* Увеличено */
             }
             
-            .loading-text {
+            .loader {
+                width: 18px;
+                height: 18px;
+                border-width: 2px;
+            }
+            
+            .loading-card-text {
                 font-size: 11px;
             }
             
             .task-title {
-                text-align: left;
+                text-align: left; /* ИЗМЕНЕНИЕ: для мобильных тоже по левому краю */
             }
         }
     </style>
 </head>
 <body>
-    <!-- АНИМАЦИЯ ЗАГРУЗКИ -->
+    <!-- НОВАЯ АНИМАЦИЯ ЗАГРУЗКИ -->
     <div class="loader-container" id="loader">
         <div class="loader"></div>
+        <div class="loading-text"></div>
     </div>
     
     <div class="notification" id="notification"></div>
     
+    <!-- НОВАЯ ШАПКА -->
     <header>
         <div class="logo"><img src="https://i.postimg.cc/wjGzSY92/1.png" alt="Logo"></div>
         <div class="site-name" onclick="toggleSiteNameDropdown()">
@@ -1153,16 +1182,19 @@
                 <a href="https://smart-bowling.github.io/SMB-SKYMALL/" class="dropdown-button">
                     <span>SKYMALL</span>
                 </a>
+              <a href="https://smart-bowling.github.io/SMB-BB/" class="dropdown-button">
+                    <span>BLOCKBUSTER</span>
+                </a>
             </div>
         </div>
         <div class="menu-button" onclick="toggleDropdown()">
             <div></div><div></div><div></div>
         </div>
         <div class="dropdown" id="dropdownMenu">
-            <a href="https://smart-bowling.github.io/PARTS-BB/">
+            <a href="https://smart-bowling.github.io/PARTS-KH/">
                 <span class="icon-space"><i class="fas fa-cube"></i></span>ДЕТАЛИ
             </a>
-            <a href="https://smart-bowling.github.io/PS-STOP-BB/">
+            <a href="https://smart-bowling.github.io/PS-STOP-KH/">
                 <span class="icon-space"><i class="fas fa-exclamation-triangle"></i></span>STOP LANE
             </a>
         </div>
@@ -1171,16 +1203,12 @@
     <div class="container" id="main-container" style="display: none;">
         <div class="header-section">
             <div class="tabs">
-                <button class="tab-btn active" data-tab="tab1">
-                    <i class="fas fa-tasks"></i>РЕЕСТР ЗАДАЧ
-                </button>
-                <button class="tab-btn" data-tab="tab2">
-                    <i class="fas fa-book"></i>КАТАЛОГ ЗАДАЧ
-                </button>
+                <button class="tab-btn active" data-tab="tab1">РЕЕСТР ЗАДАЧ</button>
+                <button class="tab-btn" data-tab="tab2">КАТАЛОГ ЗАДАЧ</button>
             </div>
             
             <button class="add-task-btn" onclick="window.open('https://smart-bowling.github.io/add_engineer/', '_blank')">
-                <i class="fas fa-plus-circle"></i>ДОБАВИТЬ ЗАДАЧУ
+                ДОБАВИТЬ ЗАДАЧУ
             </button>
         </div>
         
@@ -1188,7 +1216,8 @@
             <div class="cards-grid" id="journal-cards">
                 <div class="task-card">
                     <div class="loading-container">
-                        <div class="loading-text">Загрузка данных...</div>
+                        <div class="loader"></div>
+                        <div class="loading-card-text"></div>
                     </div>
                 </div>
             </div>
@@ -1209,7 +1238,8 @@
             <div class="cards-grid" id="tasks-cards">
                 <div class="task-card">
                     <div class="loading-container">
-                        <div class="loading-text">Загрузка данных...</div>
+                        <div class="loader"></div>
+                        <div class="loading-card-text"></div>
                     </div>
                 </div>
             </div>
@@ -1228,33 +1258,56 @@
     </div>
 
     <script>
-        // КОНФИГУРАЦИЯ
+        // ФУНКЦИИ ДЛЯ РАБОТЫ ШАПКИ
+        function toggleSiteNameDropdown() {
+            const dropdown = document.getElementById("siteNameDropdown");
+            dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+            
+            const menu = document.getElementById("dropdownMenu");
+            if (menu.style.display === "flex") {
+                menu.style.display = "none";
+            }
+            
+            event.stopPropagation();
+        }
+
+        function toggleDropdown() {
+            const menu = document.getElementById("dropdownMenu");
+            menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+            
+            const dropdown = document.getElementById("siteNameDropdown");
+            if (dropdown.style.display === "block") {
+                dropdown.style.display = "none";
+            }
+            
+            event.stopPropagation();
+        }
+
+        // ОСНОВНОЙ КОД ПРИЛОЖЕНИЯ
         const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbyBiibLN40TjLDo1pz69ogyUgERUBhuCcmmkXDCgvS3fUGbt6ifyt_Lh9f3gg8yXZOA/exec';
         const CARDS_PER_PAGE = 6;
-        const CACHE_DURATION = 30000; // 30 секунд кэширования
 
-        // ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
+        let isInitialLoad = true;
         let tasksData = null;
         let journalData = null;
-        let dataCache = {};
-        let cacheTimestamp = {};
         
         let currentJournalPage = 1;
         let currentTasksPage = 1;
         let totalJournalPages = 1;
         let totalTasksPages = 1;
-        
-        let isInitialLoad = true;
 
-        // УПРАВЛЕНИЕ ЗАГРУЗКОЙ
-        function showLoader() {
+        // Функция для показа загрузки
+        function showLoader(message = 'Загрузка...') {
             const loader = document.getElementById('loader');
             const mainContainer = document.getElementById('main-container');
+            const loadingText = loader.querySelector('.loading-text');
             
+            loadingText.textContent = message;
             loader.style.display = 'flex';
             mainContainer.style.display = 'none';
         }
 
+        // Функция для скрытия загрузки
         function hideLoader() {
             const loader = document.getElementById('loader');
             const mainContainer = document.getElementById('main-container');
@@ -1263,11 +1316,11 @@
             mainContainer.style.display = 'flex';
         }
 
-        function showOperationLoading() {
-            showLoader();
+        // Функция для показа загрузки при операциях
+        function showOperationLoading(message) {
+            showLoader(message);
         }
 
-        // УТИЛИТЫ
         function convertGoogleDriveLink(driveLink) {
             if (!driveLink) return null;
             
@@ -1299,6 +1352,7 @@
         function showNotification(message, type = 'success') {
             const notification = document.getElementById('notification');
             notification.textContent = message;
+        
             notification.className = `notification ${type}`;
             notification.classList.add('show');
             
@@ -1307,36 +1361,15 @@
             }, 3000);
         }
 
-        // ОПТИМИЗИРОВАННАЯ ФУНКЦИЯ ДЛЯ ЗАПРОСОВ С КЭШИРОВАНИЕМ
         async function makeRequest(url, options = {}) {
-            const cacheKey = url + JSON.stringify(options);
-            const now = Date.now();
-            
-            // Проверяем кэш
-            if (dataCache[cacheKey] && cacheTimestamp[cacheKey]) {
-                const age = now - cacheTimestamp[cacheKey];
-                if (age < CACHE_DURATION) {
-                    return dataCache[cacheKey];
-                }
-            }
-            
             try {
-                // Добавляем timestamp для предотвращения кэширования браузера
-                const separator = url.includes('?') ? '&' : '?';
-                const timestampedUrl = `${url}${separator}_t=${now}`;
-                
-                const response = await fetch(timestampedUrl, options);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
+                if (!options.method || options.method === 'GET') {
+                    const separator = url.includes('?') ? '&' : '?';
+                    url = `${url}${separator}_=${Date.now()}`;
                 }
                 
+                const response = await fetch(url, options);
                 const data = await response.json();
-                
-                // Сохраняем в кэш
-                dataCache[cacheKey] = data;
-                cacheTimestamp[cacheKey] = now;
-                
                 return data;
             } catch (error) {
                 console.error('Ошибка запроса:', error);
@@ -1344,7 +1377,6 @@
             }
         }
 
-        // ПАГИНАЦИЯ
         function updatePagination(type, currentPage, totalPages) {
             const pagination = document.getElementById(`${type}-pagination`);
             const currentPageSpan = document.getElementById(`${type}-current-page`);
@@ -1385,33 +1417,22 @@
             return data.slice(startIndex, endIndex);
         }
 
-        // ОПТИМИЗИРОВАННАЯ ЗАГРУЗКА ДАННЫХ
-        async function loadAllData() {
-            try {
-                const [journal, tasks] = await Promise.all([
-                    makeRequest(`${BACKEND_URL}?action=getJournal`),
-                    makeRequest(`${BACKEND_URL}?action=getTasks`)
-                ]);
-                
-                journalData = journal.reverse();
-                tasksData = tasks;
-                
-                renderJournalCards(journalData);
-                renderTasksCards(tasksData);
-                
-                return { journalData, tasksData };
-            } catch (error) {
-                console.error('Ошибка загрузки данных:', error);
-                throw error;
-            }
-        }
-
         async function loadTasks() {
             try {
                 if (tasksData && !isInitialLoad) {
                     renderTasksCards(tasksData);
                     return;
                 }
+                
+                const tasksCards = document.getElementById('tasks-cards');
+                tasksCards.innerHTML = `
+                    <div class="task-card">
+                        <div class="loading-container">
+                            <div class="loader"></div>
+                            <div class="loading-card-text"></div>
+                        </div>
+                    </div>
+                `;
                 
                 const tasks = await makeRequest(`${BACKEND_URL}?action=getTasks`);
                 tasksData = tasks;
@@ -1429,6 +1450,7 @@
             }
         }
 
+    
         async function loadJournal() {
             try {
                 if (journalData && !isInitialLoad) {
@@ -1436,8 +1458,20 @@
                     return;
                 }
                 
+                const journalCards = document.getElementById('journal-cards');
+                journalCards.innerHTML = `
+                    <div class="task-card">
+                        <div class="loading-container">
+                            <div class="loader"></div>
+                            <div class="loading-card-text"></div>
+                        </div>
+                    </div>
+                `;
+                
                 const journal = await makeRequest(`${BACKEND_URL}?action=getJournal`);
-                journalData = journal.reverse();
+                
+                // Убираем reverse() - теперь сортировка в renderJournalCards
+                journalData = journal;
                 renderJournalCards(journalData);
                 
             } catch (error) {
@@ -1452,48 +1486,54 @@
             }
         }
 
-        // ОПТИМИЗИРОВАННОЕ ВЫПОЛНЕНИЕ ЗАДАЧИ
         async function completeTask(taskId, executor, rowIndex) {
-            showOperationLoading();
+            showOperationLoading('');
             
             try {
-                // ОБНОВЛЯЕМ ЛОКАЛЬНО СРАЗУ
-                const card = document.querySelector(`[data-task-id="${taskId}"]`);
-                if (card) {
-                    updateCardUI(card, executor);
-                }
-                
-                // ОТПРАВЛЯЕМ ДАННЫЕ НА СЕРВЕР
                 const updateUrl = `${BACKEND_URL}?action=updateCell&sheetName=B&column=E&row=${rowIndex}&value=${encodeURIComponent(executor)}`;
-                
-                // Отправляем запросы параллельно
-                const [result, immediateUpdateResult] = await Promise.all([
-                    makeRequest(updateUrl),
-                    makeRequest(`${BACKEND_URL}?action=updateFromRowNumber&rowNumber=${rowIndex}`)
-                ]);
+                const result = await makeRequest(updateUrl);
                 
                 if (result.success) {
-                    const message = immediateUpdateResult === 'SUCCESS' 
-                        ? 'Задача выполнена! Данные обновлены мгновенно.' 
-                        : 'Задача выполнена!';
+                    const immediateUpdateResult = await makeRequest(`${BACKEND_URL}?action=updateFromRowNumber&rowNumber=${rowIndex}`);
                     
-                    showNotification(message, 'success');
-                    
-                    // Обновляем данные
-                    const [journal, tasks] = await Promise.all([
-                        makeRequest(`${BACKEND_URL}?action=getJournal`),
-                        makeRequest(`${BACKEND_URL}?action=getTasks`)
-                    ]);
-                    
-                    journalData = journal.reverse();
-                    tasksData = tasks;
-                    
-                    hideLoader();
-                    
-                    // Обновляем интерфейс
-                    renderJournalCards(journalData);
-                    renderTasksCards(tasksData);
-                    
+                    if (immediateUpdateResult === 'SUCCESS') {
+                        showNotification('Задача выполнена! Данные обновлены мгновенно.', 'success');
+                        
+                        const card = document.querySelector(`[data-task-id="${taskId}"]`);
+                        if (card) {
+                            const submitBtn = card.querySelector('.submit-btn');
+                            if (submitBtn) {
+                                const submittedText = document.createElement('div');
+                                submittedText.className = 'submitted-text';
+                                submittedText.innerHTML = '<i class="fas fa-check-circle"></i>ОТПРАВЛЕНО';
+                                submitBtn.parentNode.replaceChild(submittedText, submitBtn);
+                            }
+                            
+                            const select = card.querySelector('.executor-select');
+                            if (select) {
+                                const executorName = document.createElement('span');
+                                executorName.className = 'row-value';
+                                executorName.textContent = executor;
+                                select.parentNode.replaceChild(executorName, select);
+                            }
+                        }
+                        
+                        journalData = null;
+                        tasksData = null;
+                        
+                        setTimeout(() => {
+                            loadJournal();
+                            loadTasks();
+                            hideLoader();
+                        }, 1000);
+                    } else {
+                        showNotification('Задача выполнена, но обновление даты займет до 1 минуты', 'warning');
+                        setTimeout(() => {
+                            loadJournal();
+                            loadTasks();
+                            hideLoader();
+                        }, 1000);
+                    }
                 } else {
                     hideLoader();
                     showNotification('Ошибка: ' + result.error, 'error');
@@ -1501,30 +1541,10 @@
             } catch (error) {
                 console.error('Ошибка выполнения задачи:', error);
                 hideLoader();
-                showNotification('Ошибка выполнения задачи', 'error');
+                showNotification('Ошибка выполнения задачи: ' + error.message, 'error');
             }
         }
 
-        // БЫСТРОЕ ОБНОВЛЕНИЕ ИНТЕРФЕЙСА КАРТОЧКИ
-        function updateCardUI(card, executor) {
-            const submitBtn = card.querySelector('.submit-btn');
-            if (submitBtn) {
-                const submittedText = document.createElement('div');
-                submittedText.className = 'submitted-text';
-                submittedText.innerHTML = '<i class="fas fa-check-circle"></i>ОТПРАВЛЕНО';
-                submitBtn.parentNode.replaceChild(submittedText, submitBtn);
-            }
-            
-            const select = card.querySelector('.executor-select');
-            if (select) {
-                const executorName = document.createElement('span');
-                executorName.className = 'row-value';
-                executorName.textContent = executor;
-                select.parentNode.replaceChild(executorName, select);
-            }
-        }
-
-        // РЕНДЕРИНГ КАРТОЧЕК
         function renderTasksCards(tasks) {
             const tasksCards = document.getElementById('tasks-cards');
             
@@ -1532,7 +1552,8 @@
                 tasksCards.innerHTML = `
                     <div class="task-card">
                         <div class="loading-container">
-                            <div class="loading-text">Нет задач</div>
+                            <div class="loader"></div>
+                            <div class="loading-card-text">Нет задач</div>
                         </div>
                     </div>
                 `;
@@ -1547,10 +1568,7 @@
             
             const currentTasks = getCurrentPageData(tasks, currentTasksPage);
             
-            // Используем DocumentFragment для быстрой вставки
-            const fragment = document.createDocumentFragment();
-            
-            currentTasks.forEach(task => {
+            tasksCards.innerHTML = currentTasks.map(task => {
                 let statusClass = 'success';
                 if (task.daysLeft <= 0) {
                     statusClass = 'danger';
@@ -1560,55 +1578,51 @@
                 
                 const hasLink = task.driveLink && task.driveLink.trim() !== '';
                 
-                const card = document.createElement('div');
-                card.className = 'task-card catalog-task';
-                card.innerHTML = `
-                    <div class="task-header">
-                        <div class="task-title">${task.task}</div>
-                    </div>
-                    
-                    <div class="card-content">
-                        <div class="content-row">
-                            <span class="row-label">Последнее выполнение:</span>
-                            <span class="row-value">${task.lastDate || '-'}</span>
+                return `
+                    <div class="task-card catalog-task">
+                        <div class="task-header">
+                            <div class="task-title">${task.task}</div>
                         </div>
-                        <div class="content-row">
-                            <span class="row-label">Прошло дней:</span>
-                            <span class="row-value">${task.daysPassed}</span>
+                        
+                        <div class="card-content">
+                            <div class="content-row">
+                                <span class="row-label">Последнее выполнение:</span>
+                                <span class="row-value">${task.lastDate || '-'}</span>
+                            </div>
+                            <div class="content-row">
+                                <span class="row-label">Прошло дней:</span>
+                                <span class="row-value">${task.daysPassed}</span>
+                            </div>
+                            <div class="content-row">
+                                <span class="row-label">Интервал:</span>
+                                <span class="row-value">${task.frequency} дн.</span>
+                            </div>
+                            <div class="content-row">
+                                <span class="row-label">Остаток дней:</span>
+                                <span class="row-value">
+                                    <span class="status-badge ${statusClass}">${task.daysLeft}</span>
+                                </span>
+                            </div>
+                            <div class="content-row">
+                                <span class="row-label">Следующее выполнение:</span>
+                                <span class="row-value">${task.nextDate || '-'}</span>
+                            </div>
                         </div>
-                        <div class="content-row">
-                            <span class="row-label">Интервал:</span>
-                            <span class="row-value">${task.frequency} дн.</span>
-                        </div>
-                        <div class="content-row">
-                            <span class="row-label">Остаток дней:</span>
-                            <span class="row-value">
-                                <span class="status-badge ${statusClass}">${task.daysLeft}</span>
-                            </span>
-                        </div>
-                        <div class="content-row">
-                            <span class="row-label">Следующее выполнение:</span>
-                            <span class="row-value">${task.nextDate || '-'}</span>
-                        </div>
-                    </div>
-                    
-                    <div class="catalog-buttons-container">
-                        <div class="catalog-button-wrapper">
-                            ${hasLink 
-                                ? `<a href="#" onclick="openDriveLink('${task.driveLink}')" class="open-button">
-                                    <i class="fas fa-file-alt"></i>ОТКРЫТЬ ЗАДАЧУ
-                                  </a>`
-                                : '<div class="no-open">Недоступно</div>'
-                            }
+                        
+                        <div class="catalog-buttons-container">
+                            <div class="catalog-button-wrapper">
+                                ${hasLink 
+                                    ? `<a href="#" onclick="openDriveLink('${task.driveLink}')" class="open-button">
+                                        <i class="fas fa-file-alt"></i>ОТКРЫТЬ ЗАДАЧУ
+                                      </a>`
+                                    : '<div class="no-open">Недоступно</div>'
+                                }
+                            </div>
                         </div>
                     </div>
                 `;
-                
-                fragment.appendChild(card);
-            });
+            }).join('');
             
-            tasksCards.innerHTML = '';
-            tasksCards.appendChild(fragment);
             updatePagination('tasks', currentTasksPage, totalTasksPages);
         }
 
@@ -1619,7 +1633,8 @@
                 journalCards.innerHTML = `
                     <div class="task-card">
                         <div class="loading-container">
-                            <div class="loading-text">Нет данных</div>
+                            <div class="loader"></div>
+                            <div class="loading-card-text">Нет данных</div>
                         </div>
                     </div>
                 `;
@@ -1627,132 +1642,188 @@
                 return;
             }
             
-            totalJournalPages = Math.ceil(journal.length / CARDS_PER_PAGE);
+            // РАЗДЕЛЯЕМ ЗАДАЧИ НА ОТКРЫТЫЕ И ЗАКРЫТЫЕ
+            const openTasks = [];
+            const closedTasks = [];
+            
+            journal.forEach(task => {
+                if (!task.isCompleted) {
+                    openTasks.push(task);
+                } else {
+                    closedTasks.push(task);
+                }
+            });
+            
+            // СОРТИРУЕМ ОТКРЫТЫЕ ЗАДАЧИ: НОВЫЕ СВЕРХУ
+            openTasks.sort((a, b) => {
+                // Сортируем по дате создания (новые сверху)
+                if (a.createdDate && b.createdDate) {
+                    return new Date(b.createdDate) - new Date(a.createdDate);
+                }
+                return 0;
+            });
+            
+            // СОРТИРУЕМ ЗАКРЫТЫЕ ЗАДАЧИ: НОВЫЕ СВЕРХУ
+            closedTasks.sort((a, b) => {
+                // Сортируем по дате выполнения (новые сверху)
+                if (a.completedDate && b.completedDate) {
+                    return new Date(b.completedDate) - new Date(a.completedDate);
+                }
+                return 0;
+            });
+            
+            // ОБЪЕДИНЯЕМ: сначала открытые, потом закрытые
+            const sortedJournal = [...openTasks, ...closedTasks];
+            
+            totalJournalPages = Math.ceil(sortedJournal.length / CARDS_PER_PAGE);
             if (currentJournalPage > totalJournalPages) {
                 currentJournalPage = 1;
             }
             
-            const currentJournal = getCurrentPageData(journal, currentJournalPage);
-            const fragment = document.createDocumentFragment();
+            const currentJournal = getCurrentPageData(sortedJournal, currentJournalPage);
+            
+            let html = '';
             
             currentJournal.forEach((task, index) => {
                 const rowIndex = task.rowIndex || (index + 2);
                 const hasLink = task.driveLink && task.driveLink.trim() !== '';
                 const taskId = task.id || task.driveLink || '';
                 
-                const card = document.createElement('div');
-                
                 if (!task.isCompleted) {
-                    card.className = 'task-card pending';
-                    card.setAttribute('data-task-id', taskId);
-                    card.setAttribute('data-row-index', rowIndex);
-                    card.innerHTML = `
-                        <div class="task-header">
-                            <div class="task-title">${task.task}</div>
-                        </div>
-                        
-                        <div class="card-content">
-                            <div class="content-row">
-                                <span class="row-label">Дата появления:</span>
-                                <span class="row-value">${task.createdDate}</span>
+                    html += `
+                        <div class="task-card pending" data-task-id="${taskId}" data-row-index="${rowIndex}">
+                            <div class="task-header">
+                                <div class="task-title">${task.task}</div>
                             </div>
-                            <div class="content-row">
-                                <span class="row-label">Дата выполнения:</span>
-                                <span class="row-value">${task.completedDate || '-'}</span>
+                            
+                            <div class="card-content">
+                                <div class="content-row">
+                                    <span class="row-label">Дата появления:</span>
+                                    <span class="row-value">${task.createdDate}</span>
+                                </div>
+                                <div class="content-row">
+                                    <span class="row-label">Дата выполнения:</span>
+                                    <span class="row-value">${task.completedDate || '-'}</span>
+                                </div>
+                                <div class="content-row">
+                                    <span class="row-label">Выполнил:</span>
+                                    <span class="row-value">
+                                        <select class="executor-select" id="executor-${taskId}">
+                                            <option value="" selected disabled>Выберите...</option>
+                                            <option value="Вадим">Вадим</option>
+                                            <option value="Алексей">Алексей</option>
+                                            <option value="Дмитрий">Дмитрий</option>
+                                            <option value="Сергей">Сергей</option>
+                                        </select>
+                                    </span>
+                                </div>
                             </div>
-                            <div class="content-row">
-                                <span class="row-label">Выполнил:</span>
-                                <span class="row-value">
-                                    <select class="executor-select" id="executor-${taskId}">
-                                        <option value="" selected disabled></option>
-                                        <option value="Вадим">Вадим</option>
-                                    </select>
-                                </span>
+                            
+                            <div class="buttons-container">
+                                ${hasLink 
+                                    ? `<a href="#" onclick="openDriveLink('${task.driveLink}')" class="schema-button">
+                                        <i class="fas fa-file-alt"></i>ОТКРЫТЬ ЗАДАЧУ
+                                      </a>`
+                                    : '<div class="no-open">Недоступно</div>'
+                                }
+                                <button class="submit-btn" onclick="submitTask(event, '${taskId}', ${rowIndex})" disabled>
+                                    <i class="fas fa-paper-plane"></i>ОТПРАВИТЬ
+                                </button>
                             </div>
-                        </div>
-                        
-                        <div class="buttons-container">
-                            ${hasLink 
-                                ? `<a href="#" onclick="openDriveLink('${task.driveLink}')" class="schema-button">
-                                    <i class="fas fa-file-alt"></i>ОТКРЫТЬ ЗАДАЧУ
-                                  </a>`
-                                : '<div class="no-open">Недоступно</div>'
-                            }
-                            <button class="submit-btn" onclick="submitTask('${taskId}', ${rowIndex})" disabled>
-                                <i class="fas fa-paper-plane"></i>ОТПРАВИТЬ
-                            </button>
                         </div>
                     `;
                 } else {
-                    card.className = 'task-card completed';
-                    card.innerHTML = `
-                        <div class="task-header">
-                            <div class="task-title">${task.task}</div>
-                        </div>
-                        
-                        <div class="card-content">
-                            <div class="content-row">
-                                <span class="row-label">Дата появления:</span>
-                                <span class="row-value">${task.createdDate}</span>
+                    html += `
+                        <div class="task-card completed">
+                            <div class="task-header">
+                                <div class="task-title">${task.task}</div>
                             </div>
-                            <div class="content-row">
-                                <span class="row-label">Дата выполнения:</span>
-                                <span class="row-value">${task.completedDate}</span>
+                            
+                            <div class="card-content">
+                                <div class="content-row">
+                                    <span class="row-label">Дата появления:</span>
+                                    <span class="row-value">${task.createdDate}</span>
+                                </div>
+                                <div class="content-row">
+                                    <span class="row-label">Дата выполнения:</span>
+                                    <span class="row-value">${task.completedDate}</span>
+                                </div>
+                                <div class="content-row">
+                                    <span class="row-label">Выполнил:</span>
+                                    <span class="row-value">${task.executor}</span>
+                                </div>
                             </div>
-                            <div class="content-row">
-                                <span class="row-label">Выполнил:</span>
-                                <span class="row-value">${task.executor}</span>
-                            </div>
-                        </div>
-                        
-                        <div class="buttons-container">
-                            ${hasLink 
-                                ? `<a href="#" onclick="openDriveLink('${task.driveLink}')" class="schema-button">
-                                    <i class="fas fa-file-alt"></i>ОТКРЫТЬ ЗАДАЧУ
-                                  </a>`
-                                : '<div class="no-open">Недоступно</div>'
-                            }
-                            <div class="submitted-text">
-                                <i class="fas fa-check-circle"></i>ОТПРАВЛЕНО
+                            
+                            <div class="buttons-container">
+                                ${hasLink 
+                                    ? `<a href="#" onclick="openDriveLink('${task.driveLink}')" class="schema-button">
+                                        <i class="fas fa-file-alt"></i>ОТКРЫТЬ ЗАДАЧУ
+                                      </a>`
+                                    : '<div class="no-open">Недоступно</div>'
+                                }
+                                <div class="submitted-text">
+                                    <i class="fas fa-check-circle"></i>ОТПРАВЛЕНО
+                                </div>
                             </div>
                         </div>
                     `;
                 }
-                
-                fragment.appendChild(card);
             });
             
-            journalCards.innerHTML = '';
-            journalCards.appendChild(fragment);
+            journalCards.innerHTML = html;
             
-            // Делегирование событий для селекторов
-            journalCards.addEventListener('change', function(e) {
-                if (e.target.classList.contains('executor-select')) {
-                    const card = e.target.closest('.task-card');
+            // Добавляем обработчики для селектов исполнителей
+            document.querySelectorAll('.executor-select').forEach(select => {
+                select.addEventListener('change', function() {
+                    const card = this.closest('.task-card');
                     const submitBtn = card.querySelector('.submit-btn');
-                    submitBtn.disabled = !e.target.value;
-                }
+                    if (submitBtn) {
+                        submitBtn.disabled = !this.value || this.value === '';
+                    }
+                    event.stopPropagation();
+                });
+                
+                select.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                });
             });
             
             updatePagination('journal', currentJournalPage, totalJournalPages);
         }
 
-        function submitTask(taskId, rowIndex) {
-            const card = document.querySelector(`[data-task-id="${taskId}"]`);
+        // ИСПРАВЛЕННАЯ ФУНКЦИЯ submitTask
+        function submitTask(event, taskId, rowIndex) {
+            // Получаем кнопку, на которую нажали
+            const button = event.currentTarget;
+            // Получаем карточку задачи
+            const card = button.closest('.task-card');
+            
+            if (!card) {
+                showNotification('Ошибка: карточка задачи не найдена', 'error');
+                return;
+            }
+            
+            // Находим селект внутри этой карточки
             const select = card.querySelector('.executor-select');
             
-            if (!select.value) {
+            if (!select) {
+                showNotification('Ошибка: поле выбора исполнителя не найдено', 'error');
+                return;
+            }
+            
+            // ПРОВЕРЯЕМ, ЧТО ВЫБРАН ИСПОЛНИТЕЛЬ
+            if (!select.value || select.value === '' || select.value === 'Выберите...') {
                 showNotification('Выберите исполнителя перед отправкой', 'error');
                 return;
             }
             
+            // Отправляем задачу на выполнение
             completeTask(taskId, select.value, rowIndex);
             event.stopPropagation();
         }
 
-        // ИНИЦИАЛИЗАЦИЯ
         document.addEventListener('DOMContentLoaded', function() {
-            // Обработчики для меню
+            // ОБРАБОТЧИКИ ДЛЯ ЗАКРЫТИЯ МЕНЮ ПРИ КЛИКЕ ВНЕ
             document.addEventListener('click', function(e) {
                 const siteNameDropdown = document.getElementById('siteNameDropdown');
                 const dropdownMenu = document.getElementById('dropdownMenu');
@@ -1766,9 +1837,24 @@
                 }
             });
             
-            // Управление табами
+            // Показываем загрузку при старте
+            showLoader('');
+            
             const tabButtons = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
+            
+            // Загружаем данные и скрываем загрузку когда все готово
+            Promise.all([
+                loadJournal(),
+                loadTasks()
+            ]).then(() => {
+                setTimeout(() => {
+                    hideLoader();
+                }, 500);
+            }).catch(error => {
+                console.error('Ошибка загрузки:', error);
+                hideLoader();
+            });
             
             tabButtons.forEach(button => {
                 button.addEventListener('click', () => {
@@ -1789,23 +1875,7 @@
                     }
                 });
             });
-            
-            // Запускаем начальную загрузку
-            showLoader();
-            
-            // Параллельная загрузка всех данных
-            loadAllData().then(() => {
-                setTimeout(() => {
-                    hideLoader();
-                    isInitialLoad = false;
-                }, 300);
-            }).catch(error => {
-                console.error('Ошибка начальной загрузки:', error);
-                hideLoader();
-                showNotification('Ошибка загрузки данных', 'error');
-            });
-            
-            // Автообновление данных каждые 30 секунд
+
             setInterval(() => {
                 const activeTab = document.querySelector('.tab-content.active');
                 if (activeTab.id === 'tab2') {
@@ -1814,8 +1884,11 @@
                     loadJournal();
                 }
             }, 30000);
-            
-            // Выделение карточек
+
+            setTimeout(() => {
+                isInitialLoad = false;
+            }, 1000);
+
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.task-card')) {
                     const card = e.target.closest('.task-card');
@@ -1835,32 +1908,18 @@
                     card.classList.add('selected');
                 }
             });
+            
+            // Добавляем обработчик для отслеживания изменений в селектах исполнителей
+            document.addEventListener('change', function(e) {
+                if (e.target && e.target.classList.contains('executor-select')) {
+                    const card = e.target.closest('.task-card');
+                    const submitBtn = card.querySelector('.submit-btn');
+                    if (submitBtn) {
+                        submitBtn.disabled = !e.target.value || e.target.value === '';
+                    }
+                }
+            });
         });
-
-        // ФУНКЦИИ ШАПКИ
-        function toggleSiteNameDropdown() {
-            const dropdown = document.getElementById("siteNameDropdown");
-            dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
-            
-            const menu = document.getElementById("dropdownMenu");
-            if (menu.style.display === "flex") {
-                menu.style.display = "none";
-            }
-            
-            event.stopPropagation();
-        }
-
-        function toggleDropdown() {
-            const menu = document.getElementById("dropdownMenu");
-            menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
-            
-            const dropdown = document.getElementById("siteNameDropdown");
-            if (dropdown.style.display === "block") {
-                dropdown.style.display = "none";
-            }
-            
-            event.stopPropagation();
-        }
     </script>
 </body>
 </html>
