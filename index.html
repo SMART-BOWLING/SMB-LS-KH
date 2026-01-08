@@ -53,14 +53,14 @@
             padding-right: env(safe-area-inset-right);
         }
 
-        /* НОВАЯ ШАПКА ИЗ ВТОРОГО КОДА */
+        /* ШАПКА */
         header {
             background-color: #1f2937;
             color: white;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 14px 20px; /* Увеличено с 10px */
+            padding: 14px 20px;
             position: fixed;
             top: 0;
             left: 0;
@@ -68,15 +68,15 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             user-select: none;
             z-index: 1000;
-            padding-top: max(14px, env(safe-area-inset-top)); /* Увеличено с 10px */
+            padding-top: max(14px, env(safe-area-inset-top));
             padding-left: max(20px, env(safe-area-inset-left));
             padding-right: max(20px, env(safe-area-inset-right));
-            min-height: 65px; /* Добавлена минимальная высота */
+            min-height: 65px;
         }
 
         .logo img {
-            width: 42px; /* Увеличено с 40px */
-            height: 42px; /* Увеличено с 40px */
+            width: 42px;
+            height: 42px;
             object-fit: cover;
             border-radius: 0;
             transform: translateY(4px);
@@ -85,7 +85,7 @@
         .site-name {
             flex: 1;
             text-align: center;
-            font-size: 21px; /* Увеличено с 20px */
+            font-size: 21px;
             font-weight: bold;
             color: white;
             cursor: pointer;
@@ -125,12 +125,12 @@
         }
 
         .menu-button {
-            width: 32px; /* Увеличено с 30px */
+            width: 32px;
             cursor: pointer;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 22px; /* Увеличено с 20px */
+            height: 22px;
         }
 
         .menu-button div {
@@ -174,7 +174,7 @@
             font-size: 16px;
         }
 
-        /* НОВАЯ АНИМАЦИЯ ЗАГРУЗКИ ИЗ ПРЕДОСТАВЛЕННОГО КОДА */
+        /* АНИМАЦИЯ ЗАГРУЗКИ */
         .loader-container {
             position: fixed;
             top: 0;
@@ -238,7 +238,7 @@
             padding: 0 16px;
             padding-left: max(16px, env(safe-area-inset-left));
             padding-right: max(16px, env(safe-area-inset-right));
-            padding-top: 80px; /* УВЕЛИЧЕНО: было 70px, теперь 80px чтобы кнопки были под шапкой */
+            padding-top: 80px;
         }
 
         .tabs {
@@ -257,7 +257,6 @@
         }
 
         .tab-btn {
-      
             background: var(--surface);
             border: 1px solid #e5e5e5;
             color: var(--text-dark);
@@ -320,14 +319,16 @@
             display: flex;
         }
 
+        /* УВЕЛИЧЕНЫ ОТСТУПЫ У КАРТОЧЕК */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 16px;
-            margin-bottom: 20px;
+            gap: 20px;
+            margin-bottom: 50px;
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
+            padding-top: 10px;
         }
 
         .task-card {
@@ -369,8 +370,8 @@
             font-weight: 700;
             color: #000000;
             line-height: 1.4;
-            text-align: left; /* ИЗМЕНЕНИЕ: выравнивание по левому краю */
-            padding: 0 5px; /* Добавлено небольшое внутреннее отступление */
+            text-align: left;
+            padding: 0 5px;
         }
 
         .card-content {
@@ -422,7 +423,7 @@
             background: white;
             border: 2px solid #1a2f40;
             border-radius: 15px;
-            padding: 10px 10px; /* Увеличено с 8px 10px */
+            padding: 10px 10px;
             font-size: 13px;
             font-weight: 700;
             color: #1a2f40;
@@ -432,7 +433,7 @@
             width: auto;
             max-width: 160px;
             min-width: 140px;
-            height: 42px; /* Увеличено с 36px */
+            height: 42px;
             display: flex;
             align-items: center;
         }
@@ -447,16 +448,16 @@
             justify-content: space-between;
             align-items: center;
             gap: 10px;
-            padding: 16px 16px; /* Увеличено с 12px 16px */
+            padding: 16px 16px;
             border-top: 1px solid #e0e0e0;
             margin-top: auto;
-            min-height: 74px; /* Добавлено */
+            min-height: 74px;
         }
 
         .schema-button {
             background-color: #1a2f40;
             color: white;
-            padding: 11px 14px; /* Увеличено с 8px 12px */
+            padding: 11px 14px;
             font-weight: 700;
             border: none;
             border-radius: 4px;
@@ -471,8 +472,8 @@
             flex: 1;
             text-align: center;
             white-space: nowrap;
-            height: 42px; /* Увеличено с 36px */
-            min-height: 42px; /* Добавлено */
+            height: 42px;
+            min-height: 42px;
         }
 
         .schema-button:hover {
@@ -487,7 +488,7 @@
             cursor: pointer;
             user-select: none;
             border-radius: 4px;
-            padding: 11px 14px; /* Увеличено с 8px 12px */
+            padding: 11px 14px;
             font-weight: 700;
             font-size: 13px;
             transition: all 0.3s ease;
@@ -497,8 +498,8 @@
             justify-content: center;
             gap: 6px;
             white-space: nowrap;
-            height: 42px; /* Увеличено с 36px */
-            min-height: 42px; /* Добавлено */
+            height: 42px;
+            min-height: 42px;
         }
 
         .submit-btn:hover {
@@ -515,7 +516,7 @@
         .submitted-text {
             color: #000;
             font-weight: 700;
-            padding: 11px 14px; /* Увеличено с 8px 12px */
+            padding: 11px 14px;
             border: 1px solid #FFFFFF;
             border-radius: 4px;
             font-size: 13px;
@@ -526,8 +527,8 @@
             align-items: center;
             justify-content: center;
             white-space: nowrap;
-            height: 42px; /* Увеличено с 36px */
-            min-height: 42px; /* Добавлено */
+            height: 42px;
+            min-height: 42px;
             gap: 6px;
         }
 
@@ -538,7 +539,7 @@
             border-top: 1px solid #e0e0e0;
             margin-top: auto;
             position: relative;
-            min-height: 66px; /* Увеличено с 60px */
+            min-height: 66px;
         }
 
         .catalog-button-wrapper {
@@ -558,7 +559,7 @@
         .open-button {
             background-color: #1a2f40;
             color: white;
-            padding: 13px 24px; /* Увеличено с 10px 24px */
+            padding: 13px 24px;
             font-weight: 700;
             border: none;
             border-radius: 4px;
@@ -572,8 +573,8 @@
             transition: all 0.3s ease;
             text-align: center;
             white-space: nowrap;
-            height: 46px; /* Увеличено с 40px */
-            min-height: 46px; /* Добавлено */
+            height: 46px;
+            min-height: 46px;
             min-width: 140px;
             width: auto;
             flex: 0 0 auto;
@@ -587,7 +588,7 @@
         .no-open {
             color: #999;
             font-style: italic;
-            padding: 13px 24px; /* Увеличено тоже */
+            padding: 13px 24px;
             border: 1px dashed #ddd;
             border-radius: 4px;
             font-size: 11px;
@@ -597,8 +598,8 @@
             align-items: center;
             justify-content: center;
             white-space: nowrap;
-            height: 46px; /* Увеличено тоже */
-            min-height: 46px; /* Добавлено */
+            height: 46px;
+            min-height: 46px;
             min-width: 140px;
             width: auto;
             flex: 0 0 auto;
@@ -687,233 +688,394 @@
             background-color: #7a2a2a;
         }
 
+        /* НОВАЯ НАВИГАЦИЯ СТРАНИЦ С БОЛЬШИМИ ОТСТУПАМИ И БЕЗ СКРОЛЛА */
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            user-select: none;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 0;
+            margin-top: 20px;
+            margin-bottom: 60px;
+            overflow: hidden; /* УБРАТЬ СКРОЛЛ */
+        }
+
         .pagination {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 8px;
-            margin-top: 10px;
-            margin-bottom: 80px;
-            padding: 20px 10px;
-            flex-wrap: wrap;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
+            gap: 10px;
+            user-select: none;
             width: 100%;
+            padding: 5px 0;
+            flex-wrap: wrap; /* ПЕРЕНАСЫВАЕМ КНОПКИ НА НОВУЮ СТРОКУ */
+            overflow: visible; /* УБРАТЬ СКРОЛЛ */
         }
 
-        .page-btn {
-            background: white;
-            border: 1px solid #e5e5e5;
-            color: #1a2f40;
-            padding: 8px 12px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 4px;
-            font-weight: 600;
-            min-width: 40px;
-            text-align: center;
-        }
-
-        .page-btn:hover:not(:disabled) {
-            background-color: #f5f5f5;
-            border-color: #d0d0d0;
-        }
-
-        .page-btn.active {
-            background-color: #dc143c;
+        .pagination button {
+            background: linear-gradient(to bottom, #1f2937, #0d1520);
             color: white;
-            border-color: #dc143c;
+            font-weight: 700;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
-        .page-btn:disabled {
-            background-color: #f0f0f0;
-            color: #999;
+        .pagination button:hover:not(:disabled) {
+            background: linear-gradient(to bottom, #2a3648, #111b29);
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+        }
+
+        .pagination button:active:not(:disabled) {
+            transform: translateY(1px);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .pagination button:disabled {
+            background: #a0aec0;
             cursor: not-allowed;
-            border-color: #e5e5e5;
+            opacity: 0.7;
         }
 
-        .page-info {
-            font-size: 14px;
-            color: #666;
-            font-weight: 600;
-            margin: 0 10px;
+        .page-numbers {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap; /* ПЕРЕНАСЫВАЕМ НОМЕРА СТРАНИЦ */
+            flex-shrink: 0;
+            overflow: visible; /* УБРАТЬ СКРОЛЛ */
         }
 
-        /* АДАПТИВНОСТЬ ДЛЯ НОВОЙ ШАПКИ */
+        .page-numbers button {
+            background: linear-gradient(to bottom, #dc143c, #b01030);
+            color: white;
+            font-weight: 700;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+
+        .page-numbers button:hover {
+            background: linear-gradient(to bottom, #e51c47, #c01238);
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+        }
+
+        .page-numbers button.active {
+            background: linear-gradient(to bottom, #1f2937, #0d1520);
+            transform: scale(1.05);
+        }
+
+        .ellipsis {
+            color: #1a2f40;
+            font-weight: 700;
+            padding: 0 5px;
+            flex-shrink: 0;
+        }
+
+        /* АДАПТИВНОСТЬ ДЛЯ ШАПКИ */
         @media (max-width: 767px) {
             header {
-                padding: 12px 15px; /* Увеличено с 8px */
+                padding: 12px 15px;
                 padding-top: max(12px, env(safe-area-inset-top));
                 padding-left: max(15px, env(safe-area-inset-left));
                 padding-right: max(15px, env(safe-area-inset-right));
             }
             
             .logo img {
-                width: 38px; /* Увеличено */
-                height: 38px; /* Увеличено */
+                width: 38px;
+                height: 38px;
             }
             
             .site-name {
-                font-size: 19px; /* Увеличено */
+                font-size: 19px;
             }
             
             .header-section {
-                padding-top: 75px; /* УВЕЛИЧЕНО для мобильных */
+                padding-top: 75px;
             }
             
-            /* Увеличим кнопки для мобильных */
             .schema-button,
             .submit-btn,
             .submitted-text {
-                height: 38px; /* Увеличено с 34px */
+                height: 38px;
                 min-height: 38px;
-                padding: 9px 12px; /* Увеличено */
+                padding: 9px 12px;
                 font-size: 12px;
             }
             
             .open-button,
             .no-open {
-                height: 42px; /* Увеличено с 36px */
+                height: 42px;
                 min-height: 42px;
-                padding: 11px 20px; /* Увеличено */
+                padding: 11px 20px;
                 font-size: 12px;
             }
             
             .buttons-container {
-                padding: 14px 12px; /* Увеличено */
+                padding: 14px 12px;
                 min-height: 68px;
             }
             
             .catalog-buttons-container {
-                min-height: 62px; /* Увеличено с 56px */
+                min-height: 62px;
             }
             
             .executor-select {
-                height: 38px; /* Увеличено с 34px */
-                padding: 9px 8px; /* Увеличено */
+                height: 38px;
+                padding: 9px 8px;
                 font-size: 12px;
             }
             
             .task-title {
-                text-align: left; /* ИЗМЕНЕНИЕ: для мобильных тоже по левому краю */
+                text-align: left;
+            }
+            
+            /* УВЕЛИЧЕННЫЕ ОТСТУПЫ ДЛЯ МОБИЛЬНЫХ */
+            .cards-grid {
+                gap: 16px;
+                margin-bottom: 40px;
+                padding-top: 8px;
+            }
+            
+            .pagination-container {
+                margin-top: 15px;
+                margin-bottom: 50px;
+                padding: 12px 0;
+            }
+            
+            /* АДАПТИВНАЯ ПАГИНАЦИЯ БЕЗ СКРОЛЛА */
+            .pagination {
+                gap: 6px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-numbers {
+                gap: 6px;
+                flex-wrap: wrap;
+                justify-content: center;
             }
         }
 
         @media (max-width: 480px) {
             header {
-                padding: 10px 12px; /* Увеличено */
+                padding: 10px 12px;
                 padding-top: max(10px, env(safe-area-inset-top));
                 padding-left: max(12px, env(safe-area-inset-left));
                 padding-right: max(12px, env(safe-area-inset-right));
             }
             
             .logo img {
-                width: 36px; /* Увеличено */
-                height: 36px; /* Увеличено */
+                width: 36px;
+                height: 36px;
             }
             
             .site-name {
-                font-size: 17px; /* Увеличено */
+                font-size: 17px;
             }
             
             .header-section {
-                padding-top: 70px; /* УВЕЛИЧЕНО для мобильных */
+                padding-top: 70px;
             }
             
             .schema-button,
             .submit-btn,
             .submitted-text {
-                height: 36px; /* Увеличено с 32px */
+                height: 36px;
                 min-height: 36px;
-                padding: 8px 10px; /* Увеличено */
+                padding: 8px 10px;
                 font-size: 11px;
             }
             
             .open-button,
             .no-open {
-                height: 40px; /* Увеличено с 34px */
+                height: 40px;
                 min-height: 40px;
-                padding: 10px 18px; /* Увеличено */
+                padding: 10px 18px;
                 font-size: 11px;
             }
             
             .buttons-container {
-                padding: 12px 12px; /* Увеличено */
+                padding: 12px 12px;
                 min-height: 64px;
             }
             
             .catalog-buttons-container {
-                min-height: 58px; /* Увеличено с 52px */
+                min-height: 58px;
             }
             
             .executor-select {
-                height: 36px; /* Увеличено с 32px */
-                padding: 8px 7px; /* Увеличено */
+                height: 36px;
+                padding: 8px 7px;
                 font-size: 11px;
             }
             
             .menu-button {
-                width: 28px; /* Увеличено */
-                height: 20px; /* Увеличено */
+                width: 28px;
+                height: 20px;
             }
             
             .task-title {
-                text-align: left; /* ИЗМЕНЕНИЕ: для мобильных тоже по левому краю */
+                text-align: left;
+            }
+            
+            /* Адаптивность для новой пагинации */
+            .pagination {
+                gap: 4px;
+            }
+            
+            .pagination button {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+            
+            .page-numbers button {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+            
+            .page-numbers {
+                gap: 4px;
+            }
+            
+            /* УВЕЛИЧЕННЫЕ ОТСТУПЫ ДЛЯ МАЛЕНЬКИХ ЭКРАНОВ */
+            .cards-grid {
+                gap: 14px;
+                margin-bottom: 35px;
+                padding-top: 6px;
+            }
+            
+            .pagination-container {
+                margin-top: 12px;
+                margin-bottom: 45px;
+                padding: 10px 0;
+            }
+            
+            /* ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ЭКРАНОВ УМЕНЬШАЕМ ПАГИНАЦИЮ */
+            .pagination button {
+                padding: 5px 8px;
+                font-size: 11px;
+            }
+            
+            .page-numbers button {
+                padding: 5px 8px;
+                font-size: 11px;
             }
         }
 
         @media (max-width: 360px) {
             header {
-                padding: 9px 10px; /* Увеличено */
+                padding: 9px 10px;
                 padding-top: max(9px, env(safe-area-inset-top));
                 padding-left: max(10px, env(safe-area-inset-left));
                 padding-right: max(10px, env(safe-area-inset-right));
             }
             
             .site-name {
-                font-size: 16px; /* Увеличено */
+                font-size: 16px;
             }
             
             .header-section {
-                padding-top: 68px; /* УВЕЛИЧЕНО для мобильных */
+                padding-top: 68px;
             }
             
             .schema-button,
             .submit-btn,
             .submitted-text {
-                height: 34px; /* Увеличено с 30px */
+                height: 34px;
                 min-height: 34px;
-                padding: 7px 8px; /* Увеличено */
+                padding: 7px 8px;
                 font-size: 10px;
             }
             
             .open-button,
             .no-open {
-                height: 38px; /* Увеличено с 32px */
+                height: 38px;
                 min-height: 38px;
-                padding: 9px 16px; /* Увеличено */
+                padding: 9px 16px;
                 font-size: 10px;
             }
             
             .buttons-container {
-                padding: 10px 8px; /* Увеличено */
+                padding: 10px 8px;
                 min-height: 60px;
             }
             
             .catalog-buttons-container {
-                min-height: 54px; /* Увеличено с 48px */
+                min-height: 54px;
             }
             
             .executor-select {
-                height: 34px; /* Увеличено с 30px */
-                padding: 7px 6px; /* Увеличено */
+                height: 34px;
+                padding: 7px 6px;
                 font-size: 10px;
             }
             
             .task-title {
-                text-align: left; /* ИЗМЕНЕНИЕ: для мобильных тоже по левому краю */
+                text-align: left;
+            }
+            
+            /* Адаптивность для новой пагинации */
+            .pagination {
+                gap: 3px;
+            }
+            
+            .pagination button {
+                padding: 4px 6px;
+                font-size: 10px;
+            }
+            
+            .page-numbers button {
+                padding: 4px 6px;
+                font-size: 10px;
+            }
+            
+            .page-numbers {
+                gap: 3px;
+            }
+            
+            /* УВЕЛИЧЕННЫЕ ОТСТУПЫ ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ЭКРАНОВ */
+            .cards-grid {
+                gap: 12px;
+                margin-bottom: 30px;
+                padding-top: 5px;
+            }
+            
+            .pagination-container {
+                margin-top: 10px;
+                margin-bottom: 40px;
+                padding: 8px 0;
+            }
+            
+            /* ДЛЯ САМЫХ МАЛЕНЬКИХ ЭКРАНОВ ДЕЛАЕМ КНОПКИ ЕЩЕ КОМПАКТНЕЕ */
+            .pagination button {
+                padding: 3px 5px;
+                font-size: 9px;
+            }
+            
+            .page-numbers button {
+                padding: 3px 5px;
+                font-size: 9px;
+                min-width: 24px;
             }
         }
 
@@ -925,7 +1087,28 @@
             
             .header-section {
                 padding: 0;
-                padding-top: 80px; /* УВЕЛИЧЕНО */
+                padding-top: 80px;
+            }
+            
+            /* ЕЩЕ БОЛЬШЕ МЕСТА НА БОЛЬШИХ ЭКРАНАХ */
+            .cards-grid {
+                gap: 24px;
+                margin-bottom: 60px;
+                padding-top: 15px;
+            }
+            
+            .pagination-container {
+                margin-top: 25px;
+                margin-bottom: 70px;
+            }
+            
+            /* НА БОЛЬШИХ ЭКРАНАХ ДЕЛАЕМ БОЛЬШЕ РАССТОЯНИЕ МЕЖДУ КНОПКАМИ */
+            .pagination {
+                gap: 12px;
+            }
+            
+            .page-numbers {
+                gap: 10px;
             }
         }
 
@@ -936,7 +1119,28 @@
             
             .header-section {
                 padding: 0 16px;
-                padding-top: 80px; /* УВЕЛИЧЕНО */
+                padding-top: 80px;
+            }
+            
+            /* ОТСТУПЫ ДЛЯ ПЛАНШЕТОВ */
+            .cards-grid {
+                gap: 18px;
+                margin-bottom: 55px;
+                padding-top: 12px;
+            }
+            
+            .pagination-container {
+                margin-top: 22px;
+                margin-bottom: 65px;
+            }
+            
+            /* НА ПЛАНШЕТАХ УМЕРЕННОЕ РАССТОЯНИЕ */
+            .pagination {
+                gap: 8px;
+            }
+            
+            .page-numbers {
+                gap: 6px;
             }
         }
 
@@ -948,7 +1152,7 @@
             .header-section {
                 padding-left: max(12px, env(safe-area-inset-left));
                 padding-right: max(12px, env(safe-area-inset-right));
-                padding-top: 75px; /* УВЕЛИЧЕНО для мобильных */
+                padding-top: 75px;
             }
             
             .tabs {
@@ -976,7 +1180,9 @@
             
             .cards-grid {
                 grid-template-columns: 1fr;
-                gap: 12px;
+                gap: 16px;
+                margin-bottom: 40px;
+                padding-top: 8px;
             }
             
             .task-card {
@@ -1004,15 +1210,15 @@
             }
             
             .catalog-buttons-container {
-                min-height: 62px; /* Увеличено */
+                min-height: 62px;
             }
             
             .executor-select {
                 max-width: 140px;
                 min-width: 120px;
                 font-size: 12px;
-                padding: 9px 8px; /* Увеличено */
-                height: 38px; /* Увеличено */
+                padding: 9px 8px;
+                height: 38px;
             }
             
             .row-label {
@@ -1031,7 +1237,26 @@
             }
             
             .task-title {
-                text-align: left; /* ИЗМЕНЕНИЕ: для мобильных тоже по левому краю */
+                text-align: left;
+            }
+            
+            /* ПАГИНАЦИЯ ДЛЯ МОБИЛЬНЫХ */
+            .pagination-container {
+                margin-top: 15px;
+                margin-bottom: 50px;
+            }
+            
+            /* УБЕРАЕМ СКРОЛЛ И ДЕЛАЕМ ПЕРЕНАСЫВАНИЕ */
+            .pagination {
+                flex-wrap: wrap;
+                justify-content: center;
+                overflow: visible;
+            }
+            
+            .page-numbers {
+                flex-wrap: wrap;
+                justify-content: center;
+                overflow: visible;
             }
         }
 
@@ -1039,7 +1264,7 @@
             .header-section {
                 padding-left: max(10px, env(safe-area-inset-left));
                 padding-right: max(10px, env(safe-area-inset-right));
-                padding-top: 70px; /* УВЕЛИЧЕНО для мобильных */
+                padding-top: 70px;
             }
             
             .tabs {
@@ -1076,7 +1301,7 @@
             
             .task-title {
                 font-size: 15px;
-                text-align: left; /* ИЗМЕНЕНИЕ: для мобильных тоже по левому краю */
+                text-align: left;
             }
             
             .row-label, .row-value {
@@ -1084,15 +1309,15 @@
             }
             
             .catalog-buttons-container {
-                min-height: 58px; /* Увеличено */
+                min-height: 58px;
             }
             
             .executor-select {
                 max-width: 120px;
                 min-width: 100px;
                 font-size: 11px;
-                padding: 8px 7px; /* Увеличено */
-                height: 36px; /* Увеличено */
+                padding: 8px 7px;
+                height: 36px;
             }
             
             .row-label {
@@ -1104,6 +1329,18 @@
                 width: 20px;
                 height: 20px;
                 border-width: 2px;
+            }
+            
+            /* ПАГИНАЦИЯ ДЛЯ МАЛЕНЬКИХ ЭКРАНОВ */
+            .cards-grid {
+                gap: 14px;
+                margin-bottom: 35px;
+                padding-top: 6px;
+            }
+            
+            .pagination-container {
+                margin-top: 12px;
+                margin-bottom: 45px;
             }
         }
 
@@ -1123,15 +1360,15 @@
             .header-section {
                 padding-left: max(8px, env(safe-area-inset-left));
                 padding-right: max(8px, env(safe-area-inset-right));
-                padding-top: 68px; /* УВЕЛИЧЕНО для мобильных */
+                padding-top: 68px;
             }
             
             .executor-select {
                 max-width: 110px;
                 min-width: 90px;
                 font-size: 10px;
-                padding: 7px 6px; /* Увеличено */
-                height: 34px; /* Увеличено */
+                padding: 7px 6px;
+                height: 34px;
             }
             
             .row-label {
@@ -1145,7 +1382,7 @@
             }
             
             .catalog-buttons-container {
-                min-height: 54px; /* Увеличено */
+                min-height: 54px;
             }
             
             .loader {
@@ -1159,13 +1396,34 @@
             }
             
             .task-title {
-                text-align: left; /* ИЗМЕНЕНИЕ: для мобильных тоже по левому краю */
+                text-align: left;
+            }
+            
+            /* ПАГИНАЦИЯ ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ЭКРАНОВ */
+            .cards-grid {
+                gap: 12px;
+                margin-bottom: 30px;
+                padding-top: 5px;
+            }
+            
+            .pagination-container {
+                margin-top: 10px;
+                margin-bottom: 40px;
+            }
+            
+            /* САМАЯ КОМПАКТНАЯ ПАГИНАЦИЯ */
+            .pagination {
+                gap: 2px;
+            }
+            
+            .page-numbers {
+                gap: 2px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- НОВАЯ АНИМАЦИЯ ЗАГРУЗКИ -->
+    <!-- АНИМАЦИЯ ЗАГРУЗКИ -->
     <div class="loader-container" id="loader">
         <div class="loader"></div>
         <div class="loading-text"></div>
@@ -1173,7 +1431,7 @@
     
     <div class="notification" id="notification"></div>
     
-    <!-- НОВАЯ ШАПКА -->
+    <!-- ШАПКА -->
     <header>
         <div class="logo"><img src="https://i.postimg.cc/wjGzSY92/1.png" alt="Logo"></div>
         <div class="site-name" onclick="toggleSiteNameDropdown()">
@@ -1221,16 +1479,18 @@
                     </div>
                 </div>
             </div>
-            <div class="pagination" id="journal-pagination" style="display: none;">
-                <button class="page-btn prev-btn" onclick="changePage('journal', -1)">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="page-info">
-                    Страница <span id="journal-current-page">1</span> из <span id="journal-total-pages">1</span>
+            
+            <!-- НОВАЯ НАВИГАЦИЯ СТРАНИЦ ДЛЯ ЖУРНАЛА С БОЛЬШИМИ ОТСТУПАМИ -->
+            <div class="pagination-container" id="journal-pagination-container" style="display: none;">
+                <div class="pagination">
+                    <button onclick="prevPage('journal')" id="journal-prevBtn" disabled>
+                        <i class="fas fa-arrow-left"></i> Назад
+                    </button>
+                    <div class="page-numbers" id="journal-pageNumbers"></div>
+                    <button onclick="nextPage('journal')" id="journal-nextBtn">
+                        Вперёд <i class="fas fa-arrow-right"></i>
+                    </button>
                 </div>
-                <button class="page-btn next-btn" onclick="changePage('journal', 1)">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
             </div>
         </div>
         
@@ -1243,16 +1503,18 @@
                     </div>
                 </div>
             </div>
-            <div class="pagination" id="tasks-pagination" style="display: none;">
-                <button class="page-btn prev-btn" onclick="changePage('tasks', -1)">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="page-info">
-                    Страница <span id="tasks-current-page">1</span> из <span id="tasks-total-pages">1</span>
+            
+            <!-- НОВАЯ НАВИГАЦИЯ СТРАНИЦ ДЛЯ ЗАДАЧ С БОЛЬШИМИ ОТСТУПАМИ -->
+            <div class="pagination-container" id="tasks-pagination-container" style="display: none;">
+                <div class="pagination">
+                    <button onclick="prevPage('tasks')" id="tasks-prevBtn" disabled>
+                        <i class="fas fa-arrow-left"></i> Назад
+                    </button>
+                    <div class="page-numbers" id="tasks-pageNumbers"></div>
+                    <button onclick="nextPage('tasks')" id="tasks-nextBtn">
+                        Вперёд <i class="fas fa-arrow-right"></i>
+                    </button>
                 </div>
-                <button class="page-btn next-btn" onclick="changePage('tasks', 1)">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
             </div>
         </div>
     </div>
@@ -1291,10 +1553,11 @@
         let tasksData = null;
         let journalData = null;
         
+        // Переменные для новой пагинации
         let currentJournalPage = 1;
         let currentTasksPage = 1;
-        let totalJournalPages = 1;
-        let totalTasksPages = 1;
+        let journalTotalItems = 0;
+        let tasksTotalItems = 0;
 
         // Функция для показа загрузки
         function showLoader(message = 'Загрузка...') {
@@ -1377,38 +1640,101 @@
             }
         }
 
-        function updatePagination(type, currentPage, totalPages) {
-            const pagination = document.getElementById(`${type}-pagination`);
-            const currentPageSpan = document.getElementById(`${type}-current-page`);
-            const totalPagesSpan = document.getElementById(`${type}-total-pages`);
-            const prevBtn = pagination.querySelector('.prev-btn');
-            const nextBtn = pagination.querySelector('.next-btn');
-            
-            currentPageSpan.textContent = currentPage;
-            totalPagesSpan.textContent = totalPages;
-            
-            prevBtn.disabled = currentPage === 1;
-            nextBtn.disabled = currentPage === totalPages;
-            
-            pagination.style.display = totalPages > 1 ? 'flex' : 'none';
-        }
-
-        function changePage(type, direction) {
+        // ФУНКЦИИ НОВОЙ НАВИГАЦИИ
+        function prevPage(type) {
             if (type === 'journal') {
-                const newPage = currentJournalPage + direction;
-                if (newPage >= 1 && newPage <= totalJournalPages) {
-                    currentJournalPage = newPage;
+                if (currentJournalPage > 1) {
+                    currentJournalPage--;
                     renderJournalCards(journalData);
-                    updatePagination('journal', currentJournalPage, totalJournalPages);
+                    renderPageNumbers('journal', currentJournalPage, Math.ceil(journalTotalItems / CARDS_PER_PAGE));
+                    updateNavigationButtons('journal', currentJournalPage, Math.ceil(journalTotalItems / CARDS_PER_PAGE));
                 }
             } else if (type === 'tasks') {
-                const newPage = currentTasksPage + direction;
-                if (newPage >= 1 && newPage <= totalTasksPages) {
-                    currentTasksPage = newPage;
+                if (currentTasksPage > 1) {
+                    currentTasksPage--;
                     renderTasksCards(tasksData);
-                    updatePagination('tasks', currentTasksPage, totalTasksPages);
+                    renderPageNumbers('tasks', currentTasksPage, Math.ceil(tasksTotalItems / CARDS_PER_PAGE));
+                    updateNavigationButtons('tasks', currentTasksPage, Math.ceil(tasksTotalItems / CARDS_PER_PAGE));
                 }
             }
+        }
+
+        function nextPage(type) {
+            const totalPages = type === 'journal' ? 
+                Math.ceil(journalTotalItems / CARDS_PER_PAGE) : 
+                Math.ceil(tasksTotalItems / CARDS_PER_PAGE);
+            
+            if (type === 'journal') {
+                if (currentJournalPage < totalPages) {
+                    currentJournalPage++;
+                    renderJournalCards(journalData);
+                    renderPageNumbers('journal', currentJournalPage, totalPages);
+                    updateNavigationButtons('journal', currentJournalPage, totalPages);
+                }
+            } else if (type === 'tasks') {
+                if (currentTasksPage < totalPages) {
+                    currentTasksPage++;
+                    renderTasksCards(tasksData);
+                    renderPageNumbers('tasks', currentTasksPage, totalPages);
+                    updateNavigationButtons('tasks', currentTasksPage, totalPages);
+                }
+            }
+        }
+
+        function updateNavigationButtons(type, currentPage, totalPages) {
+            document.getElementById(`${type}-prevBtn`).disabled = currentPage === 1;
+            document.getElementById(`${type}-nextBtn`).disabled = currentPage >= totalPages;
+        }
+
+        function renderPageNumbers(type, currentPage, totalPages) {
+            const pageContainer = document.getElementById(`${type}-pageNumbers`);
+            pageContainer.innerHTML = "";
+            
+            if (totalPages <= 1) return;
+            
+            addPageButton(type, 1, pageContainer, currentPage);
+            
+            if (currentPage > 3 && totalPages > 3) {
+                const ellipsis = document.createElement("span");
+                ellipsis.className = "ellipsis";
+                ellipsis.textContent = "...";
+                pageContainer.appendChild(ellipsis);
+            }
+            
+            if (currentPage > 1 && currentPage < totalPages) {
+                addPageButton(type, currentPage, pageContainer, currentPage);
+            }
+            
+            if (currentPage < totalPages - 2 && totalPages > 3) {
+                const ellipsis = document.createElement("span");
+                ellipsis.className = "ellipsis";
+                ellipsis.textContent = "...";
+                pageContainer.appendChild(ellipsis);
+            }
+            
+            if (totalPages > 1) {
+                addPageButton(type, totalPages, pageContainer, currentPage);
+            }
+        }
+
+        function addPageButton(type, pageNumber, container, currentPage) {
+            const btn = document.createElement("button");
+            btn.textContent = pageNumber;
+            if (pageNumber === currentPage) btn.classList.add("active");
+            btn.onclick = () => {
+                if (type === 'journal') {
+                    currentJournalPage = pageNumber;
+                    renderJournalCards(journalData);
+                    renderPageNumbers('journal', currentJournalPage, Math.ceil(journalTotalItems / CARDS_PER_PAGE));
+                    updateNavigationButtons('journal', currentJournalPage, Math.ceil(journalTotalItems / CARDS_PER_PAGE));
+                } else if (type === 'tasks') {
+                    currentTasksPage = pageNumber;
+                    renderTasksCards(tasksData);
+                    renderPageNumbers('tasks', currentTasksPage, Math.ceil(tasksTotalItems / CARDS_PER_PAGE));
+                    updateNavigationButtons('tasks', currentTasksPage, Math.ceil(tasksTotalItems / CARDS_PER_PAGE));
+                }
+            };
+            container.appendChild(btn);
         }
 
         function getCurrentPageData(data, currentPage) {
@@ -1450,7 +1776,6 @@
             }
         }
 
-    
         async function loadJournal() {
             try {
                 if (journalData && !isInitialLoad) {
@@ -1469,8 +1794,6 @@
                 `;
                 
                 const journal = await makeRequest(`${BACKEND_URL}?action=getJournal`);
-                
-                // Убираем reverse() - теперь сортировка в renderJournalCards
                 journalData = journal;
                 renderJournalCards(journalData);
                 
@@ -1557,12 +1880,15 @@
                         </div>
                     </div>
                 `;
-                updatePagination('tasks', 1, 1);
+                
+                document.getElementById('tasks-pagination-container').style.display = 'none';
                 return;
             }
             
-            totalTasksPages = Math.ceil(tasks.length / CARDS_PER_PAGE);
-            if (currentTasksPage > totalTasksPages) {
+            tasksTotalItems = tasks.length;
+            const totalPages = Math.ceil(tasksTotalItems / CARDS_PER_PAGE);
+            
+            if (currentTasksPage > totalPages) {
                 currentTasksPage = 1;
             }
             
@@ -1623,7 +1949,14 @@
                 `;
             }).join('');
             
-            updatePagination('tasks', currentTasksPage, totalTasksPages);
+            // Обновляем навигацию
+            if (totalPages > 1) {
+                document.getElementById('tasks-pagination-container').style.display = 'flex';
+                renderPageNumbers('tasks', currentTasksPage, totalPages);
+                updateNavigationButtons('tasks', currentTasksPage, totalPages);
+            } else {
+                document.getElementById('tasks-pagination-container').style.display = 'none';
+            }
         }
 
         function renderJournalCards(journal) {
@@ -1638,7 +1971,8 @@
                         </div>
                     </div>
                 `;
-                updatePagination('journal', 1, 1);
+                
+                document.getElementById('journal-pagination-container').style.display = 'none';
                 return;
             }
             
@@ -1656,7 +1990,6 @@
             
             // СОРТИРУЕМ ОТКРЫТЫЕ ЗАДАЧИ: НОВЫЕ СВЕРХУ
             openTasks.sort((a, b) => {
-                // Сортируем по дате создания (новые сверху)
                 if (a.createdDate && b.createdDate) {
                     return new Date(b.createdDate) - new Date(a.createdDate);
                 }
@@ -1665,7 +1998,6 @@
             
             // СОРТИРУЕМ ЗАКРЫТЫЕ ЗАДАЧИ: НОВЫЕ СВЕРХУ
             closedTasks.sort((a, b) => {
-                // Сортируем по дате выполнения (новые сверху)
                 if (a.completedDate && b.completedDate) {
                     return new Date(b.completedDate) - new Date(a.completedDate);
                 }
@@ -1675,8 +2007,10 @@
             // ОБЪЕДИНЯЕМ: сначала открытые, потом закрытые
             const sortedJournal = [...openTasks, ...closedTasks];
             
-            totalJournalPages = Math.ceil(sortedJournal.length / CARDS_PER_PAGE);
-            if (currentJournalPage > totalJournalPages) {
+            journalTotalItems = sortedJournal.length;
+            const totalPages = Math.ceil(journalTotalItems / CARDS_PER_PAGE);
+            
+            if (currentJournalPage > totalPages) {
                 currentJournalPage = 1;
             }
             
@@ -1788,14 +2122,18 @@
                 });
             });
             
-            updatePagination('journal', currentJournalPage, totalJournalPages);
+            // Обновляем навигацию
+            if (totalPages > 1) {
+                document.getElementById('journal-pagination-container').style.display = 'flex';
+                renderPageNumbers('journal', currentJournalPage, totalPages);
+                updateNavigationButtons('journal', currentJournalPage, totalPages);
+            } else {
+                document.getElementById('journal-pagination-container').style.display = 'none';
+            }
         }
 
-        // ИСПРАВЛЕННАЯ ФУНКЦИЯ submitTask
         function submitTask(event, taskId, rowIndex) {
-            // Получаем кнопку, на которую нажали
             const button = event.currentTarget;
-            // Получаем карточку задачи
             const card = button.closest('.task-card');
             
             if (!card) {
@@ -1803,7 +2141,6 @@
                 return;
             }
             
-            // Находим селект внутри этой карточки
             const select = card.querySelector('.executor-select');
             
             if (!select) {
@@ -1811,13 +2148,11 @@
                 return;
             }
             
-            // ПРОВЕРЯЕМ, ЧТО ВЫБРАН ИСПОЛНИТЕЛЬ
             if (!select.value || select.value === '' || select.value === 'Кто выполнил?') {
                 showNotification('Выберите исполнителя перед отправкой', 'error');
                 return;
             }
             
-            // Отправляем задачу на выполнение
             completeTask(taskId, select.value, rowIndex);
             event.stopPropagation();
         }
@@ -1909,9 +2244,8 @@
                 }
             });
             
-            // Добавляем обработчик для отслеживания изменений в селектах исполнителей
             document.addEventListener('change', function(e) {
-                if (e.target && e.target.classList.contains('executor-select')) {
+                if (e.target && e.target.classList.contains('.executor-select')) {
                     const card = e.target.closest('.task-card');
                     const submitBtn = card.querySelector('.submit-btn');
                     if (submitBtn) {
