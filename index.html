@@ -688,7 +688,7 @@
             background-color: #7a2a2a;
         }
 
-        /* НОВАЯ НАВИГАЦИЯ СТРАНИЦ С БОЛЬШИМИ ОТСТУПАМИ И БЕЗ СКРОЛЛА */
+        /* НОВАЯ НАВИГАЦИЯ СТРАНИЦ С БОЛЬШИМИ КНОПКАМИ И БЕЗ СКРОЛЛА */
         .pagination-container {
             display: flex;
             justify-content: center;
@@ -722,7 +722,7 @@
             font-weight: 700;
             border: none;
             border-radius: 6px;
-            padding: 8px 14px;
+            padding: 10px 18px; /* УВЕЛИЧИЛИ РАЗМЕР КНОПОК */
             cursor: pointer;
             transition: all 0.2s ease;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -731,6 +731,7 @@
             gap: 6px;
             white-space: nowrap;
             flex-shrink: 0;
+            font-size: 14px; /* УВЕЛИЧИЛИ ШРИФТ */
         }
 
         .pagination button:hover:not(:disabled) {
@@ -766,11 +767,12 @@
             font-weight: 700;
             border: none;
             border-radius: 6px;
-            padding: 8px 14px;
+            padding: 10px 18px; /* УВЕЛИЧИЛИ РАЗМЕР КНОПОК */
             cursor: pointer;
             transition: all 0.2s ease;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             flex-shrink: 0;
+            font-size: 14px; /* УВЕЛИЧИЛИ ШРИФТ */
         }
 
         .page-numbers button:hover {
@@ -789,6 +791,7 @@
             font-weight: 700;
             padding: 0 5px;
             flex-shrink: 0;
+            font-size: 16px; /* УВЕЛИЧИЛИ ШРИФТ МНОГОТОЧИЯ */
         }
 
         /* АДАПТИВНОСТЬ ДЛЯ ШАПКИ */
@@ -862,7 +865,7 @@
                 padding: 12px 0;
             }
             
-            /* АДАПТИВНАЯ ПАГИНАЦИЯ БЕЗ СКРОЛЛА */
+            /* АДАПТИВНАЯ ПАГИНАЦИЯ С БОЛЬШИМИ КНОПКАМИ БЕЗ СКРОЛЛА */
             .pagination {
                 gap: 6px;
                 flex-wrap: wrap;
@@ -873,6 +876,17 @@
                 gap: 6px;
                 flex-wrap: wrap;
                 justify-content: center;
+            }
+            
+            /* УВЕЛИЧЕННЫЕ КНОПКИ ПАГИНАЦИИ ДЛЯ МОБИЛЬНЫХ */
+            .pagination button {
+                padding: 8px 14px; /* УВЕЛИЧИЛИ ДЛЯ МОБИЛЬНЫХ */
+                font-size: 13px;
+            }
+            
+            .page-numbers button {
+                padding: 8px 14px; /* УВЕЛИЧИЛИ ДЛЯ МОБИЛЬНЫХ */
+                font-size: 13px;
             }
         }
 
@@ -938,18 +952,18 @@
                 text-align: left;
             }
             
-            /* Адаптивность для новой пагинации */
+            /* Адаптивность для новой пагинации с большими кнопками */
             .pagination {
                 gap: 4px;
             }
             
             .pagination button {
-                padding: 6px 10px;
+                padding: 7px 12px; /* УВЕЛИЧИЛИ ДЛЯ МАЛЕНЬКИХ ЭКРАНОВ */
                 font-size: 12px;
             }
             
             .page-numbers button {
-                padding: 6px 10px;
+                padding: 7px 12px; /* УВЕЛИЧИЛИ ДЛЯ МАЛЕНЬКИХ ЭКРАНОВ */
                 font-size: 12px;
             }
             
@@ -970,14 +984,14 @@
                 padding: 10px 0;
             }
             
-            /* ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ЭКРАНОВ УМЕНЬШАЕМ ПАГИНАЦИЮ */
+            /* ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ЭКРАНОВ УМЕНЬШАЕМ ПАГИНАЦИЮ, НО ОСТАВЛЯЕМ БОЛЬШЕ ЧЕМ БЫЛО */
             .pagination button {
-                padding: 5px 8px;
+                padding: 6px 10px; /* БОЛЬШЕ ЧЕМ БЫЛО РАНЬШЕ */
                 font-size: 11px;
             }
             
             .page-numbers button {
-                padding: 5px 8px;
+                padding: 6px 10px; /* БОЛЬШЕ ЧЕМ БЫЛО РАНЬШЕ */
                 font-size: 11px;
             }
         }
@@ -1034,18 +1048,18 @@
                 text-align: left;
             }
             
-            /* Адаптивность для новой пагинации */
+            /* Адаптивность для новой пагинации с большими кнопками */
             .pagination {
                 gap: 3px;
             }
             
             .pagination button {
-                padding: 4px 6px;
+                padding: 5px 8px; /* БОЛЬШЕ ЧЕМ БЫЛО РАНЬШЕ */
                 font-size: 10px;
             }
             
             .page-numbers button {
-                padding: 4px 6px;
+                padding: 5px 8px; /* БОЛЬШЕ ЧЕМ БЫЛО РАНЬШЕ */
                 font-size: 10px;
             }
             
@@ -1066,14 +1080,14 @@
                 padding: 8px 0;
             }
             
-            /* ДЛЯ САМЫХ МАЛЕНЬКИХ ЭКРАНОВ ДЕЛАЕМ КНОПКИ ЕЩЕ КОМПАКТНЕЕ */
+            /* ДЛЯ САМЫХ МАЛЕНЬКИХ ЭКРАНОВ ДЕЛАЕМ КНОПКИ ЕЩЕ КОМПАКТНЕЕ, НО ВСЕ РАВНО БОЛЬШЕ ЧЕМ БЫЛО */
             .pagination button {
-                padding: 3px 5px;
+                padding: 4px 6px; /* БОЛЬШЕ ЧЕМ БЫЛО РАНЬШЕ */
                 font-size: 9px;
             }
             
             .page-numbers button {
-                padding: 3px 5px;
+                padding: 4px 6px; /* БОЛЬШЕ ЧЕМ БЫЛО РАНЬШЕ */
                 font-size: 9px;
                 min-width: 24px;
             }
@@ -1102,13 +1116,24 @@
                 margin-bottom: 70px;
             }
             
-            /* НА БОЛЬШИХ ЭКРАНАХ ДЕЛАЕМ БОЛЬШЕ РАССТОЯНИЕ МЕЖДУ КНОПКАМИ */
+            /* НА БОЛЬШИХ ЭКРАНАХ ДЕЛАЕМ БОЛЬШЕ РАССТОЯНИЕ МЕЖДУ КНОПКАМИ И КНОПКИ ЕЩЕ БОЛЬШЕ */
             .pagination {
                 gap: 12px;
             }
             
             .page-numbers {
                 gap: 10px;
+            }
+            
+            /* НА БОЛЬШИХ ЭКРАНАХ ДЕЛАЕМ КНОПКИ ЕЩЕ БОЛЬШЕ */
+            .pagination button {
+                padding: 12px 20px; /* УВЕЛИЧИЛИ ДЛЯ БОЛЬШИХ ЭКРАНОВ */
+                font-size: 15px;
+            }
+            
+            .page-numbers button {
+                padding: 12px 20px; /* УВЕЛИЧИЛИ ДЛЯ БОЛЬШИХ ЭКРАНОВ */
+                font-size: 15px;
             }
         }
 
@@ -1240,7 +1265,7 @@
                 text-align: left;
             }
             
-            /* ПАГИНАЦИЯ ДЛЯ МОБИЛЬНЫХ */
+            /* ПАГИНАЦИЯ ДЛЯ МОБИЛЬНЫХ С БОЛЬШИМИ КНОПКАМИ */
             .pagination-container {
                 margin-top: 15px;
                 margin-bottom: 50px;
@@ -1331,7 +1356,7 @@
                 border-width: 2px;
             }
             
-            /* ПАГИНАЦИЯ ДЛЯ МАЛЕНЬКИХ ЭКРАНОВ */
+            /* ПАГИНАЦИЯ ДЛЯ МАЛЕНЬКИХ ЭКРАНОВ С БОЛЬШИМИ КНОПКАМИ */
             .cards-grid {
                 gap: 14px;
                 margin-bottom: 35px;
@@ -1399,7 +1424,7 @@
                 text-align: left;
             }
             
-            /* ПАГИНАЦИЯ ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ЭКРАНОВ */
+            /* ПАГИНАЦИЯ ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ЭКРАНОВ С БОЛЬШИМИ КНОПКАМИ */
             .cards-grid {
                 gap: 12px;
                 margin-bottom: 30px;
@@ -1411,7 +1436,7 @@
                 margin-bottom: 40px;
             }
             
-            /* САМАЯ КОМПАКТНАЯ ПАГИНАЦИЯ */
+            /* САМАЯ КОМПАКТНАЯ ПАГИНАЦИЯ, НО КНОПКИ ВСЕ РАВНО БОЛЬШЕ ЧЕМ БЫЛО */
             .pagination {
                 gap: 2px;
             }
@@ -1480,7 +1505,7 @@
                 </div>
             </div>
             
-            <!-- НОВАЯ НАВИГАЦИЯ СТРАНИЦ ДЛЯ ЖУРНАЛА С БОЛЬШИМИ ОТСТУПАМИ -->
+            <!-- НОВАЯ НАВИГАЦИЯ СТРАНИЦ ДЛЯ ЖУРНАЛА С БОЛЬШИМИ КНОПКАМИ -->
             <div class="pagination-container" id="journal-pagination-container" style="display: none;">
                 <div class="pagination">
                     <button onclick="prevPage('journal')" id="journal-prevBtn" disabled>
@@ -1504,7 +1529,7 @@
                 </div>
             </div>
             
-            <!-- НОВАЯ НАВИГАЦИЯ СТРАНИЦ ДЛЯ ЗАДАЧ С БОЛЬШИМИ ОТСТУПАМИ -->
+            <!-- НОВАЯ НАВИГАЦИЯ СТРАНИЦ ДЛЯ ЗАДАЧ С БОЛЬШИМИ КНОПКАМИ -->
             <div class="pagination-container" id="tasks-pagination-container" style="display: none;">
                 <div class="pagination">
                     <button onclick="prevPage('tasks')" id="tasks-prevBtn" disabled>
