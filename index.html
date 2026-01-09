@@ -395,7 +395,7 @@
         }
 
         .row-label {
-            font-size: 16px;
+            font-size: 14px;
             color: #000000;
             font-weight: 700;
             flex-shrink: 0;
@@ -406,7 +406,7 @@
         }
 
         .row-value {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
             color: #000000;
             text-align: right;
@@ -420,10 +420,10 @@
 
         .executor-select {
             background: white;
-            border: 2px solid #1a2f40;
+            border: 2px solid #FFFFFF;
             border-radius: 15px;
             padding: 10px 10px; /* Увеличено с 8px 10px */
-            font-size: 13px;
+            font-size: 16px;
             font-weight: 700;
             color: #1a2f40;
             cursor: pointer;
@@ -439,7 +439,7 @@
 
         .executor-select:focus {
             outline: none;
-            border-color: #dc143c;
+            border-color: #FFFFFF;
         }
 
         .buttons-container {
@@ -714,6 +714,7 @@
             font-weight: 600;
             min-width: 40px;
             text-align: center;
+            position: relative;
         }
 
         .page-btn:hover:not(:disabled) {
@@ -739,6 +740,35 @@
             color: #666;
             font-weight: 600;
             margin: 0 10px;
+        }
+
+        /* Стили для тултипов кнопок пагинации */
+        .page-btn[title]:hover::after {
+            content: attr(title);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 1000;
+            margin-bottom: 5px;
+        }
+
+        .page-btn[title]:hover::before {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+            margin-bottom: -5px;
         }
 
         /* АДАПТИВНОСТЬ ДЛЯ НОВОЙ ШАПКИ */
@@ -1222,14 +1252,20 @@
                 </div>
             </div>
             <div class="pagination" id="journal-pagination" style="display: none;">
-                <button class="page-btn prev-btn" onclick="changePage('journal', -1)">
+                <button class="page-btn first-btn" onclick="goToPage('journal', 1)" title="Первая страница">
+                    <i class="fas fa-fast-backward"></i>
+                </button>
+                <button class="page-btn prev-btn" onclick="changePage('journal', -1)" title="Предыдущая страница">
                     <i class="fas fa-chevron-left"></i>
                 </button>
                 <div class="page-info">
                     Страница <span id="journal-current-page">1</span> из <span id="journal-total-pages">1</span>
                 </div>
-                <button class="page-btn next-btn" onclick="changePage('journal', 1)">
+                <button class="page-btn next-btn" onclick="changePage('journal', 1)" title="Следующая страница">
                     <i class="fas fa-chevron-right"></i>
+                </button>
+                <button class="page-btn last-btn" onclick="goToPage('journal', totalJournalPages)" title="Последняя страница">
+                    <i class="fas fa-fast-forward"></i>
                 </button>
             </div>
         </div>
@@ -1244,14 +1280,20 @@
                 </div>
             </div>
             <div class="pagination" id="tasks-pagination" style="display: none;">
-                <button class="page-btn prev-btn" onclick="changePage('tasks', -1)">
+                <button class="page-btn first-btn" onclick="goToPage('tasks', 1)" title="Первая страница">
+                    <i class="fas fa-fast-backward"></i>
+                </button>
+                <button class="page-btn prev-btn" onclick="changePage('tasks', -1)" title="Предыдущая страница">
                     <i class="fas fa-chevron-left"></i>
                 </button>
                 <div class="page-info">
                     Страница <span id="tasks-current-page">1</span> из <span id="tasks-total-pages">1</span>
                 </div>
-                <button class="page-btn next-btn" onclick="changePage('tasks', 1)">
+                <button class="page-btn next-btn" onclick="changePage('tasks', 1)" title="Следующая страница">
                     <i class="fas fa-chevron-right"></i>
+                </button>
+                <button class="page-btn last-btn" onclick="goToPage('tasks', totalTasksPages)" title="Последняя страница">
+                    <i class="fas fa-fast-forward"></i>
                 </button>
             </div>
         </div>
@@ -1377,18 +1419,44 @@
             }
         }
 
+        function goToPage(type, pageNumber) {
+            if (type === 'journal') {
+                if (pageNumber >= 1 && pageNumber <= totalJournalPages && pageNumber !== currentJournalPage) {
+                    currentJournalPage = pageNumber;
+                    renderJournalCards(journalData);
+                    updatePagination('journal', currentJournalPage, totalJournalPages);
+                }
+            } else if (type === 'tasks') {
+                if (pageNumber >= 1 && pageNumber <= totalTasksPages && pageNumber !== currentTasksPage) {
+                    currentTasksPage = pageNumber;
+                    renderTasksCards(tasksData);
+                    updatePagination('tasks', currentTasksPage, totalTasksPages);
+                }
+            }
+        }
+
         function updatePagination(type, currentPage, totalPages) {
             const pagination = document.getElementById(`${type}-pagination`);
             const currentPageSpan = document.getElementById(`${type}-current-page`);
             const totalPagesSpan = document.getElementById(`${type}-total-pages`);
+            const firstBtn = pagination.querySelector('.first-btn');
             const prevBtn = pagination.querySelector('.prev-btn');
             const nextBtn = pagination.querySelector('.next-btn');
+            const lastBtn = pagination.querySelector('.last-btn');
             
             currentPageSpan.textContent = currentPage;
             totalPagesSpan.textContent = totalPages;
             
+            // Обновляем состояние кнопок
+            firstBtn.disabled = currentPage === 1;
             prevBtn.disabled = currentPage === 1;
             nextBtn.disabled = currentPage === totalPages;
+            lastBtn.disabled = currentPage === totalPages;
+            
+            // Обновляем обработчики для кнопки "Последняя"
+            lastBtn.onclick = function() {
+                goToPage(type, totalPages);
+            };
             
             pagination.style.display = totalPages > 1 ? 'flex' : 'none';
         }
@@ -1396,18 +1464,10 @@
         function changePage(type, direction) {
             if (type === 'journal') {
                 const newPage = currentJournalPage + direction;
-                if (newPage >= 1 && newPage <= totalJournalPages) {
-                    currentJournalPage = newPage;
-                    renderJournalCards(journalData);
-                    updatePagination('journal', currentJournalPage, totalJournalPages);
-                }
+                goToPage('journal', newPage);
             } else if (type === 'tasks') {
                 const newPage = currentTasksPage + direction;
-                if (newPage >= 1 && newPage <= totalTasksPages) {
-                    currentTasksPage = newPage;
-                    renderTasksCards(tasksData);
-                    updatePagination('tasks', currentTasksPage, totalTasksPages);
-                }
+                goToPage('tasks', newPage);
             }
         }
 
@@ -1807,7 +1867,7 @@
             const select = card.querySelector('.executor-select');
             
             if (!select) {
-                showNotification('Ошибка: поле выбора исполнителя не найдено', 'error');
+                showNotification('Ошибка: поле выбора исполнителя не найдена', 'error');
                 return;
             }
             
