@@ -290,25 +290,33 @@
             border-color: var(--accent);
         }
 
-        .add-task-btn {
+        /* СТИЛИ ДЛЯ СТРОКИ С КОЛИЧЕСТВОМ ОТКРЫТЫХ ЗАДАЧ */
+        .open-tasks-counter {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
             background-color: #1a2f40;
             color: white;
-            border: none;
-            padding: 14px 24px;
-            font-size: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
             border-radius: 6px;
             font-weight: 700;
+            font-size: 15px;
             margin: 8px 0 16px;
             width: 100%;
-            touch-action: manipulation; /* Предотвращает масштабирование при двойном тапе */
         }
 
-        .add-task-btn:hover {
-            background-color: #0d1f2d;
-            transform: translateY(-1px);
+        .open-tasks-counter .label {
+            flex: 1;
+            text-align: left;
+        }
+
+        .open-tasks-counter .count {
+            background-color: #dc143c;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 16px;
+            min-width: 40px;
+            text-align: center;
         }
 
         .tab-content {
@@ -807,6 +815,17 @@
                 font-size: 12px;
             }
             
+            .open-tasks-counter {
+                padding: 12px 14px;
+                font-size: 14px;
+            }
+            
+            .open-tasks-counter .count {
+                font-size: 15px;
+                padding: 5px 10px;
+                min-width: 36px;
+            }
+            
             .task-title {
                 text-align: left; /* ИЗМЕНЕНИЕ: для мобильных тоже по левому краю */
             }
@@ -870,6 +889,17 @@
                 height: 20px; /* Увеличено */
             }
             
+            .open-tasks-counter {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+            
+            .open-tasks-counter .count {
+                font-size: 14px;
+                padding: 4px 8px;
+                min-width: 32px;
+            }
+            
             .task-title {
                 text-align: left; /* ИЗМЕНЕНИЕ: для мобильных тоже по левому краю */
             }
@@ -921,6 +951,17 @@
                 height: 34px; /* Увеличено с 30px */
                 padding: 7px 6px; /* Увеличено */
                 font-size: 10px;
+            }
+            
+            .open-tasks-counter {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+            
+            .open-tasks-counter .count {
+                font-size: 13px;
+                padding: 3px 6px;
+                min-width: 28px;
             }
             
             .task-title {
@@ -975,9 +1016,9 @@
                 flex: 1 1 calc(50% - 10px);
             }
             
-            .add-task-btn {
+            .open-tasks-counter {
                 margin: 6px 0 12px;
-                padding: 12px 8px;
+                padding: 12px 14px;
                 font-size: 14px;
             }
             
@@ -1065,9 +1106,9 @@
                 flex: 1 1 calc(50% - 6px);
             }
             
-            .add-task-btn {
+            .open-tasks-counter {
                 margin: 4px 0 10px;
-                padding: 10px 6px;
+                padding: 10px 12px;
                 font-size: 13px;
             }
             
@@ -1218,9 +1259,10 @@
                 <button class="tab-btn" data-tab="tab2">КАТАЛОГ ЗАДАЧ</button>
             </div>
             
-            <button class="add-task-btn" onclick="window.open('https://i.pinimg.com/1200x/2f/dc/3e/2fdc3e8077a2024240236b53fd21e36c.jpg', '_blank')">
-                ДОБАВИТЬ ЗАДАЧУ
-            </button>
+            <div class="open-tasks-counter" id="open-tasks-counter">
+                <span class="label">Открытых задач:</span>
+                <span class="count">0</span>
+            </div>
         </div>
         
         <div class="tab-content active" id="tab1">
@@ -1669,6 +1711,7 @@
 
         function renderJournalCards(journal) {
             const journalCards = document.getElementById('journal-cards');
+            const openTasksCounter = document.getElementById('open-tasks-counter');
             
             if (!journal || journal.length === 0) {
                 journalCards.innerHTML = `
@@ -1679,8 +1722,25 @@
                         </div>
                     </div>
                 `;
+                
+                // Обновляем счетчик открытых задач
+                if (openTasksCounter) {
+                    openTasksCounter.querySelector('.count').textContent = '0';
+                }
+                
                 updatePagination('journal', 1, 1);
                 return;
+            }
+            
+            // Подсчет открытых задач
+            let openTasksCount = 0;
+            if (journal && journal.length > 0) {
+                openTasksCount = journal.filter(task => !task.isCompleted).length;
+            }
+            
+            // Обновляем счетчик
+            if (openTasksCounter) {
+                openTasksCounter.querySelector('.count').textContent = openTasksCount;
             }
             
             // РАЗДЕЛЯЕМ ЗАДАЧИ НА ОТКРЫТЫЕ И ЗАКРЫТЫЕ
@@ -1708,7 +1768,7 @@
             closedTasks.sort((a, b) => {
                 // Сортируем по дате выполнения (новые сверху)
                 if (a.completedDate && b.completedDate) {
-                    return new Date(b.completedDate) - new Date(a.completedDate);
+                    return new Date(b.completedDate) - new Date(a.createdDate);
                 }
                 return 0;
             });
