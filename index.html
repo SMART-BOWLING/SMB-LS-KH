@@ -1537,7 +1537,7 @@
             </div>
             
             <div class="open-tasks-counter" id="open-tasks-counter">
-                <span class="label">Количество открытых задач:</span>
+                <span class="label">Количество невыполненных задач:</span>
                 <span class="count">0</span>
             </div>
         </div>
@@ -1931,7 +1931,7 @@
                 if (journalData && journalData.length > 0) {
                     openTasksCount = journalData.filter(task => !task.isCompleted).length;
                 }
-                labelSpan.innerHTML = 'Количество открытых задач:';
+                labelSpan.innerHTML = 'Количество невыполненных задач:';
                 countSpan.textContent = openTasksCount;
                 countSpan.style.backgroundColor = '#dc143c'; // Красный цвет для открытых задач
             }
