@@ -1537,13 +1537,13 @@
             </div>
             
             <div class="open-tasks-counter" id="open-tasks-counter">
-                <span class="label">Открытых задач:</span>
+                <span class="label">Количество открытых задач:</span>
                 <span class="count">0</span>
             </div>
         </div>
         
         <div class="date-filter-container" id="date-filter-container">
-            <span class="date-filter-label">Выберите дату выполнения:</span>
+            <span class="date-filter-label">Просмотр выполненных задач по дате</span>
             <div class="date-input-wrapper">
                 <i class="fas fa-calendar-alt calendar-icon"></i>
                 <input type="text" class="date-filter-input" id="date-filter-input" placeholder="Выберите дату" readonly>
@@ -1921,7 +1921,7 @@
             if (isFilterActive && currentFilterDate) {
                 // Показываем количество всех задач за выбранную дату (и выполненных, и невыполненных)
                 const allTasksCount = countAllTasksByDate(currentFilterDate, originalJournalData);
-                labelSpan.innerHTML = `Задачи с датой выполнения: ${currentFilterDate}`;
+                labelSpan.innerHTML = `Выполненные задачи за дату: ${currentFilterDate}`;
                 countSpan.textContent = allTasksCount;
                 // Оставляем красный цвет фона как было изначально
                 countSpan.style.backgroundColor = '#dc143c';
@@ -1931,7 +1931,7 @@
                 if (journalData && journalData.length > 0) {
                     openTasksCount = journalData.filter(task => !task.isCompleted).length;
                 }
-                labelSpan.innerHTML = 'Открытых задач:';
+                labelSpan.innerHTML = 'Количество открытых задач:';
                 countSpan.textContent = openTasksCount;
                 countSpan.style.backgroundColor = '#dc143c'; // Красный цвет для открытых задач
             }
