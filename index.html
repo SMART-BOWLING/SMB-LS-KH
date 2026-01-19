@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>SMB-LS-KH</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
@@ -12,7 +13,7 @@
             --light-bg: #fefefe;
             --dark-bg: #1a1a1a;
             --accent: #dc143c;
-            --text-dark: #1a1a1a;
+            --text-dark: #1a2f40;
             --text-light: #ffffff;
             --text-gray: #FFF;
             --text-light-gray: #999999;
@@ -300,6 +301,14 @@
             font-size: 15px;
             margin: 8px 0 16px;
             width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .open-tasks-counter:hover {
+            background-color: #1c3448;
+            transform: translateY(-1px);
         }
 
         .open-tasks-counter .label {
@@ -316,9 +325,131 @@
             text-align: center;
         }
 
-        .tab-content {
+        .date-filter-container {
             display: none;
             padding: 16px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .date-filter-container.show {
+            display: flex;
+        }
+
+        .date-filter-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a2f40;
+        }
+
+        .date-input-wrapper {
+            position: relative;
+            min-width: 200px;
+            flex: 1;
+        }
+
+        .date-filter-input {
+            padding: 8px 12px;
+            padding-left: 40px;
+            border: 1px solid #d0d0d0;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            background-color: white;
+            color: #1a2f40;
+            cursor: pointer;
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .date-filter-input:focus {
+            outline: none;
+            border-color: #dc143c;
+        }
+
+        .calendar-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            pointer-events: none;
+        }
+
+        .clear-filter-btn {
+            padding: 8px 16px;
+            background-color: #1a2f40;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .clear-filter-btn:hover {
+            background-color: #0d1f2d;
+        }
+
+        /* Стили для календаря Flatpickr */
+        .flatpickr-calendar {
+            font-family: "Poppins", sans-serif;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange, .flatpickr-day.selected.inRange, .flatpickr-day.startRange.inRange, .flatpickr-day.endRange.inRange, .flatpickr-day.selected:focus, .flatpickr-day.startRange:focus, .flatpickr-day.endRange:focus, .flatpickr-day.selected:hover, .flatpickr-day.startRange:hover, .flatpickr-day.endRange:hover, .flatpickr-day.selected.prevMonthDay, .flatpickr-day.startRange.prevMonthDay, .flatpickr-day.endRange.prevMonthDay, .flatpickr-day.selected.nextMonthDay, .flatpickr-day.startRange.nextMonthDay, .flatpickr-day.endRange.nextMonthDay {
+            background: #dc143c;
+            border-color: #dc143c;
+        }
+
+        .flatpickr-day.today {
+            border-color: #1a2f40;
+        }
+
+        .flatpickr-day.today:hover {
+            background: #1a2f40;
+            border-color: #1a2f40;
+            color: white;
+        }
+
+        .flatpickr-months .flatpickr-month {
+            background: #1a2f40;
+            color: white;
+            fill: white;
+        }
+
+        .flatpickr-current-month .flatpickr-monthDropdown-months {
+            color: white;
+        }
+
+        .flatpickr-current-month input.cur-year {
+            color: white;
+        }
+
+        .flatpickr-weekdays {
+            background: #2d3e50;
+        }
+
+        .flatpickr-weekday {
+            color: white;
+        }
+
+        .flatpickr-day {
+            font-weight: 600;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 0;
             flex: 1;
             overflow-y: auto;
             flex-direction: column;
@@ -336,6 +467,7 @@
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 16px;
         }
 
         .task-card {
@@ -427,20 +559,20 @@
         }
 
         .executor-select {
-            background: #cccccc; /* Цвет как у неактивной кнопки "Отправить" */
-            border: 2px solid #cccccc; /* Цвет как у неактивной кнопки "Отправить" */
+            background: #cccccc;
+            border: 2px solid #cccccc;
             border-radius: 15px;
-            padding: 8px 10px; /* Уменьшил padding по высоте */
-            font-size: 15px; /* Чуть уменьшил шрифт */
+            padding: 8px 10px;
+            font-size: 15px;
             font-weight: 700;
-            color: #666666; /* Серый цвет текста */
+            color: #666666;
             cursor: pointer;
             text-align: left;
             transition: all 0.3s ease;
             width: auto;
             max-width: 160px;
             min-width: 140px;
-            height: 36px; /* Уменьшил высоту кнопки */
+            height: 36px;
             display: flex;
             align-items: center;
             touch-action: manipulation;
@@ -691,6 +823,7 @@
             transition: all 0.4s ease;
             background-color: var(--text-dark);
             font-size: 13px;
+            display: none;
         }
 
         .notification.show {
@@ -762,6 +895,18 @@
             margin: 0 10px;
         }
 
+        /* iPhone-specific fixes */
+        @supports (-webkit-touch-callout: none) {
+            .date-filter-input {
+                padding-right: 30px;
+            }
+            
+            .date-filter-container {
+                padding-left: calc(16px + env(safe-area-inset-left));
+                padding-right: calc(16px + env(safe-area-inset-right));
+            }
+        }
+
         @media (max-width: 767px) {
             header {
                 padding: 12px 15px;
@@ -781,6 +926,9 @@
             
             .header-section {
                 padding-top: 75px;
+                padding-left: calc(16px + env(safe-area-inset-left));
+                padding-right: calc(16px + env(safe-area-inset-right));
+                width: calc(100% - env(safe-area-inset-left) - env(safe-area-inset-right));
             }
             
             .schema-button,
@@ -810,11 +958,11 @@
             }
             
             .executor-select {
-                height: 34px; /* Уменьшил высоту для мобильных */
-                padding: 7px 8px; /* Уменьшил padding */
+                height: 34px;
+                padding: 7px 8px;
                 font-size: 12px;
-                background: #cccccc; /* Цвет как у неактивной кнопки "Отправить" */
-                border: 2px solid #cccccc; /* Цвет как у неактивной кнопки "Отправить" */
+                background: #cccccc;
+                border: 2px solid #cccccc;
             }
             
             .open-tasks-counter {
@@ -828,8 +976,69 @@
                 min-width: 36px;
             }
             
+            /* ОСНОВНОЙ ФИКС ДЛЯ iPhone - полная перестройка фильтра */
+            .date-filter-container {
+                padding: 12px;
+                padding-left: calc(12px + env(safe-area-inset-left));
+                padding-right: calc(12px + env(safe-area-inset-right));
+                gap: 10px;
+                flex-direction: column;
+                align-items: stretch;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .date-filter-label {
+                text-align: center;
+                width: 100%;
+                font-size: 14px;
+                margin-bottom: 5px;
+            }
+            
+            .date-input-wrapper {
+                min-width: 100%;
+                max-width: 100%;
+                width: 100%;
+                flex: none;
+            }
+            
+            .date-filter-input {
+                width: 100%;
+                max-width: 100%;
+                font-size: 14px;
+                padding-left: 40px;
+                padding-right: 12px;
+                box-sizing: border-box;
+                -webkit-appearance: none;
+                appearance: none;
+                border-radius: 6px;
+                height: 44px;
+                border: 1px solid #ccc;
+            }
+            
+            .clear-filter-btn {
+                width: 100%;
+                padding: 12px 16px;
+                font-size: 14px;
+                height: 44px;
+                border-radius: 6px;
+                box-sizing: border-box;
+            }
+            
+            .calendar-icon {
+                left: 14px;
+            }
+            
             .task-title {
                 text-align: left;
+            }
+            
+            /* Мобильная версия календаря */
+            .flatpickr-calendar {
+                max-width: calc(100vw - 40px) !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                width: calc(100vw - 40px) !important;
             }
         }
 
@@ -852,6 +1061,8 @@
             
             .header-section {
                 padding-top: 70px;
+                padding-left: calc(12px + env(safe-area-inset-left));
+                padding-right: calc(12px + env(safe-area-inset-right));
             }
             
             .schema-button,
@@ -881,11 +1092,11 @@
             }
             
             .executor-select {
-                height: 32px; /* Уменьшил высоту для маленьких экранов */
-                padding: 6px 7px; /* Уменьшил padding */
+                height: 32px;
+                padding: 6px 7px;
                 font-size: 11px;
-                background: #cccccc; /* Цвет как у неактивной кнопки "Отправить" */
-                border: 2px solid #cccccc; /* Цвет как у неактивной кнопки "Отправить" */
+                background: #cccccc;
+                border: 2px solid #cccccc;
             }
             
             .menu-button {
@@ -902,6 +1113,26 @@
                 font-size: 14px;
                 padding: 4px 8px;
                 min-width: 32px;
+            }
+            
+            /* iPhone-specific для очень маленьких экранов */
+            .date-filter-container {
+                padding: 10px;
+                padding-left: calc(10px + env(safe-area-inset-left));
+                padding-right: calc(10px + env(safe-area-inset-right));
+                gap: 8px;
+            }
+            
+            .date-filter-input {
+                font-size: 13px;
+                padding: 10px 12px 10px 40px;
+                height: 42px;
+            }
+            
+            .clear-filter-btn {
+                padding: 10px 14px;
+                font-size: 13px;
+                height: 42px;
             }
             
             .task-title {
@@ -923,6 +1154,8 @@
             
             .header-section {
                 padding-top: 68px;
+                padding-left: calc(10px + env(safe-area-inset-left));
+                padding-right: calc(10px + env(safe-area-inset-right));
             }
             
             .schema-button,
@@ -952,11 +1185,11 @@
             }
             
             .executor-select {
-                height: 30px; /* Уменьшил высоту для очень маленьких экранов */
-                padding: 5px 6px; /* Уменьшил padding */
+                height: 30px;
+                padding: 5px 6px;
                 font-size: 10px;
-                background: #cccccc; /* Цвет как у неактивной кнопки "Отправить" */
-                border: 2px solid #cccccc; /* Цвет как у неактивной кнопки "Отправить" */
+                background: #cccccc;
+                border: 2px solid #cccccc;
             }
             
             .open-tasks-counter {
@@ -968,6 +1201,34 @@
                 font-size: 13px;
                 padding: 3px 6px;
                 min-width: 28px;
+            }
+            
+            /* iPhone-specific для самых маленьких экранов */
+            .date-filter-container {
+                padding: 8px;
+                padding-left: calc(8px + env(safe-area-inset-left));
+                padding-right: calc(8px + env(safe-area-inset-right));
+            }
+            
+            .date-filter-label {
+                font-size: 13px;
+            }
+            
+            .date-filter-input {
+                font-size: 12px;
+                padding: 8px 10px 8px 35px;
+                height: 40px;
+            }
+            
+            .calendar-icon {
+                left: 10px;
+                font-size: 14px;
+            }
+            
+            .clear-filter-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+                height: 40px;
             }
             
             .task-title {
@@ -1006,6 +1267,7 @@
                 padding-left: max(12px, env(safe-area-inset-left));
                 padding-right: max(12px, env(safe-area-inset-right));
                 padding-top: 75px;
+                width: calc(100% - env(safe-area-inset-left) - env(safe-area-inset-right));
             }
             
             .tabs {
@@ -1028,12 +1290,15 @@
             }
             
             .tab-content {
-                padding: 12px;
+                padding: 0;
             }
             
             .cards-grid {
                 grid-template-columns: 1fr;
                 gap: 12px;
+                padding: 12px;
+                padding-left: calc(12px + env(safe-area-inset-left));
+                padding-right: calc(12px + env(safe-area-inset-right));
             }
             
             .task-card {
@@ -1070,8 +1335,8 @@
                 font-size: 12px;
                 padding: 7px 8px;
                 height: 34px;
-                background: #cccccc; /* Цвет как у неактивной кнопки "Отправить" */
-                border: 2px solid #cccccc; /* Цвет как у неактивной кнопки "Отправить" */
+                background: #cccccc;
+                border: 2px solid #cccccc;
             }
             
             .row-label {
@@ -1119,8 +1384,10 @@
                 font-size: 13px;
             }
             
-            .tab-content {
+            .cards-grid {
                 padding: 10px;
+                padding-left: calc(10px + env(safe-area-inset-left));
+                padding-right: calc(10px + env(safe-area-inset-right));
             }
             
             .task-card {
@@ -1152,8 +1419,8 @@
                 font-size: 11px;
                 padding: 6px 7px;
                 height: 32px;
-                background: #cccccc; /* Цвет как у неактивной кнопки "Отправить" */
-                border: 2px solid #cccccc; /* Цвет как у неактивной кнопки "Отправить" */
+                background: #cccccc;
+                border: 2px solid #cccccc;
             }
             
             .row-label {
@@ -1193,8 +1460,8 @@
                 font-size: 10px;
                 padding: 5px 6px;
                 height: 30px;
-                background: #cccccc; /* Цвет как у неактивной кнопки "Отправить" */
-                border: 2px solid #cccccc; /* Цвет как у неактивной кнопки "Отправить" */
+                background: #cccccc;
+                border: 2px solid #cccccc;
             }
             
             .row-label {
@@ -1233,7 +1500,8 @@
         <div class="loading-text"></div>
     </div>
     
-    <div class="notification" id="notification"></div>
+    <!-- Уведомление скрыто -->
+    <div class="notification" id="notification" style="display: none;"></div>
     
     <header>
         <div class="logo"><img src="https://i.postimg.cc/wjGzSY92/1.png" alt="Logo"></div>
@@ -1272,6 +1540,15 @@
                 <span class="label">Открытых задач:</span>
                 <span class="count">0</span>
             </div>
+        </div>
+        
+        <div class="date-filter-container" id="date-filter-container">
+            <span class="date-filter-label">Выберите дату выполнения:</span>
+            <div class="date-input-wrapper">
+                <i class="fas fa-calendar-alt calendar-icon"></i>
+                <input type="text" class="date-filter-input" id="date-filter-input" placeholder="Выберите дату" readonly>
+            </div>
+            <button class="clear-filter-btn" id="clear-filter-btn">Сбросить фильтр</button>
         </div>
         
         <div class="tab-content active" id="tab1">
@@ -1331,6 +1608,9 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/ru.js"></script>
+    
     <script>
         // ФУНКЦИИ ДЛЯ РАБОТЫ ШАПКИ
         function toggleSiteNameDropdown() {
@@ -1364,11 +1644,20 @@
         let isInitialLoad = true;
         let tasksData = null;
         let journalData = null;
+        let originalJournalData = null; // Для хранения оригинальных данных
         
         let currentJournalPage = 1;
         let currentTasksPage = 1;
         let totalJournalPages = 1;
         let totalTasksPages = 1;
+
+        // Переменные для фильтрации
+        let isFilterActive = false;
+        let currentFilterDate = '';
+        let uniqueDates = [];
+        
+        // Переменная для календаря
+        let datePicker = null;
 
         function showLoader(message = 'Загрузка...') {
             const loader = document.getElementById('loader');
@@ -1420,16 +1709,10 @@
             }
         }
 
+        // Функция showNotification теперь ничего не делает (убраны всплывающие уведомления)
         function showNotification(message, type = 'success') {
-            const notification = document.getElementById('notification');
-            notification.textContent = message;
-        
-            notification.className = `notification ${type}`;
-            notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
+            // Уведомления отключены
+            return;
         }
 
         async function makeRequest(url, options = {}) {
@@ -1504,6 +1787,164 @@
             return data.slice(startIndex, endIndex);
         }
 
+        // Функции для работы с фильтрацией по дате
+        function toggleDateFilter() {
+            const dateFilterContainer = document.getElementById('date-filter-container');
+            if (dateFilterContainer.classList.contains('show')) {
+                dateFilterContainer.classList.remove('show');
+            } else {
+                dateFilterContainer.classList.add('show');
+                initDatePicker();
+            }
+        }
+
+        function initDatePicker() {
+            if (datePicker) {
+                datePicker.destroy();
+            }
+            
+            const dateInput = document.getElementById('date-filter-input');
+            
+            // Инициализируем календарь
+            datePicker = flatpickr(dateInput, {
+                locale: "ru",
+                dateFormat: "d.m.Y",
+                allowInput: false,
+                clickOpens: true,
+                disableMobile: false, // Важно для iPhone!
+                onChange: function(selectedDates, dateStr, instance) {
+                    if (dateStr) {
+                        const formattedDate = dateStr;
+                        filterJournalByDate(formattedDate);
+                    }
+                },
+                onOpen: function(selectedDates, dateStr, instance) {
+                    // На iPhone включаем нативный date picker
+                    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                        // Даем Safari время обработать нативный date picker
+                        setTimeout(() => {
+                            dateInput.blur();
+                            dateInput.focus();
+                        }, 100);
+                    }
+                }
+            });
+            
+            // Очищаем поле ввода
+            dateInput.value = '';
+        }
+
+        function extractUniqueDatesFromJournal(journalData) {
+            const dates = new Set();
+            
+            if (journalData && journalData.length > 0) {
+                journalData.forEach(task => {
+                    if (task.completedDate && task.completedDate.trim() !== '' && task.completedDate !== '-') {
+                        dates.add(task.completedDate);
+                    }
+                });
+            }
+            
+            return Array.from(dates).sort((a, b) => {
+                // Сортируем даты в формате DD.MM.YYYY
+                const [dayA, monthA, yearA] = a.split('.').map(Number);
+                const [dayB, monthB, yearB] = b.split('.').map(Number);
+                
+                if (yearA !== yearB) return yearB - yearA;
+                if (monthA !== monthB) return monthB - monthA;
+                return dayB - dayA;
+            });
+        }
+
+        // Функция для подсчета выполненных задач по дате
+        function countCompletedTasksByDate(date, journalData) {
+            if (!date || !journalData) return 0;
+            
+            return journalData.filter(task => {
+                return task.completedDate === date && task.isCompleted;
+            }).length;
+        }
+
+        // Функция для подсчета всех задач по дате (выполненных и невыполненных)
+        function countAllTasksByDate(date, journalData) {
+            if (!date || !journalData) return 0;
+            
+            return journalData.filter(task => {
+                return task.completedDate === date;
+            }).length;
+        }
+
+        function filterJournalByDate(date) {
+            if (!date || date === '') {
+                // Сброс фильтра
+                isFilterActive = false;
+                currentFilterDate = '';
+                journalData = [...originalJournalData];
+                
+                // Обновляем отображение
+                currentJournalPage = 1;
+                renderJournalCards(journalData);
+                updateCounterLabel();
+                
+                // Обновляем поле ввода
+                const dateInput = document.getElementById('date-filter-input');
+                if (dateInput) {
+                    dateInput.value = '';
+                }
+                
+                return;
+            }
+            
+            // Применяем фильтр
+            isFilterActive = true;
+            currentFilterDate = date;
+            
+            const filteredData = originalJournalData.filter(task => {
+                return task.completedDate === date;
+            });
+            
+            journalData = filteredData;
+            
+            // Обновляем отображение
+            currentJournalPage = 1;
+            renderJournalCards(journalData);
+            
+            // Обновляем счетчик с количеством всех задач за эту дату
+            updateCounterLabel();
+        }
+
+        function updateCounterLabel() {
+            const openTasksCounter = document.getElementById('open-tasks-counter');
+            const labelSpan = openTasksCounter.querySelector('.label');
+            const countSpan = openTasksCounter.querySelector('.count');
+            
+            if (isFilterActive && currentFilterDate) {
+                // Показываем количество всех задач за выбранную дату (и выполненных, и невыполненных)
+                const allTasksCount = countAllTasksByDate(currentFilterDate, originalJournalData);
+                labelSpan.innerHTML = `Задачи с датой выполнения: ${currentFilterDate}`;
+                countSpan.textContent = allTasksCount;
+                // Оставляем красный цвет фона как было изначально
+                countSpan.style.backgroundColor = '#dc143c';
+            } else {
+                // Показываем количество открытых (незавершенных) задач
+                let openTasksCount = 0;
+                if (journalData && journalData.length > 0) {
+                    openTasksCount = journalData.filter(task => !task.isCompleted).length;
+                }
+                labelSpan.innerHTML = 'Открытых задач:';
+                countSpan.textContent = openTasksCount;
+                countSpan.style.backgroundColor = '#dc143c'; // Красный цвет для открытых задач
+            }
+        }
+
+        function clearDateFilter() {
+            const dateInput = document.getElementById('date-filter-input');
+            if (dateInput) {
+                dateInput.value = '';
+            }
+            filterJournalByDate('');
+        }
+
         async function loadTasks() {
             try {
                 if (tasksData && !isInitialLoad) {
@@ -1533,7 +1974,7 @@
                         Ошибка загрузки: ${error.message}
                     </div>
                 `;
-                showNotification('Ошибка загрузки задач', 'error');
+                // Уведомления отключены
             }
         }
 
@@ -1556,8 +1997,17 @@
                 
                 const journal = await makeRequest(`${BACKEND_URL}?action=getJournal`);
                 
-                journalData = journal;
+                // Сохраняем оригинальные данные
+                originalJournalData = [...journal];
+                journalData = [...journal];
+                
+                // Извлекаем уникальные даты выполнения
+                uniqueDates = extractUniqueDatesFromJournal(journalData);
+                
                 renderJournalCards(journalData);
+                
+                // Обновляем счетчик при загрузке
+                updateCounterLabel();
                 
             } catch (error) {
                 console.error('Ошибка загрузки журнала:', error);
@@ -1567,7 +2017,7 @@
                         Ошибка загрузки: ${error.message}
                     </div>
                 `;
-                showNotification('Ошибка загрузки журнала', 'error');
+                // Уведомления отключены
             }
         }
 
@@ -1582,7 +2032,7 @@
                     const immediateUpdateResult = await makeRequest(`${BACKEND_URL}?action=updateFromRowNumber&rowNumber=${rowIndex}`);
                     
                     if (immediateUpdateResult === 'SUCCESS') {
-                        showNotification('Задача выполнена! Данные обновлены мгновенно.', 'success');
+                        // Уведомления отключены
                         
                         const card = document.querySelector(`[data-task-id="${taskId}"]`);
                         if (card) {
@@ -1603,8 +2053,19 @@
                             }
                         }
                         
+                        // Сбрасываем кэшированные данные
                         journalData = null;
+                        originalJournalData = null;
                         tasksData = null;
+                        isFilterActive = false;
+                        currentFilterDate = '';
+                        
+                        // Обновляем интерфейс
+                        updateCounterLabel();
+                        
+                        // Закрываем фильтр
+                        const dateFilterContainer = document.getElementById('date-filter-container');
+                        dateFilterContainer.classList.remove('show');
                         
                         setTimeout(() => {
                             loadJournal();
@@ -1612,7 +2073,22 @@
                             hideLoader();
                         }, 1000);
                     } else {
-                        showNotification('Задача выполнена, но обновление даты займет до 1 минуты', 'warning');
+                        // Уведомления отключены
+                        
+                        // Сбрасываем кэшированные данные
+                        journalData = null;
+                        originalJournalData = null;
+                        tasksData = null;
+                        isFilterActive = false;
+                        currentFilterDate = '';
+                        
+                        // Обновляем интерфейс
+                        updateCounterLabel();
+                        
+                        // Закрываем фильтр
+                        const dateFilterContainer = document.getElementById('date-filter-container');
+                        dateFilterContainer.classList.remove('show');
+                        
                         setTimeout(() => {
                             loadJournal();
                             loadTasks();
@@ -1621,12 +2097,12 @@
                     }
                 } else {
                     hideLoader();
-                    showNotification('Ошибка: ' + result.error, 'error');
+                    // Уведомления отключены
                 }
             } catch (error) {
                 console.error('Ошибка выполнения задачи:', error);
                 hideLoader();
-                showNotification('Ошибка выполнения задачи: ' + error.message, 'error');
+                // Уведомления отключены
             }
         }
 
@@ -1713,7 +2189,6 @@
 
         function renderJournalCards(journal) {
             const journalCards = document.getElementById('journal-cards');
-            const openTasksCounter = document.getElementById('open-tasks-counter');
             
             if (!journal || journal.length === 0) {
                 journalCards.innerHTML = `
@@ -1725,24 +2200,12 @@
                     </div>
                 `;
                 
-                if (openTasksCounter) {
-                    openTasksCounter.querySelector('.count').textContent = '0';
-                }
-                
                 updatePagination('journal', 1, 1);
                 return;
             }
             
-            // Подсчет открытых задач
-            let openTasksCount = 0;
-            if (journal && journal.length > 0) {
-                openTasksCount = journal.filter(task => !task.isCompleted).length;
-            }
-            
             // Обновляем счетчик
-            if (openTasksCounter) {
-                openTasksCounter.querySelector('.count').textContent = openTasksCount;
-            }
+            updateCounterLabel();
             
             // НЕ СОРТИРУЕМ ДАННЫЕ! Сохраняем порядок из Google Таблицы
             const sortedJournal = [...journal];
@@ -1867,19 +2330,19 @@
             const card = button.closest('.task-card');
             
             if (!card) {
-                showNotification('Ошибка: карточка задачи не найдена', 'error');
+                // Уведомления отключены
                 return;
             }
             
             const select = card.querySelector('.executor-select');
             
             if (!select) {
-                showNotification('Ошибка: поле выбора исполнителя не найдена', 'error');
+                // Уведомления отключены
                 return;
             }
             
             if (!select.value || select.value === '' || select.value === 'Выберите исполнителя') {
-                showNotification('Выберите исполнителя перед отправкой', 'error');
+                // Уведомления отключены
                 return;
             }
             
@@ -1901,6 +2364,7 @@
             document.addEventListener('click', function(e) {
                 const siteNameDropdown = document.getElementById('siteNameDropdown');
                 const dropdownMenu = document.getElementById('dropdownMenu');
+                const dateFilterContainer = document.getElementById('date-filter-container');
                 
                 if (!e.target.closest('.site-name') && siteNameDropdown.style.display === 'block') {
                     siteNameDropdown.style.display = 'none';
@@ -1909,12 +2373,37 @@
                 if (!e.target.closest('.menu-button') && dropdownMenu.style.display === 'flex') {
                     dropdownMenu.style.display = 'none';
                 }
+                
+                // Закрываем фильтр при клике вне его области
+                if (!e.target.closest('#open-tasks-counter') && 
+                    !e.target.closest('#date-filter-container') && 
+                    dateFilterContainer.classList.contains('show')) {
+                    dateFilterContainer.classList.remove('show');
+                }
             });
             
             showLoader('');
             
             const tabButtons = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
+            
+            // Обработчик для открытия фильтра по дате
+            document.getElementById('open-tasks-counter').addEventListener('click', toggleDateFilter);
+            
+            // Обработчик для кнопки сброса фильтра
+            document.getElementById('clear-filter-btn').addEventListener('click', clearDateFilter);
+            
+            // iPhone-specific: предотвращаем проблемы с вводом на iOS
+            const dateInput = document.getElementById('date-filter-input');
+            if (dateInput && /iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                dateInput.addEventListener('focus', function() {
+                    this.style.fontSize = '16px'; // Предотвращает автоматический zoom в iOS
+                });
+                
+                dateInput.addEventListener('blur', function() {
+                    this.style.fontSize = '';
+                });
+            }
             
             Promise.all([
                 loadJournal(),
