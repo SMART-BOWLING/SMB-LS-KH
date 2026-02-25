@@ -176,40 +176,47 @@
             font-size: 16px;
         }
 
+        /* НОВАЯ АНИМАЦИЯ ЗАГРУЗКИ */
         .loader-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: white;
+            inset: 0;
+            background: #1f2937;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            gap: 20px;
         }
 
-        .loader {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #dc143c;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        .logo-wrapper {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .glow-ring {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 100%;
+            background: conic-gradient(#dc143c, transparent 100%);
+            animation: spin 5s linear infinite;
+            filter: blur(20px);
+        }
+
+        .loader-container img {
+            width: 120px;
+            z-index: 2;
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            to { transform: rotate(365deg); }
         }
 
         .loading-text {
-            font-size: 16px;
-            color: #1a2f40;
-            font-weight: 600;
-            text-align: center;
+            display: none;
         }
 
         .container {
@@ -1495,9 +1502,12 @@
     </style>
 </head>
 <body>
+    <!-- НОВАЯ АНИМАЦИЯ ЗАГРУЗКИ -->
     <div class="loader-container" id="loader">
-        <div class="loader"></div>
-        <div class="loading-text"></div>
+        <div class="logo-wrapper">
+            <div class="glow-ring"></div>
+            <img src="https://i.postimg.cc/wjGzSY92/1.png" alt="Logo">
+        </div>
     </div>
     
     <!-- Уведомление скрыто -->
@@ -1659,12 +1669,10 @@
         // Переменная для календаря
         let datePicker = null;
 
-        function showLoader(message = 'Загрузка...') {
+        function showLoader(message = '') {
             const loader = document.getElementById('loader');
             const mainContainer = document.getElementById('main-container');
-            const loadingText = loader.querySelector('.loading-text');
             
-            loadingText.textContent = message;
             loader.style.display = 'flex';
             mainContainer.style.display = 'none';
         }
