@@ -1563,12 +1563,7 @@
         
         <div class="tab-content active" id="tab1">
             <div class="cards-grid" id="journal-cards">
-                <div class="task-card">
-                    <div class="loading-container">
-                        <div class="loader"></div>
-                        <div class="loading-card-text"></div>
-                    </div>
-                </div>
+                <!-- Содержимое будет вставлено через JavaScript -->
             </div>
             <div class="pagination" id="journal-pagination" style="display: none;">
                 <button class="page-btn first-btn" onclick="goToPage('journal', 1)">
@@ -1591,12 +1586,7 @@
         
         <div class="tab-content" id="tab2">
             <div class="cards-grid" id="tasks-cards">
-                <div class="task-card">
-                    <div class="loading-container">
-                        <div class="loader"></div>
-                        <div class="loading-card-text"></div>
-                    </div>
-                </div>
+                <!-- Содержимое будет вставлено через JavaScript -->
             </div>
             <div class="pagination" id="tasks-pagination" style="display: none;">
                 <button class="page-btn first-btn" onclick="goToPage('tasks', 1)">
@@ -1960,18 +1950,14 @@
                     return;
                 }
                 
+                // Очищаем контейнер перед загрузкой
                 const tasksCards = document.getElementById('tasks-cards');
-                tasksCards.innerHTML = `
-                    <div class="task-card">
-                        <div class="loading-container">
-                            <div class="loader"></div>
-                            <div class="loading-card-text"></div>
-                        </div>
-                    </div>
-                `;
+                tasksCards.innerHTML = '';
                 
                 const tasks = await makeRequest(`${BACKEND_URL}?action=getTasks`);
                 tasksData = tasks;
+                
+                // Сначала рендерим карточки
                 renderTasksCards(tasks);
                 
             } catch (error) {
@@ -1993,15 +1979,9 @@
                     return;
                 }
                 
+                // Очищаем контейнер перед загрузкой
                 const journalCards = document.getElementById('journal-cards');
-                journalCards.innerHTML = `
-                    <div class="task-card">
-                        <div class="loading-container">
-                            <div class="loader"></div>
-                            <div class="loading-card-text"></div>
-                        </div>
-                    </div>
-                `;
+                journalCards.innerHTML = '';
                 
                 const journal = await makeRequest(`${BACKEND_URL}?action=getJournal`);
                 
@@ -2012,6 +1992,7 @@
                 // Извлекаем уникальные даты выполнения
                 uniqueDates = extractUniqueDatesFromJournal(journalData);
                 
+                // Сначала рендерим карточки
                 renderJournalCards(journalData);
                 
                 // Обновляем счетчик при загрузке
@@ -2075,11 +2056,13 @@
                         const dateFilterContainer = document.getElementById('date-filter-container');
                         dateFilterContainer.classList.remove('show');
                         
-                        setTimeout(() => {
-                            loadJournal();
-                            loadTasks();
-                            hideLoader();
-                        }, 1000);
+                        // Загружаем новые данные и скрываем загрузчик только после полной отрисовки
+                        await Promise.all([
+                            loadJournal(),
+                            loadTasks()
+                        ]);
+                        
+                        hideLoader();
                     } else {
                         // Уведомления отключены
                         
@@ -2097,11 +2080,13 @@
                         const dateFilterContainer = document.getElementById('date-filter-container');
                         dateFilterContainer.classList.remove('show');
                         
-                        setTimeout(() => {
-                            loadJournal();
-                            loadTasks();
-                            hideLoader();
-                        }, 1000);
+                        // Загружаем новые данные и скрываем загрузчик только после полной отрисовки
+                        await Promise.all([
+                            loadJournal(),
+                            loadTasks()
+                        ]);
+                        
+                        hideLoader();
                     }
                 } else {
                     hideLoader();
@@ -2121,7 +2106,6 @@
                 tasksCards.innerHTML = `
                     <div class="task-card">
                         <div class="loading-container">
-                            <div class="loader"></div>
                             <div class="loading-card-text">Нет задач</div>
                         </div>
                     </div>
@@ -2202,7 +2186,6 @@
                 journalCards.innerHTML = `
                     <div class="task-card">
                         <div class="loading-container">
-                            <div class="loader"></div>
                             <div class="loading-card-text">Нет данных</div>
                         </div>
                     </div>
@@ -2413,13 +2396,15 @@
                 });
             }
             
+            // Загружаем данные и скрываем загрузчик только после полной отрисовки
             Promise.all([
                 loadJournal(),
                 loadTasks()
             ]).then(() => {
+                // Небольшая задержка для завершения всех операций рендеринга
                 setTimeout(() => {
                     hideLoader();
-                }, 500);
+                }, 100);
             }).catch(error => {
                 console.error('Ошибка загрузки:', error);
                 hideLoader();
