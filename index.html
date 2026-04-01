@@ -363,6 +363,59 @@
             border-color: var(--accent);
         }
 
+        /* Стили для бейджа счётчика на кнопке вкладки */
+        .tab-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #dc143c;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            min-width: 20px;
+            height: 20px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            border: 1px solid white;
+            line-height: 1;
+            z-index: 2;
+        }
+
+        /* Адаптация для мобильных устройств */
+        @media (max-width: 767px) {
+            .tab-badge {
+                top: -6px;
+                right: -6px;
+                font-size: 9px;
+                min-width: 18px;
+                height: 18px;
+            }
+            
+            .tab-btn {
+                padding: 10px 12px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tab-badge {
+                top: -5px;
+                right: -5px;
+                font-size: 8px;
+                min-width: 16px;
+                height: 16px;
+            }
+            
+            .tab-btn {
+                padding: 8px 10px;
+                font-size: 11px;
+            }
+        }
+
         .open-tasks-counter {
             display: flex;
             justify-content: space-between;
@@ -1512,12 +1565,15 @@
                 <div class="tabs">
                     <button class="tab-btn active" data-tab="tab1">
                         <i class="fas fa-wrench" style="margin-right: 8px;"></i>МЕХАНИК
+                        <span class="tab-badge" id="mechanic-badge">0</span>
                     </button>
                     <button class="tab-btn" data-tab="tab2">
                         <i class="fas fa-user-tie" style="margin-right: 8px;"></i>ИНСТРУКТОР
+                        <span class="tab-badge" id="instructor-badge">0</span>
                     </button>
                     <button class="tab-btn" data-tab="tab3">
                         <i class="fas fa-bowling-ball" style="margin-right: 8px;"></i>КЛУБ
+                        <span class="tab-badge" id="club-badge">0</span>
                     </button>
                 </div>
                 
@@ -1672,6 +1728,32 @@
 
         function hideLoader() {
             loader.classList.remove('active');
+        }
+
+        // ===== ФУНКЦИЯ ДЛЯ ОБНОВЛЕНИЯ БЕЙДЖЕЙ =====
+        function updateTabBadges() {
+            // Подсчитываем количество невыполненных задач для каждой категории
+            const mechanicOpenCount = journalData ? journalData.filter(task => !task.isCompleted).length : 0;
+            const instructorOpenCount = instructorData ? instructorData.filter(task => !task.isCompleted).length : 0;
+            const clubOpenCount = engineerData ? engineerData.filter(task => !task.isCompleted).length : 0;
+            
+            // Обновляем бейджи
+            const mechanicBadge = document.getElementById('mechanic-badge');
+            const instructorBadge = document.getElementById('instructor-badge');
+            const clubBadge = document.getElementById('club-badge');
+            
+            if (mechanicBadge) {
+                mechanicBadge.textContent = mechanicOpenCount;
+                mechanicBadge.style.display = mechanicOpenCount > 0 ? 'inline-flex' : 'none';
+            }
+            if (instructorBadge) {
+                instructorBadge.textContent = instructorOpenCount;
+                instructorBadge.style.display = instructorOpenCount > 0 ? 'inline-flex' : 'none';
+            }
+            if (clubBadge) {
+                clubBadge.textContent = clubOpenCount;
+                clubBadge.style.display = clubOpenCount > 0 ? 'inline-flex' : 'none';
+            }
         }
 
         // ===== ФУНКЦИИ АВТОРИЗАЦИИ =====
@@ -2054,6 +2136,7 @@
                 currentJournalPage = 1;
                 renderJournalCards(journalData);
                 updateCounterLabel();
+                updateTabBadges();
                 const dateInput = document.getElementById('date-filter-input');
                 if (dateInput) dateInput.value = '';
                 return;
@@ -2071,6 +2154,7 @@
             currentJournalPage = 1;
             renderJournalCards(journalData);
             updateCounterLabel();
+            updateTabBadges();
         }
 
         function filterInstructorByDate(date) {
@@ -2082,6 +2166,7 @@
                 currentInstructorPage = 1;
                 renderInstructorCards(instructorData);
                 updateCounterLabel();
+                updateTabBadges();
                 const dateInput = document.getElementById('date-filter-input');
                 if (dateInput) dateInput.value = '';
                 return;
@@ -2099,6 +2184,7 @@
             currentInstructorPage = 1;
             renderInstructorCards(instructorData);
             updateCounterLabel();
+            updateTabBadges();
         }
 
         function filterEngineerByDate(date) {
@@ -2110,6 +2196,7 @@
                 currentEngineerPage = 1;
                 renderEngineerCards(engineerData);
                 updateCounterLabel();
+                updateTabBadges();
                 const dateInput = document.getElementById('date-filter-input');
                 if (dateInput) dateInput.value = '';
                 return;
@@ -2127,6 +2214,7 @@
             currentEngineerPage = 1;
             renderEngineerCards(engineerData);
             updateCounterLabel();
+            updateTabBadges();
         }
 
         function updateCounterLabel() {
@@ -2190,6 +2278,7 @@
             try {
                 if (journalData && !isInitialLoad) {
                     renderJournalCards(journalData);
+                    updateTabBadges();
                     return;
                 }
                 const journalCards = document.getElementById('journal-cards');
@@ -2200,6 +2289,7 @@
                 journalData = [...filteredJournal];
                 renderJournalCards(journalData);
                 updateCounterLabel();
+                updateTabBadges();
             } catch (error) {
                 console.error('Ошибка загрузки журнала:', error);
                 document.getElementById('journal-cards').innerHTML = `<div class="task-card error">Ошибка загрузки: ${error.message}</div>`;
@@ -2210,6 +2300,7 @@
             try {
                 if (instructorData && !isInitialLoad) {
                     renderInstructorCards(instructorData);
+                    updateTabBadges();
                     return;
                 }
                 const instructorCards = document.getElementById('instructor-cards');
@@ -2220,6 +2311,7 @@
                 instructorData = [...filteredInstructor];
                 renderInstructorCards(instructorData);
                 updateCounterLabel();
+                updateTabBadges();
             } catch (error) {
                 console.error('Ошибка загрузки задач инструктора:', error);
                 document.getElementById('instructor-cards').innerHTML = `<div class="task-card error">Ошибка загрузки: ${error.message}</div>`;
@@ -2230,6 +2322,7 @@
             try {
                 if (engineerData && !isInitialLoad) {
                     renderEngineerCards(engineerData);
+                    updateTabBadges();
                     return;
                 }
                 const engineerCards = document.getElementById('engineer-cards');
@@ -2240,6 +2333,7 @@
                 engineerData = [...filteredEngineer];
                 renderEngineerCards(engineerData);
                 updateCounterLabel();
+                updateTabBadges();
             } catch (error) {
                 console.error('Ошибка загрузки задач клуба:', error);
                 document.getElementById('engineer-cards').innerHTML = `<div class="task-card error">Ошибка загрузки: ${error.message}</div>`;
@@ -2597,6 +2691,7 @@
         window.changePage = changePage;
         window.toggleUserDropdown = toggleUserDropdown;
         window.signOut = signOut;
+        window.updateTabBadges = updateTabBadges;
     </script>
 
     <!-- ИСПРАВЛЕНИЕ ДЛЯ КНОПОК -->
