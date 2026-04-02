@@ -39,13 +39,13 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* ИСПРАВЛЕНО: убраны overflow:hidden и position:fixed которые блокировали скролл */
         html, body {
             height: 100%;
-            overflow: hidden;
+            margin: 0;
+            padding: 0;
             background-color: #f4f6f9;
             width: 100%;
-            position: fixed;
-            touch-action: manipulation;
         }
 
         body {
@@ -53,7 +53,6 @@
             padding: 0;
             line-height: 1.5;
             min-height: 100vh;
-            height: 100vh;
             -webkit-font-smoothing: antialiased;
             font-weight: 700;
             padding-top: env(safe-area-inset-top);
@@ -61,6 +60,7 @@
             padding-left: env(safe-area-inset-left);
             padding-right: env(safe-area-inset-right);
             -webkit-text-size-adjust: 100%;
+            overflow-y: auto;
         }
 
         /* НОВАЯ ШАПКА */
@@ -293,7 +293,7 @@
             border-radius: 0;
             box-shadow: none;
             overflow: hidden;
-            height: 100%;
+            height: auto;
             display: flex;
             flex-direction: column;
             border: none;
@@ -611,7 +611,6 @@
             display: none;
             padding: 0;
             flex: 1;
-            overflow-y: auto;
             flex-direction: column;
         }
 
@@ -1339,7 +1338,8 @@
 
         @media (max-width: 767px) {
             .container {
-                height: 100vh;
+                height: auto;
+                min-height: 100vh;
             }
             
             .header-section {
@@ -2037,13 +2037,10 @@
         }
 
         function scrollToTop() {
-            const activeTab = document.querySelector('.tab-content.active');
-            if (activeTab) {
-                activeTab.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            }
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         }
 
         function goToPage(type, pageNumber) {
