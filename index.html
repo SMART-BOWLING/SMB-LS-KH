@@ -430,57 +430,54 @@
             }
         }
 
-        /* КНОПКА ВЫБОРА ДАТЫ - КАЛЕНДАРЬ ОТКРЫВАЕТСЯ СРАЗУ ПРИ КЛИКЕ */
-        .open-tasks-counter {
+        /* ПОЛЕ ДЛЯ ВЫБОРА ДАТЫ - ПРИ КЛИКЕ ОТКРЫВАЕТСЯ КАЛЕНДАРЬ */
+        .date-picker-field {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 14px 16px;
-            background: linear-gradient(145deg, #1f2f3f, #16212e);
-            color: white;
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 15px;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 8px;
             margin: 8px 0 16px;
-            width: 100%;
             cursor: pointer;
             transition: all 0.3s ease;
-            user-select: none;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
-        .open-tasks-counter:hover {
-            transform: translateY(-1px);
-            background: linear-gradient(145deg, #243546, #1a2735);
+        .date-picker-field:hover {
+            border-color: #dc143c;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
-        .open-tasks-counter:active {
-            transform: translateY(1px);
-        }
-
-        .open-tasks-counter .label {
-            flex: 1;
-            text-align: left;
+        .date-picker-label {
+            font-size: 14px;
             font-weight: 600;
-            letter-spacing: 0.5px;
+            color: #1a2f40;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        
-        .open-tasks-counter .count {
-            background-color: #dc143c;
+
+        .date-picker-label i {
+            color: #dc143c;
+            font-size: 18px;
+        }
+
+        .date-picker-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a2f40;
+            background-color: #f8f9fa;
             padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 16px;
-            min-width: 40px;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            border-radius: 20px;
         }
 
-        /* Блок с фильтром больше не показываем - календарь открывается сразу */
-        .date-filter-container {
-            display: none;
+        .date-picker-value.empty {
+            color: #999;
         }
 
+        /* Стили для flatpickr */
         .flatpickr-calendar {
             font-family: "Poppins", sans-serif;
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
@@ -489,7 +486,7 @@
             z-index: 10001;
         }
 
-        .flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange, .flatpickr-day.selected.inRange, .flatpickr-day.startRange.inRange, .flatpickr-day.endRange.inRange, .flatpickr-day.selected:focus, .flatpickr-day.startRange:focus, .flatpickr-day.endRange:focus, .flatpickr-day.selected:hover, .flatpickr-day.startRange:hover, .flatpickr-day.endRange:hover, .flatpickr-day.selected.prevMonthDay, .flatpickr-day.startRange.prevMonthDay, .flatpickr-day.endRange.prevMonthDay, .flatpickr-day.selected.nextMonthDay, .flatpickr-day.startRange.nextMonthDay, .flatpickr-day.endRange.nextMonthDay {
+        .flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange, .flatpickr-day.selected.inRange, .flatpickr-day.startRange.inRange, .flatpickr-day.endRange.inRange, .flatpickr-day.selected:focus, .flatpickr-day.startRange:focus, .flatpickr-day.endRange:focus, .flatpickr-day.selected:hover, .flatpickr-day.startRange:hover, .flatpickr-day.endRange:hover {
             background: #dc143c;
             border-color: #dc143c;
         }
@@ -528,6 +525,33 @@
 
         .flatpickr-day {
             font-weight: 600;
+        }
+
+        /* Кнопка сброса фильтра */
+        .reset-filter-btn {
+            background: #1a2f40;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .reset-filter-btn:hover {
+            background: #0d1f2d;
+            transform: translateY(-1px);
+        }
+
+        .reset-filter-btn:active {
+            transform: translateY(1px);
         }
 
         .tab-content {
@@ -931,15 +955,18 @@
             .site-name { font-size: 19px; }
             .user-avatar { width: 34px; height: 34px; }
             .header-section { padding-top: 75px; }
-            .open-tasks-counter { padding: 12px 14px; font-size: 14px; }
-            .open-tasks-counter .count { font-size: 15px; padding: 5px 10px; min-width: 36px; }
+            .date-picker-field { padding: 10px 14px; }
+            .date-picker-label { font-size: 13px; }
+            .date-picker-value { font-size: 13px; }
             .cards-grid { padding: 12px; }
             .flatpickr-calendar { max-width: calc(100vw - 40px) !important; left: 50% !important; transform: translateX(-50%) !important; width: calc(100vw - 40px) !important; }
         }
 
         @media (max-width: 480px) {
-            .open-tasks-counter { padding: 10px 12px; font-size: 13px; }
-            .open-tasks-counter .count { font-size: 14px; padding: 4px 8px; min-width: 32px; }
+            .date-picker-field { padding: 8px 12px; }
+            .date-picker-label { font-size: 12px; }
+            .date-picker-value { font-size: 12px; padding: 4px 10px; }
+            .reset-filter-btn { padding: 10px 14px; font-size: 13px; }
         }
 
         @media (min-width: 1200px) {
@@ -1040,11 +1067,21 @@
                     </div>
                 </div>
                 
-                <!-- КНОПКА ДЛЯ ВЫБОРА ДАТЫ - ПРИ КЛИКЕ СРАЗУ ОТКРЫВАЕТСЯ КАЛЕНДАРЬ -->
-                <div class="open-tasks-counter" id="date-selector-button">
-                    <span class="label"><i class="fas fa-calendar-alt" style="margin-right: 8px;"></i>ВЫБРАТЬ ДАТУ ДЛЯ ПРОСМОТРА</span>
-                    <span class="count">📅</span>
+                <!-- ПОЛЕ ДЛЯ ВЫБОРА ДАТЫ - ПРИ КЛИКЕ ОТКРЫВАЕТСЯ КАЛЕНДАРЬ -->
+                <div class="date-picker-field" id="datePickerField">
+                    <div class="date-picker-label">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Выбрать дату для просмотра</span>
+                    </div>
+                    <div class="date-picker-value empty" id="selectedDateDisplay">
+                        не выбрана
+                    </div>
                 </div>
+                
+                <!-- Кнопка сброса фильтра -->
+                <button class="reset-filter-btn" id="resetFilterBtn">
+                    <i class="fas fa-undo-alt"></i> Сбросить фильтр
+                </button>
             </div>
             
             <div class="tab-content active" id="tab1">
@@ -1358,38 +1395,53 @@
             return data.slice(startIndex, startIndex + CARDS_PER_PAGE);
         }
 
-        // Функция для открытия календаря - вызывается при клике на кнопку
-        function openCalendar() {
-            if (datePicker) {
-                datePicker.open();
+        // Обновление отображения выбранной даты
+        function updateDateDisplay(date) {
+            const displayElement = document.getElementById('selectedDateDisplay');
+            if (date && date !== '') {
+                displayElement.textContent = date;
+                displayElement.classList.remove('empty');
             } else {
-                // Создаем временный input для flatpickr
-                const tempInput = document.createElement('input');
-                tempInput.type = 'text';
-                tempInput.style.position = 'absolute';
-                tempInput.style.opacity = '0';
-                tempInput.style.pointerEvents = 'none';
-                document.body.appendChild(tempInput);
-                
-                datePicker = flatpickr(tempInput, {
-                    locale: "ru",
-                    dateFormat: "d.m.Y",
-                    onChange: function(selectedDates, dateStr) {
-                        if (dateStr) {
-                            const activeTab = document.querySelector('.tab-content.active');
-                            if (activeTab && activeTab.id === 'tab1') filterJournalByDate(dateStr);
-                            else if (activeTab && activeTab.id === 'tab2') filterInstructorByDate(dateStr);
-                            else if (activeTab && activeTab.id === 'tab3') filterEngineerByDate(dateStr);
-                        }
-                        // Удаляем временный input после выбора
-                        setTimeout(() => { if (tempInput && tempInput.remove) tempInput.remove(); }, 100);
-                    },
-                    onClose: function() {
-                        setTimeout(() => { if (tempInput && tempInput.remove) tempInput.remove(); }, 100);
-                    }
-                });
-                datePicker.open();
+                displayElement.textContent = 'не выбрана';
+                displayElement.classList.add('empty');
             }
+        }
+
+        // Инициализация календаря на поле
+        function initDatePickerOnField() {
+            const datePickerField = document.getElementById('datePickerField');
+            
+            datePicker = flatpickr(datePickerField, {
+                locale: "ru",
+                dateFormat: "d.m.Y",
+                allowInput: false,
+                clickOpens: true,
+                onChange: function(selectedDates, dateStr) {
+                    if (dateStr) {
+                        updateDateDisplay(dateStr);
+                        const activeTab = document.querySelector('.tab-content.active');
+                        if (activeTab && activeTab.id === 'tab1') filterJournalByDate(dateStr);
+                        else if (activeTab && activeTab.id === 'tab2') filterInstructorByDate(dateStr);
+                        else if (activeTab && activeTab.id === 'tab3') filterEngineerByDate(dateStr);
+                    }
+                },
+                onReady: function() {
+                    // Делаем так, чтобы клик по полю открывал календарь
+                    datePickerField.style.cursor = 'pointer';
+                }
+            });
+        }
+
+        // Сброс фильтра
+        function resetFilter() {
+            if (datePicker) {
+                datePicker.clear();
+            }
+            updateDateDisplay('');
+            const activeTab = document.querySelector('.tab-content.active');
+            if (activeTab && activeTab.id === 'tab1') filterJournalByDate('');
+            else if (activeTab && activeTab.id === 'tab2') filterInstructorByDate('');
+            else if (activeTab && activeTab.id === 'tab3') filterEngineerByDate('');
         }
 
         function filterJournalByDate(date) {
@@ -1707,10 +1759,13 @@
             const tabButtons = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
             
-            // Привязываем открытие календаря к кнопке
-            const dateSelectorButton = document.getElementById('date-selector-button');
-            if (dateSelectorButton) {
-                dateSelectorButton.addEventListener('click', openCalendar);
+            // Инициализируем календарь на поле
+            initDatePickerOnField();
+            
+            // Кнопка сброса фильтра
+            const resetBtn = document.getElementById('resetFilterBtn');
+            if (resetBtn) {
+                resetBtn.addEventListener('click', resetFilter);
             }
             
             Promise.all([loadJournal(), loadInstructorTasks(), loadEngineerTasks()])
