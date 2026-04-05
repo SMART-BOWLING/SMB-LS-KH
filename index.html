@@ -430,17 +430,18 @@
             }
         }
 
-        /* СТРОКА: поле календаря (только иконка, без текста) + кнопка сброса */
+        /* СТРОКА: поле календаря (только иконка, текст удалён) + кнопка сброса (только значок) */
         .filter-row {
             display: flex;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: space-between;
             gap: 12px;
             margin: 8px 0 16px;
         }
 
-        /* ПОЛЕ ДЛЯ ВЫБОРА ДАТЫ - ТОЛЬКО ИКОНКА, БЕЗ ТЕКСТА */
+        /* ПОЛЕ ДЛЯ ВЫБОРА ДАТЫ - ПРИ КЛИКЕ ОТКРЫВАЕТСЯ КАЛЕНДАРЬ, область с текстом полностью удалена */
         .date-picker-field {
+            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -451,8 +452,7 @@
             transition: all 0.3s ease;
             border: 1px solid #e0e0e0;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            flex-shrink: 0;
-            width: 54px;
+            min-height: 48px;
         }
 
         .date-picker-field:hover {
@@ -460,18 +460,19 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
+        /* Иконка календаря — теперь единственный визуальный элемент */
         .date-picker-label-icon {
-            font-size: 20px;
+            font-size: 22px;
             color: #dc143c;
             margin: 0;
         }
 
-        /* Скрываем блок с отображением даты — полностью убираем текст "не выбрана" */
+        /* Полностью скрываем контейнер с текстом даты */
         .date-picker-value {
             display: none;
         }
 
-        /* Кнопка сброса фильтра — только значок */
+        /* Кнопка сброса фильтра — только значок, текст скрыт */
         .reset-filter-icon-btn {
             background: #1a2f40;
             color: white;
@@ -948,14 +949,16 @@
             .site-name { font-size: 19px; }
             .user-avatar { width: 34px; height: 34px; }
             .header-section { padding-top: 75px; }
-            .date-picker-field { width: 50px; padding: 10px 12px; }
+            .date-picker-field { padding: 10px 14px; min-height: 44px; }
+            .date-picker-label-icon { font-size: 20px; }
             .reset-filter-icon-btn { width: 44px; height: 44px; font-size: 18px; }
             .cards-grid { padding: 12px; }
             .flatpickr-calendar { max-width: calc(100vw - 40px) !important; left: 50% !important; transform: translateX(-50%) !important; width: calc(100vw - 40px) !important; }
         }
 
         @media (max-width: 480px) {
-            .date-picker-field { width: 46px; padding: 8px 10px; }
+            .date-picker-field { padding: 8px 12px; min-height: 42px; }
+            .date-picker-label-icon { font-size: 18px; }
             .reset-filter-icon-btn { width: 42px; height: 42px; }
         }
 
@@ -1057,11 +1060,11 @@
                     </div>
                 </div>
                 
-                <!-- Строка: только иконка календаря + кнопка сброса (текст "не выбрана" удалён полностью) -->
+                <!-- Строка: поле календаря (только иконка, без текста) и кнопка сброса (только значок) -->
                 <div class="filter-row">
                     <div class="date-picker-field" id="datePickerField">
                         <i class="fas fa-calendar-alt date-picker-label-icon"></i>
-                        <div class="date-picker-value" id="selectedDateDisplay"></div>
+                        <!-- Блок отображения даты полностью удалён, не будет даже пустого текста -->
                     </div>
                     <button class="reset-filter-icon-btn" id="resetFilterBtn" title="Сбросить фильтр">
                         <i class="fas fa-undo-alt"></i>
@@ -1108,7 +1111,7 @@
     <script src="https://npmcdn.com/flatpickr/dist/l10n/ru.js"></script>
     
     <script>
-        // Полный код логики (идентичный исходному, но с адаптацией под новый интерфейс)
+        // Полный код логики (идентичный исходному, но с адаптацией под новый интерфейс, где нет текста "не выбрана")
         const AUTH_SPREADSHEET_ID = '1-yiVdZYa6wJdupTiuiHvI_ht3Vu73RUjyCehZqs2cJ4';
         const AUTH_SHEET_NAME = '1';
         const AUTH_API_KEY = 'AIzaSyAXL0Hsfxy-g-AgYhnivj4x9gCB2rrtF-0';
@@ -1163,9 +1166,9 @@
         function updatePagination(type, currentPage, totalPages) { const pagination = document.getElementById(`${type}-pagination`); if (!pagination) return; const currentPageSpan = document.getElementById(`${type}-current-page`); const totalPagesSpan = document.getElementById(`${type}-total-pages`); const firstBtn = pagination.querySelector('.first-btn'); const prevBtn = pagination.querySelector('.prev-btn'); const nextBtn = pagination.querySelector('.next-btn'); const lastBtn = pagination.querySelector('.last-btn'); currentPageSpan.textContent = currentPage; totalPagesSpan.textContent = totalPages; firstBtn.disabled = currentPage === 1; prevBtn.disabled = currentPage === 1; nextBtn.disabled = currentPage === totalPages; lastBtn.disabled = currentPage === totalPages; lastBtn.onclick = () => goToPage(type, totalPages); pagination.style.display = totalPages > 1 ? 'flex' : 'none'; }
         function changePage(type, direction) { if (type === 'journal') goToPage('journal', currentJournalPage + direction); else if (type === 'instructor') goToPage('instructor', currentInstructorPage + direction); else if (type === 'engineer') goToPage('engineer', currentEngineerPage + direction); }
         function getCurrentPageData(data, currentPage) { const startIndex = (currentPage - 1) * CARDS_PER_PAGE; return data.slice(startIndex, startIndex + CARDS_PER_PAGE); }
-        function updateDateDisplay(date) { /* Убираем отображение любого текста */ return; }
-        function initDatePickerOnField() { const datePickerField = document.getElementById('datePickerField'); datePicker = flatpickr(datePickerField, { locale: "ru", dateFormat: "d.m.Y", allowInput: false, clickOpens: true, onChange: function(selectedDates, dateStr) { if (dateStr) { currentFilterDate = dateStr; isFilterActive = true; const activeTab = document.querySelector('.tab-content.active'); if (activeTab && activeTab.id === 'tab1') filterJournalByDate(dateStr); else if (activeTab && activeTab.id === 'tab2') filterInstructorByDate(dateStr); else if (activeTab && activeTab.id === 'tab3') filterEngineerByDate(dateStr); } }, onReady: function() { datePickerField.style.cursor = 'pointer'; } }); }
-        function resetFilter() { if (datePicker) { datePicker.clear(); } currentFilterDate = ''; isFilterActive = false; const activeTab = document.querySelector('.tab-content.active'); if (activeTab && activeTab.id === 'tab1') filterJournalByDate(''); else if (activeTab && activeTab.id === 'tab2') filterInstructorByDate(''); else if (activeTab && activeTab.id === 'tab3') filterEngineerByDate(''); }
+        // Убрана функция updateDateDisplay, так как отображение текста даты полностью удалено
+        function initDatePickerOnField() { const datePickerField = document.getElementById('datePickerField'); datePicker = flatpickr(datePickerField, { locale: "ru", dateFormat: "d.m.Y", allowInput: false, clickOpens: true, onChange: function(selectedDates, dateStr) { if (dateStr) { const activeTab = document.querySelector('.tab-content.active'); if (activeTab && activeTab.id === 'tab1') filterJournalByDate(dateStr); else if (activeTab && activeTab.id === 'tab2') filterInstructorByDate(dateStr); else if (activeTab && activeTab.id === 'tab3') filterEngineerByDate(dateStr); } }, onReady: function() { datePickerField.style.cursor = 'pointer'; } }); }
+        function resetFilter() { if (datePicker) { datePicker.clear(); } const activeTab = document.querySelector('.tab-content.active'); if (activeTab && activeTab.id === 'tab1') filterJournalByDate(''); else if (activeTab && activeTab.id === 'tab2') filterInstructorByDate(''); else if (activeTab && activeTab.id === 'tab3') filterEngineerByDate(''); }
         function filterJournalByDate(date) { if (!date || date === '') { isFilterActive = false; currentFilterDate = ''; filterType = 'journal'; journalData = originalJournalData ? filterTasksByTitle([...originalJournalData], ['PS', 'МЕХ', 'ps', 'мех']) : []; currentJournalPage = 1; renderJournalCards(journalData); updateTabBadges(); return; } isFilterActive = true; currentFilterDate = date; filterType = 'journal'; const filteredData = originalJournalData.filter(task => { const titleMatch = ['PS', 'МЕХ', 'ps', 'мех'].some(keyword => (task.task || '').toLowerCase().includes(keyword.toLowerCase())); return task.completedDate === date && titleMatch; }); journalData = filteredData; currentJournalPage = 1; renderJournalCards(journalData); updateTabBadges(); }
         function filterInstructorByDate(date) { if (!date || date === '') { isFilterActive = false; currentFilterDate = ''; filterType = 'instructor'; instructorData = originalJournalData ? filterTasksByTitle([...originalJournalData], ['ИНСТ', 'инст']) : []; currentInstructorPage = 1; renderInstructorCards(instructorData); updateTabBadges(); return; } isFilterActive = true; currentFilterDate = date; filterType = 'instructor'; const filteredData = originalJournalData.filter(task => { const titleMatch = ['ИНСТ', 'инст'].some(keyword => (task.task || '').toLowerCase().includes(keyword.toLowerCase())); return task.completedDate === date && titleMatch; }); instructorData = filteredData; currentInstructorPage = 1; renderInstructorCards(instructorData); updateTabBadges(); }
         function filterEngineerByDate(date) { if (!date || date === '') { isFilterActive = false; currentFilterDate = ''; filterType = 'engineer'; engineerData = originalJournalData ? filterTasksByTitle([...originalJournalData], ['КЛУБ']) : []; currentEngineerPage = 1; renderEngineerCards(engineerData); updateTabBadges(); return; } isFilterActive = true; currentFilterDate = date; filterType = 'engineer'; const filteredData = originalJournalData.filter(task => { const titleMatch = ['КЛУБ'].some(keyword => (task.task || '').toLowerCase().includes(keyword.toLowerCase())); return task.completedDate === date && titleMatch; }); engineerData = filteredData; currentEngineerPage = 1; renderEngineerCards(engineerData); updateTabBadges(); }
