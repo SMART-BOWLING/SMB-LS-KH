@@ -432,23 +432,15 @@
             }
         }
 
-        /* НОВОЕ ПОЛЕ ВЫБОРА ДАТЫ — только поле, без лишних кнопок */
+        /* НОВОЕ ПОЛЕ ВЫБОРА ДАТЫ — без фона, без надписи, только иконка и инпут */
         .date-picker-field {
-            background-color: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-            padding: 16px;
+            padding: 16px 0 8px 0;
             display: flex;
             align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
+            justify-content: flex-start;
             gap: 12px;
             width: 100%;
-        }
-
-        .date-picker-label {
-            font-size: 14px;
-            font-weight: 600;
-            color: #1a2f40;
+            background: transparent;
         }
 
         .date-input-wrapper {
@@ -491,13 +483,8 @@
         /* Адаптация поля даты на мобильных */
         @media (max-width: 767px) {
             .date-picker-field {
-                padding: 12px;
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .date-picker-label {
-                text-align: center;
-                margin-bottom: 4px;
+                padding: 12px 0 8px 0;
+                justify-content: stretch;
             }
             .date-input-wrapper {
                 width: 100%;
@@ -511,7 +498,7 @@
 
         @media (max-width: 480px) {
             .date-picker-field {
-                padding: 10px;
+                padding: 10px 0 6px 0;
             }
             .date-filter-input {
                 height: 42px;
@@ -991,9 +978,8 @@
                     <div class="tab-btn-wrapper"><button class="tab-btn" data-tab="tab2"><i class="fas fa-user-tie"></i> ИНСТРУКТОР</button><span class="tab-badge" id="instructor-badge" data-count="0">0</span></div>
                     <div class="tab-btn-wrapper"><button class="tab-btn" data-tab="tab3"><i class="fas fa-bowling-ball"></i> КЛУБ</button><span class="tab-badge" id="club-badge" data-count="0">0</span></div>
                 </div>
-                <!-- ТОЛЬКО ПОЛЕ ВЫБОРА ДАТЫ, БЕЗ КНОПКИ ОТКРЫТЫХ ЗАДАЧ -->
+                <!-- ТОЛЬКО ПОЛЕ ВЫБОРА ДАТЫ, БЕЗ НАДПИСИ И БЕЗ СЕРОГО ФОНА -->
                 <div class="date-picker-field">
-                    <span class="date-picker-label">Просмотр выполненных задач</span>
                     <div class="date-input-wrapper">
                         <i class="fas fa-calendar-alt calendar-icon"></i>
                         <input type="text" class="date-filter-input" id="date-filter-input" placeholder="Выберите дату" readonly>
@@ -1008,7 +994,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://npmcdn.com/flatpickr/dist/l10n/ru.js"></script>
     <script>
-        // Полностью рабочая логика (адаптирована под новое поле даты)
+        // Полностью рабочая логика (без изменений функционала)
         const AUTH_SPREADSHEET_ID = '1-yiVdZYa6wJdupTiuiHvI_ht3Vu73RUjyCehZqs2cJ4';
         const AUTH_SHEET_NAME = '1';
         const AUTH_API_KEY = 'AIzaSyAXL0Hsfxy-g-AgYhnivj4x9gCB2rrtF-0';
