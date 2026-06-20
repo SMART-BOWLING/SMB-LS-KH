@@ -538,7 +538,7 @@
             flex-direction: column;
             position: relative;
             overflow: hidden;
-            cursor: pointer;
+            cursor: default; /* Изменено с pointer на default */
             user-select: none;
             width: 100%;
             min-height: 280px;
@@ -649,7 +649,9 @@
             height: 42px;
             min-height: 42px;
             touch-action: manipulation;
-            z-index: 1;
+            z-index: 2; /* Поднимаем над родителем */
+            position: relative;
+            pointer-events: auto; /* Явно разрешаем клики */
         }
 
         .submit-btn {
@@ -672,7 +674,9 @@
             height: 42px;
             min-height: 42px;
             touch-action: manipulation;
-            z-index: 1;
+            z-index: 2; /* Поднимаем над родителем */
+            position: relative;
+            pointer-events: auto; /* Явно разрешаем клики */
         }
 
         .submit-btn:disabled {
@@ -993,6 +997,7 @@
             }
         }
         
+        // ИСПРАВЛЕННАЯ ФУНКЦИЯ с event.stopPropagation()
         function showConfirmModal(taskId, rowIndex, buttonElement) { 
             const modal = document.createElement('div'); modal.className = 'confirm-modal'; 
             modal.innerHTML = `<div class="confirm-modal-content"><div class="confirm-modal-icon"><i class="fas fa-exclamation-triangle"></i></div><div class="confirm-modal-title">Подтверждение</div><div class="confirm-modal-message">Вы уверены, что нажатие было не случайным?</div><div class="confirm-modal-buttons"><button class="confirm-modal-btn confirm" id="confirmYesBtn">Да, выполнить</button><button class="confirm-modal-btn cancel" id="confirmNoBtn">Отмена</button></div></div>`; 
@@ -1002,14 +1007,109 @@
             modal.onclick = (e) => { if(e.target === modal) modal.remove(); }; 
         }
         
-        function submitTaskWithConfirm(event, taskId, rowIndex, buttonElement) { event.preventDefault(); event.stopPropagation(); showConfirmModal(taskId, rowIndex, buttonElement); }
+        // ИСПРАВЛЕННАЯ ФУНКЦИЯ с event.stopPropagation()
+        function submitTaskWithConfirm(event, taskId, rowIndex, buttonElement) { 
+            if (event) {
+                event.preventDefault(); 
+                event.stopPropagation(); // Останавливаем всплытие
+            }
+            showConfirmModal(taskId, rowIndex, buttonElement); 
+        }
         
-        function openDriveLink(link) { if(link) { const driveMatch = link.match(/\/d\/([^\/]+)/); const finalUrl = driveMatch ? `https://drive.google.com/uc?export=view&id=${driveMatch[1]}` : link; window.open(finalUrl, '_blank'); } }
+        // ИСПРАВЛЕННАЯ ФУНКЦИЯ с event.stopPropagation()
+        function openDriveLink(event, link) { 
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation(); // Останавливаем всплытие
+            }
+            if (link) { 
+                const driveMatch = link.match(/\/d\/([^\/]+)/); 
+                const finalUrl = driveMatch ? `https://drive.google.com/uc?export=view&id=${driveMatch[1]}` : link; 
+                window.open(finalUrl, '_blank'); 
+            } 
+        }
         
         // Рендер с сохранением порядка (выполненные не опускаются)
-        function renderJournalCards(data) { const cont = document.getElementById('journal-cards'); if(!data || !data.length) { cont.innerHTML = `<div class="task-card"><div>Нет данных</div></div>`; totalJournalPages=1; currentJournalPage=1; updatePagination('journal'); return; } const sorted = [...data]; totalJournalPages = Math.ceil(sorted.length/CARDS_PER_PAGE); if(currentJournalPage>totalJournalPages) currentJournalPage=1; const current = getCurrentPageData(sorted, currentJournalPage); let html=''; current.forEach((t,idx)=>{ const row = t.rowIndex || (idx+2); const hasLink = t.driveLink && t.driveLink.trim(); const tid = t.id || t.driveLink || ''; if(!t.isCompleted) { html+=`<div class="task-card pending"><div class="task-header"><div class="task-title">${escapeHtml(t.task)}</div></div><div class="card-content"><div class="content-row"><span class="row-label">Дата появления:</span><span class="row-value">${t.createdDate||'-'}</span></div><div class="content-row"><span class="row-label">Дата выполнения:</span><span class="row-value">${t.completedDate||'-'}</span></div><div class="content-row"><span class="row-label">Выполнил:</span><span class="row-value">-</span></div></div><div class="buttons-container">${hasLink ? `<a href="#" onclick="openDriveLink('${escapeHtml(t.driveLink)}')" class="schema-button"><i class="fas fa-file-alt"></i>ОТКРЫТЬ ЗАДАЧУ</a>` : '<div class="no-open">Недоступно</div>'}<button class="submit-btn" onclick="submitTaskWithConfirm(event,'${escapeHtml(tid)}',${row}, this)"><i class="fas fa-paper-plane"></i>ВЫПОЛНИТЬ</button></div></div>`; } else { html+=`<div class="task-card completed"><div class="task-header"><div class="task-title">${escapeHtml(t.task)}</div></div><div class="card-content"><div class="content-row"><span class="row-label">Дата появления:</span><span class="row-value">${t.createdDate||'-'}</span></div><div class="content-row"><span class="row-label">Дата выполнения:</span><span class="row-value">${t.completedDate}</span></div><div class="content-row"><span class="row-label">Выполнил:</span><span class="row-value"><span class="executor-name">${escapeHtml(t.executor)}</span></span></div></div><div class="buttons-container">${hasLink ? `<a href="#" onclick="openDriveLink('${escapeHtml(t.driveLink)}')" class="schema-button"><i class="fas fa-file-alt"></i>ОТКРЫТЬ ЗАДАЧУ</a>` : '<div class="no-open">Недоступно</div>'}<div class="submitted-text"><i class="fas fa-check-circle"></i>ВЫПОЛНЕНО</div></div></div>`; } }); cont.innerHTML = html; updatePagination('journal'); }
-        function renderInstructorCards(data) { const cont = document.getElementById('instructor-cards'); if(!data || !data.length) { cont.innerHTML = `<div class="task-card"><div>Нет данных</div></div>`; totalInstructorPages=1; currentInstructorPage=1; updatePagination('instructor'); return; } const sorted = [...data]; totalInstructorPages = Math.ceil(sorted.length/CARDS_PER_PAGE); if(currentInstructorPage>totalInstructorPages) currentInstructorPage=1; const current = getCurrentPageData(sorted, currentInstructorPage); let html=''; current.forEach((t,idx)=>{ const row = t.rowIndex || (idx+2); const hasLink = t.driveLink && t.driveLink.trim(); const tid = t.id || t.driveLink || ''; if(!t.isCompleted) { html+=`<div class="task-card pending"><div class="task-header"><div class="task-title">${escapeHtml(t.task)}</div></div><div class="card-content"><div class="content-row"><span class="row-label">Дата появления:</span><span class="row-value">${t.createdDate||'-'}</span></div><div class="content-row"><span class="row-label">Дата выполнения:</span><span class="row-value">${t.completedDate||'-'}</span></div><div class="content-row"><span class="row-label">Выполнил:</span><span class="row-value">-</span></div></div><div class="buttons-container">${hasLink ? `<a href="#" onclick="openDriveLink('${escapeHtml(t.driveLink)}')" class="schema-button"><i class="fas fa-file-alt"></i>ОТКРЫТЬ ЗАДАЧУ</a>` : '<div class="no-open">Недоступно</div>'}<button class="submit-btn" onclick="submitTaskWithConfirm(event,'${escapeHtml(tid)}',${row}, this)"><i class="fas fa-paper-plane"></i>ВЫПОЛНИТЬ</button></div></div>`; } else { html+=`<div class="task-card completed"><div class="task-header"><div class="task-title">${escapeHtml(t.task)}</div></div><div class="card-content"><div class="content-row"><span class="row-label">Дата появления:</span><span class="row-value">${t.createdDate||'-'}</span></div><div class="content-row"><span class="row-label">Дата выполнения:</span><span class="row-value">${t.completedDate}</span></div><div class="content-row"><span class="row-label">Выполнил:</span><span class="row-value"><span class="executor-name">${escapeHtml(t.executor)}</span></span></div></div><div class="buttons-container">${hasLink ? `<a href="#" onclick="openDriveLink('${escapeHtml(t.driveLink)}')" class="schema-button"><i class="fas fa-file-alt"></i>ОТКРЫТЬ ЗАДАЧУ</a>` : '<div class="no-open">Недоступно</div>'}<div class="submitted-text"><i class="fas fa-check-circle"></i>ВЫПОЛНЕНО</div></div></div>`; } }); cont.innerHTML = html; updatePagination('instructor'); }
-        function renderEngineerCards(data) { const cont = document.getElementById('engineer-cards'); if(!data || !data.length) { cont.innerHTML = `<div class="task-card"><div>Нет данных</div></div>`; totalEngineerPages=1; currentEngineerPage=1; updatePagination('engineer'); return; } const sorted = [...data]; totalEngineerPages = Math.ceil(sorted.length/CARDS_PER_PAGE); if(currentEngineerPage>totalEngineerPages) currentEngineerPage=1; const current = getCurrentPageData(sorted, currentEngineerPage); let html=''; current.forEach((t,idx)=>{ const row = t.rowIndex || (idx+2); const hasLink = t.driveLink && t.driveLink.trim(); const tid = t.id || t.driveLink || ''; if(!t.isCompleted) { html+=`<div class="task-card pending"><div class="task-header"><div class="task-title">${escapeHtml(t.task)}</div></div><div class="card-content"><div class="content-row"><span class="row-label">Дата появления:</span><span class="row-value">${t.createdDate||'-'}</span></div><div class="content-row"><span class="row-label">Дата выполнения:</span><span class="row-value">${t.completedDate||'-'}</span></div><div class="content-row"><span class="row-label">Выполнил:</span><span class="row-value">-</span></div></div><div class="buttons-container">${hasLink ? `<a href="#" onclick="openDriveLink('${escapeHtml(t.driveLink)}')" class="schema-button"><i class="fas fa-file-alt"></i>ОТКРЫТЬ ЗАДАЧУ</a>` : '<div class="no-open">Недоступно</div>'}<button class="submit-btn" onclick="submitTaskWithConfirm(event,'${escapeHtml(tid)}',${row}, this)"><i class="fas fa-paper-plane"></i>ВЫПОЛНИТЬ</button></div></div>`; } else { html+=`<div class="task-card completed"><div class="task-header"><div class="task-title">${escapeHtml(t.task)}</div></div><div class="card-content"><div class="content-row"><span class="row-label">Дата появления:</span><span class="row-value">${t.createdDate||'-'}</span></div><div class="content-row"><span class="row-label">Дата выполнения:</span><span class="row-value">${t.completedDate}</span></div><div class="content-row"><span class="row-label">Выполнил:</span><span class="row-value"><span class="executor-name">${escapeHtml(t.executor)}</span></span></div></div><div class="buttons-container">${hasLink ? `<a href="#" onclick="openDriveLink('${escapeHtml(t.driveLink)}')" class="schema-button"><i class="fas fa-file-alt"></i>ОТКРЫТЬ ЗАДАЧУ</a>` : '<div class="no-open">Недоступно</div>'}<div class="submitted-text"><i class="fas fa-check-circle"></i>ВЫПОЛНЕНО</div></div></div>`; } }); cont.innerHTML = html; updatePagination('engineer'); }
+        function renderJournalCards(data) { 
+            const cont = document.getElementById('journal-cards'); 
+            if(!data || !data.length) { 
+                cont.innerHTML = `<div class="task-card"><div>Нет данных</div></div>`; 
+                totalJournalPages=1; currentJournalPage=1; 
+                updatePagination('journal'); 
+                return; 
+            } 
+            const sorted = [...data]; 
+            totalJournalPages = Math.ceil(sorted.length/CARDS_PER_PAGE); 
+            if(currentJournalPage>totalJournalPages) currentJournalPage=1; 
+            const current = getCurrentPageData(sorted, currentJournalPage); 
+            let html=''; 
+            current.forEach((t,idx)=>{ 
+                const row = t.rowIndex || (idx+2); 
+                const hasLink = t.driveLink && t.driveLink.trim(); 
+                const tid = t.id || t.driveLink || ''; 
+                if(!t.isCompleted) { 
+                    html+=`<div class="task-card pending"><div class="task-header"><div class="task-title">${escapeHtml(t.task)}</div></div><div class="card-content"><div class="content-row"><span class="row-label">Дата появления:</span><span class="row-value">${t.createdDate||'-'}</span></div><div class="content-row"><span class="row-label">Дата выполнения:</span><span class="row-value">${t.completedDate||'-'}</span></div><div class="content-row"><span class="row-label">Выполнил:</span><span class="row-value">-</span></div></div><div class="buttons-container">${hasLink ? `<a href="#" onclick="openDriveLink(event, '${escapeHtml(t.driveLink)}')" class="schema-button"><i class="fas fa-file-alt"></i>ОТКРЫТЬ ЗАДАЧУ</a>` : '<div class="no-open">Недоступно</div>'}<button class="submit-btn" onclick="submitTaskWithConfirm(event, '${escapeHtml(tid)}', ${row}, this)"><i class="fas fa-paper-plane"></i>ВЫПОЛНИТЬ</button></div></div>`; 
+                } else { 
+                    html+=`<div class="task-card completed"><div class="task-header"><div class="task-title">${escapeHtml(t.task)}</div></div><div class="card-content"><div class="content-row"><span class="row-label">Дата появления:</span><span class="row-value">${t.createdDate||'-'}</span></div><div class="content-row"><span class="row-label">Дата выполнения:</span><span class="row-value">${t.completedDate}</span></div><div class="content-row"><span class="row-label">Выполнил:</span><span class="row-value"><span class="executor-name">${escapeHtml(t.executor)}</span></span></div></div><div class="buttons-container">${hasLink ? `<a href="#" onclick="openDriveLink(event, '${escapeHtml(t.driveLink)}')" class="schema-button"><i class="fas fa-file-alt"></i>ОТКРЫТЬ ЗАДАЧУ</a>` : '<div class="no-open">Недоступно</div>'}<div class="submitted-text"><i class="fas fa-check-circle"></i>ВЫПОЛНЕНО</div></div></div>`; 
+                } 
+            }); 
+            cont.innerHTML = html; 
+            updatePagination('journal'); 
+        }
+        
+        function renderInstructorCards(data) { 
+            const cont = document.getElementById('instructor-cards'); 
+            if(!data || !data.length) { 
+                cont.innerHTML = `<div class="task-card"><div>Нет данных</div></div>`; 
+                totalInstructorPages=1; currentInstructorPage=1; 
+                updatePagination('instructor'); 
+                return; 
+            } 
+            const sorted = [...data]; 
+            totalInstructorPages = Math.ceil(sorted.length/CARDS_PER_PAGE); 
+            if(currentInstructorPage>totalInstructorPages) currentInstructorPage=1; 
+            const current = getCurrentPageData(sorted, currentInstructorPage); 
+            let html=''; 
+            current.forEach((t,idx)=>{ 
+                const row = t.rowIndex || (idx+2); 
+                const hasLink = t.driveLink && t.driveLink.trim(); 
+                const tid = t.id || t.driveLink || ''; 
+                if(!t.isCompleted) { 
+                    html+=`<div class="task-card pending"><div class="task-header"><div class="task-title">${escapeHtml(t.task)}</div></div><div class="card-content"><div class="content-row"><span class="row-label">Дата появления:</span><span class="row-value">${t.createdDate||'-'}</span></div><div class="content-row"><span class="row-label">Дата выполнения:</span><span class="row-value">${t.completedDate||'-'}</span></div><div class="content-row"><span class="row-label">Выполнил:</span><span class="row-value">-</span></div></div><div class="buttons-container">${hasLink ? `<a href="#" onclick="openDriveLink(event, '${escapeHtml(t.driveLink)}')" class="schema-button"><i class="fas fa-file-alt"></i>ОТКРЫТЬ ЗАДАЧУ</a>` : '<div class="no-open">Недоступно</div>'}<button class="submit-btn" onclick="submitTaskWithConfirm(event, '${escapeHtml(tid)}', ${row}, this)"><i class="fas fa-paper-plane"></i>ВЫПОЛНИТЬ</button></div></div>`; 
+                } else { 
+                    html+=`<div class="task-card completed"><div class="task-header"><div class="task-title">${escapeHtml(t.task)}</div></div><div class="card-content"><div class="content-row"><span class="row-label">Дата появления:</span><span class="row-value">${t.createdDate||'-'}</span></div><div class="content-row"><span class="row-label">Дата выполнения:</span><span class="row-value">${t.completedDate}</span></div><div class="content-row"><span class="row-label">Выполнил:</span><span class="row-value"><span class="executor-name">${escapeHtml(t.executor)}</span></span></div></div><div class="buttons-container">${hasLink ? `<a href="#" onclick="openDriveLink(event, '${escapeHtml(t.driveLink)}')" class="schema-button"><i class="fas fa-file-alt"></i>ОТКРЫТЬ ЗАДАЧУ</a>` : '<div class="no-open">Недоступно</div>'}<div class="submitted-text"><i class="fas fa-check-circle"></i>ВЫПОЛНЕНО</div></div></div>`; 
+                } 
+            }); 
+            cont.innerHTML = html; 
+            updatePagination('instructor'); 
+        }
+        
+        function renderEngineerCards(data) { 
+            const cont = document.getElementById('engineer-cards'); 
+            if(!data || !data.length) { 
+                cont.innerHTML = `<div class="task-card"><div>Нет данных</div></div>`; 
+                totalEngineerPages=1; currentEngineerPage=1; 
+                updatePagination('engineer'); 
+                return; 
+            } 
+            const sorted = [...data]; 
+            totalEngineerPages = Math.ceil(sorted.length/CARDS_PER_PAGE); 
+            if(currentEngineerPage>totalEngineerPages) currentEngineerPage=1; 
+            const current = getCurrentPageData(sorted, currentEngineerPage); 
+            let html=''; 
+            current.forEach((t,idx)=>{ 
+                const row = t.rowIndex || (idx+2); 
+                const hasLink = t.driveLink && t.driveLink.trim(); 
+                const tid = t.id || t.driveLink || ''; 
+                if(!t.isCompleted) { 
+                    html+=`<div class="task-card pending"><div class="task-header"><div class="task-title">${escapeHtml(t.task)}</div></div><div class="card-content"><div class="content-row"><span class="row-label">Дата появления:</span><span class="row-value">${t.createdDate||'-'}</span></div><div class="content-row"><span class="row-label">Дата выполнения:</span><span class="row-value">${t.completedDate||'-'}</span></div><div class="content-row"><span class="row-label">Выполнил:</span><span class="row-value">-</span></div></div><div class="buttons-container">${hasLink ? `<a href="#" onclick="openDriveLink(event, '${escapeHtml(t.driveLink)}')" class="schema-button"><i class="fas fa-file-alt"></i>ОТКРЫТЬ ЗАДАЧУ</a>` : '<div class="no-open">Недоступно</div>'}<button class="submit-btn" onclick="submitTaskWithConfirm(event, '${escapeHtml(tid)}', ${row}, this)"><i class="fas fa-paper-plane"></i>ВЫПОЛНИТЬ</button></div></div>`; 
+                } else { 
+                    html+=`<div class="task-card completed"><div class="task-header"><div class="task-title">${escapeHtml(t.task)}</div></div><div class="card-content"><div class="content-row"><span class="row-label">Дата появления:</span><span class="row-value">${t.createdDate||'-'}</span></div><div class="content-row"><span class="row-label">Дата выполнения:</span><span class="row-value">${t.completedDate}</span></div><div class="content-row"><span class="row-label">Выполнил:</span><span class="row-value"><span class="executor-name">${escapeHtml(t.executor)}</span></span></div></div><div class="buttons-container">${hasLink ? `<a href="#" onclick="openDriveLink(event, '${escapeHtml(t.driveLink)}')" class="schema-button"><i class="fas fa-file-alt"></i>ОТКРЫТЬ ЗАДАЧУ</a>` : '<div class="no-open">Недоступно</div>'}<div class="submitted-text"><i class="fas fa-check-circle"></i>ВЫПОЛНЕНО</div></div></div>`; 
+                } 
+            }); 
+            cont.innerHTML = html; 
+            updatePagination('engineer'); 
+        }
         
         function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m) { if(m === '&') return '&amp;'; if(m === '<') return '&lt;'; if(m === '>') return '&gt;'; return m; }); }
         
