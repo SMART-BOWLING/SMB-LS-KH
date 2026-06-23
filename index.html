@@ -430,6 +430,7 @@
             }
         }
 
+        /* ИСПРАВЛЕНО: поле даты теперь растягивается на всю ширину карточек */
         .date-picker-field {
             padding: 16px 0 8px 0;
             display: flex;
@@ -851,177 +852,6 @@
             color: #1a2f40;
         }
 
-        /* Модальное окно для просмотра задачи */
-        .task-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 999999;
-            padding: 20px;
-            box-sizing: border-box;
-            animation: fadeIn 0.25s ease;
-        }
-
-        .task-modal-overlay.active {
-            display: flex;
-        }
-
-        .task-modal-container {
-            background: white;
-            border-radius: 20px;
-            max-width: 700px;
-            width: 100%;
-            max-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            animation: slideUp 0.3s ease;
-            overflow: hidden;
-        }
-
-        .task-modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px 24px;
-            border-bottom: 2px solid #dc143c;
-            background: #fafafa;
-            flex-shrink: 0;
-        }
-
-        .task-modal-header h3 {
-            font-size: 18px;
-            font-weight: 700;
-            color: #1a2f40;
-            margin: 0;
-            flex: 1;
-            word-break: break-word;
-        }
-
-        .task-modal-close {
-            background: none;
-            border: none;
-            font-size: 28px;
-            color: #999;
-            cursor: pointer;
-            padding: 0 8px;
-            transition: color 0.2s;
-            line-height: 1;
-        }
-
-        .task-modal-close:hover {
-            color: #dc143c;
-        }
-
-        .task-modal-body {
-            padding: 30px 24px;
-            overflow-y: auto;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .task-modal-info {
-            text-align: center;
-            width: 100%;
-        }
-
-        .task-modal-info .task-name {
-            font-size: 20px;
-            font-weight: 700;
-            color: #1a2f40;
-            margin-bottom: 8px;
-        }
-
-        .task-modal-info .task-link-label {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 12px;
-        }
-
-        .task-modal-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background-color: #dc143c;
-            color: white;
-            padding: 14px 28px;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-
-        .task-modal-link:hover {
-            background-color: #b01030;
-            transform: scale(1.03);
-            box-shadow: 0 4px 15px rgba(220,20,60,0.3);
-        }
-
-        .task-modal-link i {
-            font-size: 20px;
-        }
-
-        .task-modal-divider {
-            width: 100%;
-            max-width: 400px;
-            height: 1px;
-            background: #e0e0e0;
-            margin: 8px 0;
-        }
-
-        .task-modal-hint {
-            font-size: 13px;
-            color: #999;
-            text-align: center;
-        }
-
-        .task-modal-hint i {
-            margin-right: 6px;
-        }
-
-        .task-modal-url {
-            font-size: 13px;
-            color: #888;
-            word-break: break-all;
-            text-align: center;
-            background: #f4f6f9;
-            padding: 10px 16px;
-            border-radius: 8px;
-            max-width: 100%;
-        }
-
-        @media (max-width: 640px) {
-            .task-modal-container {
-                max-height: 95vh;
-                border-radius: 16px;
-            }
-            .task-modal-header h3 {
-                font-size: 16px;
-            }
-            .task-modal-link {
-                padding: 12px 20px;
-                font-size: 14px;
-                width: 100%;
-                justify-content: center;
-            }
-            .task-modal-body {
-                padding: 20px 16px;
-            }
-        }
-
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -1066,20 +896,6 @@
             <div class="tab-content" id="tab3"><div class="cards-grid" id="engineer-cards"></div><div class="pagination" id="engineer-pagination"></div></div>
         </div>
     </div>
-
-    <!-- Модальное окно для просмотра задачи (без iframe) -->
-    <div class="task-modal-overlay" id="taskModal">
-        <div class="task-modal-container">
-            <div class="task-modal-header">
-                <h3 id="taskModalTitle">📋 Просмотр задачи</h3>
-                <button class="task-modal-close" id="taskModalCloseBtn">&times;</button>
-            </div>
-            <div class="task-modal-body" id="taskModalBody">
-                <!-- Содержимое заполняется динамически -->
-            </div>
-        </div>
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://npmcdn.com/flatpickr/dist/l10n/ru.js"></script>
     <script>
@@ -1101,10 +917,6 @@
         
         // ---- DOM элементы ----
         const loadingScreen = document.getElementById("loadingScreen"), loginSection = document.getElementById("login-section"), mainContent = document.getElementById("main-content"), loader = document.getElementById("loader");
-        const taskModal = document.getElementById('taskModal');
-        const taskModalBody = document.getElementById('taskModalBody');
-        const taskModalTitle = document.getElementById('taskModalTitle');
-        const taskModalCloseBtn = document.getElementById('taskModalCloseBtn');
         
         // ---- Вспомогательные функции ----
         function toggleUserDropdown() { const m = document.getElementById("userDropdown"); m.style.display = m.style.display === "block" ? "none" : "block"; }
@@ -1148,6 +960,7 @@
             }
         }
         
+        // Функция для безопасного экранирования данных
         function safeString(str) {
             if (!str) return '';
             return String(str).replace(/[&<>"']/g, function(m) {
@@ -1160,6 +973,14 @@
             });
         }
         
+        // Функция для безопасного создания onclick атрибута
+        function safeOnClick(handler, param) {
+            if (param === undefined || param === null) param = '';
+            const safeParam = String(param).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+            return `${handler}('${safeParam}')`;
+        }
+        
+        // Локальное обновление статуса
         function updateLocalTaskStatus(rowIndex, executorName) {
             const now = new Date();
             const dateStr = now.toLocaleDateString('ru-RU');
@@ -1217,72 +1038,19 @@
             showConfirmModal(taskId, rowIndex, buttonElement); 
         }
         
-        // ---- Функция открытия задачи в модальном окне (без iframe) ----
-        function openTaskInModal(event, link, taskTitle) {
+        function openDriveLink(event, link) { 
             if (event) {
                 event.preventDefault();
                 event.stopPropagation();
             }
-            
-            if (!link) {
-                alert('Ссылка на задачу отсутствует');
-                return;
-            }
-            
-            // Безопасно экранируем данные
-            const safeLink = safeString(link);
-            const safeTitle = safeString(taskTitle || 'Просмотр задачи');
-            
-            // Заголовок модалки
-            taskModalTitle.textContent = '📋 ' + safeTitle;
-            
-            // Показываем информацию и кнопку для открытия
-            taskModalBody.innerHTML = `
-                <div class="task-modal-info">
-                    <div class="task-name">${safeTitle}</div>
-                    <div class="task-link-label">Нажмите кнопку ниже, чтобы открыть задачу:</div>
-                    <a href="${safeLink}" target="_blank" rel="noopener noreferrer" class="task-modal-link">
-                        <i class="fas fa-external-link-alt"></i> Открыть задачу
-                    </a>
-                </div>
-                <div class="task-modal-divider"></div>
-                <div class="task-modal-hint">
-                    <i class="fas fa-info-circle"></i> Задача откроется в новой вкладке
-                </div>
-                <div class="task-modal-url">
-                    <i class="fas fa-link"></i> ${safeLink.length > 60 ? safeLink.substring(0, 60) + '...' : safeLink}
-                </div>
-            `;
-            
-            // Показываем модалку
-            taskModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            if (link) { 
+                const driveMatch = link.match(/\/d\/([^\/]+)/); 
+                const finalUrl = driveMatch ? `https://drive.google.com/uc?export=view&id=${driveMatch[1]}` : link; 
+                window.open(finalUrl, '_blank'); 
+            } 
         }
         
-        function closeTaskModal() {
-            taskModal.classList.remove('active');
-            document.body.style.overflow = '';
-            // Очищаем содержимое
-            setTimeout(() => {
-                taskModalBody.innerHTML = '';
-            }, 300);
-        }
-        
-        // Закрытие модалки по клику на фон или кнопку
-        taskModalCloseBtn.addEventListener('click', closeTaskModal);
-        taskModal.addEventListener('click', function(e) {
-            if (e.target === taskModal) {
-                closeTaskModal();
-            }
-        });
-        // Закрытие по Escape
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && taskModal.classList.contains('active')) {
-                closeTaskModal();
-            }
-        });
-        
-        // Генерация HTML для карточки
+        // Генерация HTML для карточки с безопасными данными
         function createTaskCard(task, rowIndex) {
             const safeTask = safeString(task.task || '');
             const safeDriveLink = safeString(task.driveLink || '');
@@ -1301,7 +1069,7 @@
                         <div class="content-row"><span class="row-label">Выполнил:</span><span class="row-value">-</span></div>
                     </div>
                     <div class="buttons-container">
-                        ${hasLink ? `<button class="schema-button" onclick="openTaskInModal(event, '${safeDriveLink}', '${safeTask}')"><i class="fas fa-file-alt"></i>ОТКРЫТЬ ЗАДАЧУ</button>` : '<div class="no-open">Недоступно</div>'}
+                        ${hasLink ? `<a href="#" onclick="openDriveLink(event, '${safeDriveLink}')" class="schema-button"><i class="fas fa-file-alt"></i>ОТКРЫТЬ ЗАДАЧУ</a>` : '<div class="no-open">Недоступно</div>'}
                         <button class="submit-btn" onclick="submitTaskWithConfirm(event, '${tid}', ${rowIndex}, this)"><i class="fas fa-paper-plane"></i>ВЫПОЛНИТЬ</button>
                     </div>
                 </div>`;
@@ -1314,7 +1082,7 @@
                         <div class="content-row"><span class="row-label">Выполнил:</span><span class="row-value"><span class="executor-name">${safeExecutor}</span></span></div>
                     </div>
                     <div class="buttons-container">
-                        ${hasLink ? `<button class="schema-button" onclick="openTaskInModal(event, '${safeDriveLink}', '${safeTask}')"><i class="fas fa-file-alt"></i>ОТКРЫТЬ ЗАДАЧУ</button>` : '<div class="no-open">Недоступно</div>'}
+                        ${hasLink ? `<a href="#" onclick="openDriveLink(event, '${safeDriveLink}')" class="schema-button"><i class="fas fa-file-alt"></i>ОТКРЫТЬ ЗАДАЧУ</a>` : '<div class="no-open">Недоступно</div>'}
                         <div class="submitted-text"><i class="fas fa-check-circle"></i>ВЫПОЛНЕНО</div>
                     </div>
                 </div>`;
@@ -1419,10 +1187,7 @@
         }
         
         window.addEventListener('load',()=>{ const logged = localStorage.getItem('userLoggedIn')==='true', email=localStorage.getItem('userEmail'), name=localStorage.getItem('userName'), nameSheet=localStorage.getItem('userNameFromSheet'), pic=localStorage.getItem('userPic'); if(logged && email) { loginSection.style.display='none'; mainContent.style.display='block'; currentUser={ email, name, picture:pic }; currentUserNameFromSheet = nameSheet || name; updateUserAvatar(currentUser); showLoading(true); loadSheetsAPI().then(()=>gapi.client.init({ apiKey: AUTH_API_KEY, discoveryDocs:['https://sheets.googleapis.com/$discovery/rest?version=v4'] })).then(()=>checkEmailInSheet(email)).catch(()=>signOut()); } else { loginSection.style.display='flex'; mainContent.style.display='none'; setTimeout(()=>loadingScreen.classList.add('fade-out'),500); } });
-        
-        // Делаем функции глобальными для вызова из onclick
-        window.openTaskInModal = openTaskInModal;
-        window.closeTaskModal = closeTaskModal;
+        window.openDriveLink = openDriveLink; 
         window.submitTaskWithConfirm = submitTaskWithConfirm; 
         window.goToPage = goToPage; 
         window.changePage = changePage; 
